@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="382" height="382" viewBox="0 0 382 382">
+  <defs>
+    <clipPath id="clip-Artboard_9">
+      <rect width="382" height="382"/>
+    </clipPath>
+  </defs>
+  <g id="Artboard_9" data-name="Artboard – 9" clip-path="url(#clip-Artboard_9)">
+    <rect width="382" height="382" fill="#fff"/>
+    <g id="user" transform="translate(112 102.129)">
+      <path id="Path_158" data-name="Path 158" d="M161.076,73.9V54.269A39.269,39.269,0,0,0,121.807,15H43.269A39.269,39.269,0,0,0,4,54.269V73.9" transform="translate(-4 103.454)" fill="#bdc6cf"/>
+      <ellipse id="Ellipse_11" data-name="Ellipse 11" cx="39" cy="39.5" rx="39" ry="39.5" transform="translate(40.157 -0.129)" fill="#bdc6cf"/>
+    </g>
+  </g>
+</svg>

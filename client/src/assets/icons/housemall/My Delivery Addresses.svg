@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300" viewBox="0 0 300 300">
+  <defs>
+    <clipPath id="clip-My_Delivery_Addresses">
+      <rect width="300" height="300"/>
+    </clipPath>
+  </defs>
+  <g id="My_Delivery_Addresses" data-name="My Delivery Addresses" clip-path="url(#clip-My_Delivery_Addresses)">
+    <rect width="300" height="300" fill="#fff"/>
+    <g id="truck_1_" data-name="truck (1)" transform="translate(79.676 112)">
+      <rect id="Rectangle_1548" data-name="Rectangle 1548" width="103" height="89" transform="translate(0.324)" stroke-width="2" stroke="#000" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path id="Path_3463" data-name="Path 3463" d="M16,8H43.622L64.338,28.716V63.244H16Z" transform="translate(87.454 26.527)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <ellipse id="Ellipse_216" data-name="Ellipse 216" cx="16.5" cy="17.5" rx="16.5" ry="17.5" transform="translate(14.324 89)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <circle id="Ellipse_217" data-name="Ellipse 217" cx="17.5" cy="17.5" r="17.5" transform="translate(103.324 89)" stroke-width="2" stroke="#000" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </g>
+  </g>
+</svg>

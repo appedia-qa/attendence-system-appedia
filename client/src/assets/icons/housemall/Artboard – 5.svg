@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="382" height="382" viewBox="0 0 382 382">
+  <defs>
+    <clipPath id="clip-Artboard_5">
+      <rect width="382" height="382"/>
+    </clipPath>
+  </defs>
+  <g id="Artboard_5" data-name="Artboard – 5" clip-path="url(#clip-Artboard_5)">
+    <rect width="382" height="382" fill="#fff"/>
+    <g id="Group_482" data-name="Group 482" transform="translate(103 93)">
+      <g id="shopping-bag" transform="translate(0 0)">
+        <path id="Path_155" data-name="Path 155" d="M32.452,2,3,41.269V178.71a19.634,19.634,0,0,0,19.634,19.634H160.076A19.634,19.634,0,0,0,179.71,178.71V41.269L150.258,2Z" transform="translate(-3 -2)" fill="#d19130" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="7"/>
+        <line id="Line_16" data-name="Line 16" x2="176" transform="translate(0.846 38)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="7"/>
+        <path id="Path_156" data-name="Path 156" d="M86.538,10A39.269,39.269,0,0,1,8,10" transform="translate(41.086 68.538)" fill="#d19130" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="7"/>
+      </g>
+    </g>
+  </g>
+</svg>

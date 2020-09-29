@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300" viewBox="0 0 300 300">
+  <defs>
+    <clipPath id="clip-My_Profile">
+      <rect width="300" height="300"/>
+    </clipPath>
+  </defs>
+  <g id="My_Profile" data-name="My Profile" clip-path="url(#clip-My_Profile)">
+    <rect width="300" height="300" fill="#fff"/>
+    <g id="user" transform="translate(73 65)">
+      <path id="Path_234" data-name="Path 234" d="M149.333,69.5V51.333A36.333,36.333,0,0,0,113,15H40.333A36.333,36.333,0,0,0,4,51.333V69.5" transform="translate(0 97)" fill="none" stroke="#191919" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <circle id="Ellipse_18" data-name="Ellipse 18" cx="36.5" cy="36.5" r="36.5" transform="translate(40 3)" stroke-width="2" stroke="#191919" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </g>
+  </g>
+</svg>

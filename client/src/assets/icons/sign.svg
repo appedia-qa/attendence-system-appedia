@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="63" height="94" viewBox="0 0 63 94">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#b2602f"/>
+      <stop offset="1" stop-color="#d7a074"/>
+    </linearGradient>
+    <clipPath id="clip-Arabic_Icon">
+      <rect width="63" height="94"/>
+    </clipPath>
+  </defs>
+  <g id="Arabic_Icon" data-name="Arabic Icon" clip-path="url(#clip-Arabic_Icon)">
+    <g id="Group_6134" data-name="Group 6134" transform="translate(-29.853 -115)">
+      <path id="Path_6255" data-name="Path 6255" d="M75.874,146.146c-10.011,3.894-19.466,8.025-27.014,12.554-8.025,4.847-13.349,11.363-13.349,17.56,0,13.349,14.62,22.487,36.311,22.487a84.174,84.174,0,0,0,20.26-2.306l.558,1.43a125.726,125.726,0,0,1-13.349,8.9c-2.542,1.43-7.232,2.3-13.587,2.3-19.308,0-35.6-9.137-35.6-29.636,0-10.41,5.561-18.988,13.189-25.663-8.58-6.119-11.918-10.41-11.918-17.322A25.645,25.645,0,0,1,34.955,124.3c3.655-6.039,9.058-9.3,14.778-9.3,6.992,0,12.236,3.5,17.084,10.011l-1.271,1.668a28.443,28.443,0,0,0-12.316-2.621c-8.82,0-15.891,4.449-15.891,7.707,0,3.575,2.066,6.435,6.913,10.09,2.861,2.066,6.833,4.29,8.422,4.29a10.528,10.528,0,0,0,4.37-1.43c7.151-3.417,14.3-6.516,21.452-9.217l.4.238Z" transform="translate(0)" fill="url(#linear-gradient)"/>
+    </g>
+  </g>
+</svg>
