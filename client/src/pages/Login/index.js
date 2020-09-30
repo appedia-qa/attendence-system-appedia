@@ -43,7 +43,7 @@ class Login extends Component {
 
   async componentDidMount() {
     const token = localStorage.getItem(USER_AUTH_KEY);
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }
 
   static getDerivedStateFromProps = (props, state) => {
@@ -116,11 +116,9 @@ class Login extends Component {
     }
     return (
       <LoginContainer width={this.props.windowWidth}>
-        <h1 id="backHome" onClick={() => this.props.history.push("/")}>
-          &lt; <Trans>Back to Home</Trans>
-        </h1>
         <ContainerRow width={this.props.windowWidth}>
           <Col md={6} className="image-section">
+            <ImageOverlay />
             <ImageOverlay />
           </Col>
           <Col md={6}>
@@ -129,12 +127,12 @@ class Login extends Component {
             ) : (
               <div class="login-form">
                 <h4 id="check-valid">{errorState}</h4>
-                <h1>
+                {/* <h1>
                   <Trans>LOG IN</Trans>
-                </h1>
+                </h1> */}
                 <div class="email-section">
                   <label for="outlined-basic">
-                    <Trans>Email Address</Trans>*
+                    <Trans>User Name</Trans>*
                   </label>
                   <br />
                   <div class="input-field">
@@ -160,39 +158,11 @@ class Login extends Component {
                     />
                   </div>
                 </div>
-                <div class="forget-password">
-                  <a href="/ForgetPassword">Forgot Password?</a>
-                </div>
                 <div id="login-button">
                   <button onClick={this.onLogin} class="login-button">
-                    <Trans>LOG IN</Trans>
+                    <Trans>Login</Trans>
                   </button>
                 </div>
-                <div class="account-not-exist">
-                  <p>
-                    <Trans>Don't have an account</Trans>
-                  </p>
-                  <a href="/signup">
-                    <Trans>SIGN UP</Trans>
-                  </a>
-                </div>
-                {/* <div class="join-with">
-              <div class="horizontal-line"></div>
-              <h2>Or Join With</h2>
-              <div class="horizontal-line"></div>
-            </div>
-            <div id="fb-button">
-              <button class="fb-button">
-                <FBICON1 />
-                <FBICON2 class="fb-name" />
-              </button>
-            </div>
-            <div id="gg-button">
-              <button class="gg-button">
-                <GGICON1 />
-                <GGICON2 class="gg-name" />
-              </button>
-            </div> */}
               </div>
             )}
           </Col>

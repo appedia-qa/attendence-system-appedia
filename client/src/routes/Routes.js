@@ -17,6 +17,7 @@ import Services from "../pages/OurServices";
 import categories from "../pages/categories";
 import paymentSuccess from "../components/paymentSucess";
 import paymentError from "../components/paymentError";
+import AdminDashboard from "../pages/AdminDashboard";
 
 export const ProductPageEndPoint = "/";
 export const CheckoutEndPoint = "/checkout";
@@ -28,6 +29,12 @@ const Routes = [
     name: "home",
     exact: true,
     component: Home,
+  },
+  {
+    path: "/dashboard",
+    name: "AdminDashboard",
+    exact: true,
+    component: AdminDashboard,
   },
   {
     path: "/payment-success",

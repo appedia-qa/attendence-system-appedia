@@ -188,11 +188,6 @@ class App extends Component {
                             />
                           ))}
                         </Switch>
-                        <Footer width={this.state.windowWidth} />
-                        <ProductDialog
-                          history={this.props.history}
-                          language={lang}
-                        />
                       </AlertProvider>
                     </div>
                   </StyledThemeProvider>

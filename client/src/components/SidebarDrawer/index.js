@@ -275,4 +275,4 @@ const SidebarDrawer = (props) => {
   );
 };
 
-export default withRouter(SidebarDrawer);
+export default SidebarDrawer;
