@@ -98,14 +98,18 @@ router.route('/products/remove').delete(async (req, res) => {
 });
 
 router.route('/products/find').post(async (req, res) => {
-  name = req.body.name;
+  let { product_code } = req.body;
   try {
-    let productExist = await Product.findOne({ name });
-    // res.send(productExist);
-    res.status(200).send(productExist);
+    let productExist = await Product.findOne({ product_code });
+    if(productExist && productExist.product_code === product_code) {
+      res.status(200).send(productExist);
+    }
+    else {
+      res.status(404).send('Product does not exist');
+    }
   }
   catch (error) {
-    res.send(error);
+    res.status(400).send(error);
   }
 });
 
