@@ -3,11 +3,11 @@ import { CURRENT_LANGUAGE_KEY, ARABIC_LANGUAGE } from '../constants';
 
 const paletteCustom = {
   primary: {
-    300: '#B0B5B9',
+    300: '#F36D12',
     main: '#5F6366',
     600: '#75727C',
     800: '#4D4949',
-    900: '#444444',
+    900: '#866D5A',
   },
   secondary: {
     main: '#58C747',
@@ -47,7 +47,7 @@ const paletteCustom = {
     300: '#DFDFDF'
   },
   brown: {
-    main: '#707070',
+    main: '#47291A',
     700: '#545454'
   },
   backHome: {
@@ -152,6 +152,11 @@ const customTheme = createMuiTheme({
         fontSize: '9px'
       }
     },
+    caption:{
+      fontSize: '14px',
+      fontWeight:500,
+      marginBottom:"5px"
+    },
     subtitle2: {
       fontSize: '10px',
       lineHeight:1,
@@ -202,6 +207,7 @@ const customTheme = createMuiTheme({
       root: {
       },
       input: {
+        marginTop:'0px'
       },
       selectMenu: {
         padding: "2px 10px",

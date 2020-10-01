@@ -1,34 +1,32 @@
-import styled from 'styled-components';
-import { Grid, Row } from 'react-flexbox-grid';
-import Breakpoints from '../../constants/Breakpoints';
-import img from '../../assets/images/login-image.png';
-import overlay from '../../assets/images/image-overlay.svg';
+import styled from "styled-components";
+import { Grid, Row } from "react-flexbox-grid";
+import Breakpoints from "../../constants/Breakpoints";
+import overlay from "../../assets/images/logo.svg";
 
-export const LoginContainer = styled.div` 
-  margin-top:  30px;
+export const LoginContainer = styled.div`
+  margin-top: 30px;
   margin-left: 10%;
   margin-right: 10%;
-  
-  ${({theme, width}) => `
+
+  ${({ theme, width }) => `
     .image-section{
         width: 60%;
         height: auto;
-        background: url(${img}) 0% 0% no-repeat padding-box; 
+        background: ${theme.palette.brown.main};
         background-size: cover;
-        ${width < Breakpoints.SM_MAX ?
-			`display: none;` : `display: flex;`
-		}  
+        ${width < Breakpoints.SM_MAX ? `display: none;` : `display: flex;`}  
         justify-Content: center;
         align-items:center;
+        flex-direction: column;
     }
     .login-button{
-        background-color: ${theme.palette.secondary.main};
-        color: ${theme.palette.white.main};
-        border: none;
+        background-color: ${theme.palette.white.main};
+        color: ${theme.palette.primary[300]};
+        border-color:  ${theme.palette.primary[300]};
+        border-radius:7px;
         font-size: 18px;
         height: 47px;
-        width: 100%;
-        text-transform: uppercase;
+        width: 30%;
         cursor: pointer;
     }
     h1{
@@ -48,8 +46,8 @@ export const LoginContainer = styled.div`
     }
     label {
         color: ${theme.palette.primary.main};
-        font-size: 12px;
-        font-weight: 300;
+        font-size: 14px;
+        font-weight: 600;
     }
     .input-field {
         margin-top: 6px;
@@ -84,9 +82,7 @@ export const LoginContainer = styled.div`
         width: 39%;
         margin-bottom: 7px;
         border-bottom: 1px solid ${theme.palette.primary.main};
-        ${width < Breakpoints.XS_MAX ?
-			`display: none;` : ``
-		}  
+        ${width < Breakpoints.XS_MAX ? `display: none;` : ``}  
     }
     .forget-password {
         margin-top: 4px;
@@ -141,25 +137,26 @@ export const LoginContainer = styled.div`
         }
     }
   `}
-`
+`;
 
 export const ContainerRow = styled(Row)`
-    box-shadow: 0px 3px 6px #00000029;
-    margin-bottom: 40px;
-    margin-top: 20px;
-    ${({ width }) => `
+  box-shadow: 0px 3px 6px #00000029;
+  margin-bottom: 40px;
+  margin-top: 20px;
+  ${({ width }) => `
     h1 {
-     ${width < Breakpoints.SM_MAX ?
-        `font-size: 16px;
-         font-weight: 400;` : 
-        `font-size: 25px;
+     ${
+       width < Breakpoints.SM_MAX
+         ? `font-size: 16px;
+         font-weight: 400;`
+         : `font-size: 25px;
          font-weight: 500;`
      }
     text-transform: uppercase;
     text-align: center
     }
     .email-section{
-        margin-top: 10px;
+        margin-top: 100px;
     }
     .password-section{
         margin-top: 10px;
@@ -191,19 +188,22 @@ export const ContainerRow = styled(Row)`
         font-weight: 500;
     }
     .col-md-6 {
-        ${width > Breakpoints.SM_MAX ?
-            `padding-left: 0;
-             padding-right: 0;` : 
-             `padding-left: 8px;
+        ${
+          width > Breakpoints.SM_MAX
+            ? `padding-left: 0;
+             padding-right: 0;`
+            : `padding-left: 8px;
              padding-right: 8px;`
-         }
+        }
     }  
  `}
-`
+`;
 
 export const ImageOverlay = styled.div`
-     width:  100%;
-     height: 100%;
-     background: url(${overlay}) 0% 0% no-repeat padding-box; 
-     background-size: cover;
-`
+  min-width: 200px;
+  min-height: 83px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background: url(${overlay});
+  background-size: cover;
+`;
