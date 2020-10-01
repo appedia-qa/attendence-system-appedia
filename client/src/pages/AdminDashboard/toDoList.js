@@ -15,6 +15,7 @@ import {
 const ToDoList = styled(Row)`
   ${({ theme }) => `
   width:100%;
+  margin: 0px;
   border:1px solid #D8D8D8;
   border-top-color: none;
   background-color:#FFFFFF !important;
@@ -53,19 +54,19 @@ const List = (props) => {
                 <Checkbox defaultChecked color="primary" />
               </Col>
               <Col>
-                <Typography component="p" variant="caption">
+                <Typography component="p" variant="subtitle1">
                   0003 0003
                 </Typography>
               </Col>
             </Row>
           </ListColumn>
           <ListColumn lg={3}>
-            <Typography component="p" variant="caption">
+            <Typography component="p" variant="subtitle1" >
               Name of Product Here
             </Typography>
           </ListColumn>
           <ListColumn lg={3}>
-            <Typography component="p" variant="caption">
+            <Typography component="p" variant="subtitle1">
               Https//www.producturl..
             </Typography>
           </ListColumn>
@@ -75,7 +76,7 @@ const List = (props) => {
                 margin: "10px",
               }}
             >
-              <Typography component="p" variant="caption">
+              <Typography component="p" variant="subtitle1">
                 Edit Item
               </Typography>
             </StyleButton>

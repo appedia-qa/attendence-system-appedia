@@ -1,0 +1,31 @@
+.App {
+    font-family: sans-serif;
+    /* text-align: center; */
+    background-color: #f6f9fe;
+    height: 100vh;
+  }
+  .image-item {
+    display: flex;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .image-item__btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+  button {
+    height: 40px;
+  }
+
+  .text-editor {
+    width: 1086px;
+    margin: 0 auto;
+  }
+  .ql-editor {
+    min-height: 100px;
+  }
+  
+  

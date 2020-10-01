@@ -38,23 +38,9 @@ const StyleButton = styled(Button)`
   
 `}
 `;
-const AdminDashbord = () => {
+const AdminDashbord = (props) => {
   return (
     <React.Fragment>
-      <div
-        style={{
-          width: "100%",
-          background: "#FFFFFF",
-          alignItems: "center",
-          display: "flex",
-          justifyContent: "center",
-          minHeight:"90px"
-        }}
-      >
-        <Container>
-          <Search />
-        </Container>
-      </div>
       <Container>
         <Row
           style={{
@@ -62,15 +48,18 @@ const AdminDashbord = () => {
             justifyContent: "flex-end",
             width: "100%",
             marginTop: "20px",
-            padding:"0px"
+            padding: "0px",
           }}
         >
           <StyleButton
             style={{
               margin: "10px",
             }}
+            onClick={() => {
+              props.history.push("/product");
+            }}
           >
-            <Typography component="p" variant="caption">
+            <Typography component="p" variant="subtitle1">
               Edit Item
             </Typography>
           </StyleButton>
@@ -79,7 +68,7 @@ const AdminDashbord = () => {
               margin: "10px",
             }}
           >
-            <Typography component="p" variant="caption">
+            <Typography component="p"  variant="subtitle1">
               Delete Item
             </Typography>
           </StyleButton>
@@ -87,8 +76,11 @@ const AdminDashbord = () => {
             style={{
               margin: "10px",
             }}
+            onClick={() => {
+              props.history.push("/product");
+            }}
           >
-            <Typography component="p" variant="caption">
+            <Typography component="p" variant="subtitle1">
               Add Item
             </Typography>
           </StyleButton>
@@ -102,12 +94,13 @@ const AdminDashbord = () => {
           </FormGroup>
         </Row>
         <ToDoListHeader />
-
+        <div style={{width:"100%", margin:'0px'}}>
         <ToDoList />
         <ToDoList />
         <ToDoList />
         <ToDoList />
         <ToDoList />
+        </div>
       </Container>
     </React.Fragment>
   );

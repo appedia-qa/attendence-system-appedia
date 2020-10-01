@@ -20,8 +20,7 @@ import {
 } from "@material-ui/core/styles";
 import theme from "./theme/Theme";
 import Header from "./components/Header";
-import SidebarDrawer from "./components/SidebarDrawer";
-import Footer from "./components/Footer";
+import Search from "./components/SearchAdmin";
 
 // Redux store
 import { Provider } from "react-redux";
@@ -36,7 +35,6 @@ import {
   ARABIC_LANGUAGE,
   ENGLISH_LANGUAGE,
 } from "./constants";
-import ProductDialog from "./components/ProductDialog";
 
 const catalogs = { es: catalogEs, ar: catalogAr };
 
@@ -165,13 +163,7 @@ class App extends Component {
                           height={this.state.windowHeight}
                           language={lang}
                         />
-                        <AlertComponent style={{ zIndex: "1" }} />
-                        <SidebarDrawer
-                          open={this.state.sidebarOpen}
-                          onDrawerClose={this.onDrawerClose}
-                          onDrawerOpen={this.onDrawerOpen}
-                          language={lang}
-                        />
+                        <Search />
                         <Switch>
                           {Routes.map(({ component: Cmp, ...route }, i) => (
                             <Route

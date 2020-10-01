@@ -152,6 +152,11 @@ const customTheme = createMuiTheme({
         fontSize: '9px'
       }
     },
+    caption:{
+      fontSize: '14px',
+      fontWeight:500,
+      marginBottom:"5px"
+    },
     subtitle2: {
       fontSize: '10px',
       lineHeight:1,
