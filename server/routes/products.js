@@ -43,17 +43,37 @@ router.route('/update').put(async (req, res) => {
 });
 
 
-router.route('/add').post((req, res) => {
+router.route('/products/add').post( async(req, res) => {
 
   name = req.body.name;
   description = req.body.description;
   quantity = req.body.quantity;
 
-  const newProduct = new Product({ name, description, quantity });
+  const {
+    product_code,
+    product_details,
+    product_url,
+    product_image,
+    product_category_id
+  } = req.body;
 
-  newProduct.save()
-    .then(() => res.json('Product added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+  try {
+    let productExist = await Product.findOne({ product_code });
+    if(productExist && productExist.product_code === product_code) {
+      res.status(400).send('Product already exist');
+    }
+    else {
+      const newProduct = new Product({ product_code, product_details, product_url, product_image, product_category_id});
+      let productAdded = await newProduct.save();
+      res.status(200).send('Product added')
+    }
+  }
+  catch(error) {
+    res.status(400).send(error);
+}
+  // newProduct.save()
+  //   .then(() => res.json('Product added!'))
+  //   .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/update').put(async (req, res) => {

@@ -2,6 +2,7 @@ const router = require('express').Router();
 let User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const upload = require('../config/FileUpload');
+const bcrypt = require('bcryptjs');
 
 
 // file upload path //
@@ -34,7 +35,7 @@ router.post('/fileUpload', checkAuthentication, (req, res, next) => {
   }
 });
 
-router.route('/login').post(async (req, res) => {
+router.route('/users/login').post(async (req, res) => {
   let user = {};
   user.username = req.body.username;
 
@@ -42,7 +43,8 @@ router.route('/login').post(async (req, res) => {
 
   try {
       let userExist = await User.findOne({ username });
-      if (userExist && userExist.username === username && userExist.password === password) {
+      let isCorrect = await bcrypt.compare(password, userExist.hashedPassword);
+      if (userExist && userExist.username === username && isCorrect) {
         user.id = userExist._id;
         jwt.sign({ user: user }, 'secretkey123secretkey', (error, token) => {
           token = 'Bearer' + ' ' + token;
@@ -60,17 +62,19 @@ router.route('/login').post(async (req, res) => {
   }
 });  
 
-router.route('/signup').post(async(req, res) => {
+router.route('/users/signup').post(async(req, res) => {
   const { name, username, password } = req.body;
-  
   try {
+      let salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
       let userExist = await User.findOne({ username });
       if(userExist && userExist.username === username) {
         res.status(400).send('username already exist');
       }
       else {
-        const newUser = new User({ name, username, password });
-        let userAdded = await newUser.save({});
+        const newUser = new User({ name, username, hashedPassword });
+        let userAdded = await newUser.save();
         res.status(200).send('User added')
       }
   }
