@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema({
     product_code: {
         type: String,
+        unique: true,
         required: true,
         trim: true,
     },
@@ -42,6 +43,7 @@ const productSchema = new Schema({
     },
     product_url: {
         type: String,
+        unique: true,
         required: true,
         trim: true,
     },
