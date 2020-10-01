@@ -1,7 +1,16 @@
-version: '3'
+version: '3.8'
 services:
-  app:
-    container_name: docker-node-mongo
+  reactapp: 
+    container_name: reactapp
+    restart: always
+    build: ./client/
+    stdin_open: true
+    ports:
+      - 3000:3000
+    depends_on:
+      - nodeapp
+  nodeapp:
+    container_name: nodeapp
     restart: always
     build: ./server/
     ports:
@@ -21,8 +30,12 @@ services:
       # - ./data/certbot/conf:/etc/letsencrypt
       # - ./data/certbot/www:/var/www/certbot
     ports:
-      - "80:5000"
+      - "8080:80"
       - "443:443"
+    depends_on:
+      - reactapp
+    external_links:
+      - reactapp
     # command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   # certbot:
   #   image: certbot/certbot

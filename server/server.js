@@ -28,6 +28,6 @@ app.use('/products', productsRouter);
 const categoriesRouter = require('./routes/categories');
 app.use('/categories', categoriesRouter);
 
-app.listen(port, () => {
+app.listen(port, 'nodeapp', () => {
   console.log(`Server is running on port: ${port}`);
 });
