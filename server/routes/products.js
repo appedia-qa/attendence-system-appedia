@@ -2,7 +2,20 @@ const router = require('express').Router();
 let Product = require('../models/product.model');
 const jwt = require('jsonwebtoken');
 const ObjectId = require("mongodb").ObjectID
-const verifyProductDetails =  require('../utils');
+const checkValid =  require('../utils');
+
+const verifyProductDetails = (details) => {
+  try {
+    if (!details) {
+      return false;
+    }
+    if ( checkValid(details.ar.name, details.ar.description) || checkValid(details.eng.name, details.eng.description) || checkValid(details.fr.name, details.fr.description) ) {
+      return true;
+    }
+  } catch(e) {
+    return false
+  }
+}
 
 
 router.route('/products').get(async (req, res) => {
@@ -26,8 +39,11 @@ router.route('/products/add').post( async(req, res) => {
     product_image,
     product_category_id
   } = req.body;
-  
-  if(!verifyProductDetails(product_details)) {
+
+  if ( !product_code || !product_url || !product_image || !product_category_id ) {
+    res.status(400).send('Please provide all fields');
+  }
+  else if(!verifyProductDetails(product_details)) {
     res.status(400).send('Please provide both name and description in atleast one language');
   }
   else {
@@ -57,17 +73,17 @@ router.route('/products/update').put(async (req, res) => {
     product_category_id
   } = req.body;
 
-  if(!verifyProductDetails(product_details)) {
+  if(product_details && !verifyProductDetails(product_details)) {
     res.status(400).send('Please provide both name and description in atleast one language');
   }
   else {
     try {
       let productExist = await Product.findOne({ product_code });
       if(productExist && productExist.product_code === product_code) {
-        productExist.product_details = product_details;
-        productExist.product_image = product_image;
-        productExist.product_url = product_url;
-        productExist.product_category_id = product_category_id;
+        productExist.product_details = product_details ? product_details : productExist.product_details ;
+        productExist.product_image = product_image ? product_image : productExist.product_image;
+        productExist.product_url = product_url ? product_url : productExist.product_url;
+        productExist.product_category_id = product_category_id ? product_category_id : productExist.product_category_id;
         let productSaved = await productExist.save();
         res.status(200).send("Product Updated");
       }

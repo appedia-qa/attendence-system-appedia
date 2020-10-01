@@ -17,7 +17,6 @@ const productSchema = new Schema({
             },
             description: {
                 type: String,
-                trim: true,
             }
         },
         eng: {
@@ -27,7 +26,6 @@ const productSchema = new Schema({
             },
             description: {
                 type: String,
-                trim: true,
             }
         },
         fr: {
@@ -37,7 +35,6 @@ const productSchema = new Schema({
             },
             description: {
                 type: String,
-                trim: true,
             }
         }
     },
@@ -45,17 +42,14 @@ const productSchema = new Schema({
         type: String,
         unique: true,
         required: true,
-        trim: true,
     },
     product_image: {
         type: String,
         required: true,
-        trim: true,
     },
     product_category_id: { 
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        trim: true,
     }
 }, {
     timestamps: true,
