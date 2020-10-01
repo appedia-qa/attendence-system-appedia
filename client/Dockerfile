@@ -8,10 +8,12 @@ WORKDIR /home/react/app
 
 # add `/app/node_modules/.bin` to $PATH
 COPY package.json ./
+COPY yarn.lock ./
 
 # install app dependencies
 USER node
-RUN yarn install
+# RUN yarn install
+RUN yarn install --frozen-lockfile --production && yarn cache clean
 
 # add app
 COPY --chown=node:node . .
