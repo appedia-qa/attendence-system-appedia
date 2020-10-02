@@ -35,6 +35,16 @@ router.post('/fileUpload', checkAuthentication, (req, res, next) => {
   }
 });
 
+router.route('/users').get(async (req, res) => {
+  try {
+    let users = await User.find({});
+    res.status(200).send(users);
+  }
+  catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 router.route('/users/login').post(async (req, res) => {
   let user = {};
   user.username = req.body.username;

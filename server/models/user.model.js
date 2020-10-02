@@ -21,6 +21,17 @@ const userSchema = new Schema({
   },
 }, {
   timestamps: true,
+  toJSON: {
+    transform(doc, ret) {
+        // ret.id = ret._id
+        delete ret._id
+        delete ret.__v
+        delete ret.username
+        delete ret.hashedPassword
+        delete ret.createdAt
+        delete ret.updatedAt
+    },
+  },
 });
 
 const User = mongoose.model('User', userSchema);

@@ -21,9 +21,7 @@ const verifyProductDetails = (details) => {
 router.route('/products').get(async (req, res) => {
   try {
     let products = await Product.find({});
-    res.status(200).json({
-      products
-    });
+    res.status(200).send(products);
   }
   catch (error) {
     res.status(400).send(error);
