@@ -68,6 +68,7 @@ router.route('/users/login').post(async (req, res) => {
       let isCorrect = await bcrypt.compare(password, userExist.hashedPassword);
       if (userExist && userExist.username === username && isCorrect) {
         user.id = userExist._id;
+        user.role = userExist.role;
         jwt.sign({ user: user }, 'secretkey123secretkey', (error, token) => {
           token = 'Bearer' + ' ' + token;
           res.status(200).send({
@@ -86,22 +87,28 @@ router.route('/users/login').post(async (req, res) => {
 
 router.route('/users/signup').post(async(req, res) => {
   const { name, username, password } = req.body;
-  try {
+  
+  if(!name || !username || !password) {
+    res.status(400).send('please provide name, username and password');
+  }
+  else {
+    try {
       let salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
-
+      role = 'contributor';
       let userExist = await User.findOne({ username });
       if(userExist && userExist.username === username) {
         res.status(400).send('username already exist');
       }
       else {
-        const newUser = new User({ name, username, hashedPassword });
+        const newUser = new User({ name, username, hashedPassword,role });
         let userAdded = await newUser.save();
         res.status(200).send('User added')
       }
-  }
-  catch(error) {
-    res.status(400).send(error);
+    }
+    catch(error) {
+      res.status(400).send(error);
+    }
   }
 });
 
