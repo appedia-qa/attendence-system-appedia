@@ -41,6 +41,7 @@ const StyleButton = styled(Button)`
 const ListColumn = styled(Col)`
   ${({ theme }) => `
   line-break: anywhere;
+  padding-left:5px;
   `}
 `;
 
@@ -50,25 +51,33 @@ const List = (props) => {
       <React.Fragment>
         <ToDoList style={{ alignItems: "center" }}>
           <ListColumn lg={3}>
-            <Row style={{ alignItems: "center" }}>
+            <Row style={{ alignItems: "center", paddingLeft: "10px" }}>
               <Col>
                 <Checkbox defaultChecked color="primary" />
               </Col>
               <Col>
                 <Typography component="p" variant="subtitle1">
-                  0003 0003
+                  {props.id}
                 </Typography>
               </Col>
             </Row>
           </ListColumn>
           <ListColumn lg={3}>
-            <Typography component="p" variant="subtitle1">
-              Name of Product Here
+            <Typography
+              component="p"
+              style={{ paddingLeft: "12px" }}
+              variant="subtitle1"
+            >
+              {props.name}
             </Typography>
           </ListColumn>
           <ListColumn lg={3}>
-            <Typography component="p" variant="subtitle1">
-              Https//www.producturl..
+            <Typography
+              component="p"
+              variant="subtitle1"
+              style={{ paddingLeft: "12px" }}
+            >
+              {props.url}
             </Typography>
           </ListColumn>
           <ListColumn lg={3}>
@@ -86,7 +95,7 @@ const List = (props) => {
                 style={{ width: "16px", marginRight: "5px" }}
               />
               <Typography component="p" variant="subtitle1">
-                Print Code
+                {props.code}
               </Typography>
             </StyleButton>
           </ListColumn>

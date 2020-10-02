@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import Breakpoints from "../../constants/Breakpoints";
 import { withRouter } from "react-router";
+import { useDispatch } from "react-redux";
+import { logoutRequest } from "../../redux/actions/authentication.action";
 import PersonIcon from "@material-ui/icons/Person";
 import {
   Typography,
@@ -169,7 +171,9 @@ const Container = styled(Grid)`
 `;
 
 const HeaderSearch = (props) => {
+  const dispatch = useDispatch();
   const handleLogout = () => {
+    dispatch(logoutRequest());
     props.history.push("/login");
   };
   const handleHomeCilck = () => {
@@ -204,7 +208,10 @@ const HeaderSearch = (props) => {
                 }}
                 onClick={() => handleHomeCilck()}
               >
-                <Typography style={{ color: "#6E9F21", fontSize:"12px" }} component="p">
+                <Typography
+                  style={{ color: "#6E9F21", fontSize: "12px" }}
+                  component="p"
+                >
                   Home
                 </Typography>
                 <PersonIcon style={{ width: "15px" }} />
