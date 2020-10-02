@@ -35,6 +35,10 @@ const SearchButton = styled.div`
   align-items: center;
   padding: 9px 12px;
   margin:0px;
+  input {
+    line-break:anywhere;
+    font: revert;
+  }
   
   
 `}
@@ -166,7 +170,7 @@ const Container = styled(Grid)`
 
 const HeaderSearch = (props) => {
   const handleLogout = () => {
-    console.log("i am logout");
+    props.history.push("/login");
   };
   const handleHomeCilck = () => {
     props.history.push("/");
@@ -181,25 +185,29 @@ const HeaderSearch = (props) => {
           alignItems: "center",
           display: "flex",
           justifyContent: "center",
-          minHeight: "90px",
         }}
       >
         <Container>
           <HeaderBottomMenu className="home">
-            <ActionHomeButtonContainer lg={2} md={2} sm={2}>
+            <ActionHomeButtonContainer
+              style={{ padding: "0", marginTop: "20px", marginBottom: "20px" }}
+              lg={1}
+              md={1}
+              sm={2}
+            >
               <StyleButton
                 style={{
-                  width: "70%",
+                  width: "100%",
                   height: "100%",
                   display: "flex",
                   justifyContent: "space-between",
                 }}
                 onClick={() => handleHomeCilck()}
               >
-                <Typography style={{ color: "#6E9F21" }} component="p">
+                <Typography style={{ color: "#6E9F21", fontSize:"12px" }} component="p">
                   Home
                 </Typography>
-                <PersonIcon />
+                <PersonIcon style={{ width: "15px" }} />
               </StyleButton>
             </ActionHomeButtonContainer>
 
@@ -221,14 +229,19 @@ const HeaderSearch = (props) => {
               </SearchButton>
             </ActionButtonContainer>
             <ActionBottomButtonContainer
-              style={{ width: "100%" }}
-              lg={2}
+              style={{
+                padding: "0",
+                marginTop: "20px",
+                marginBottom: "20px",
+                width: "100%",
+              }}
+              lg={1}
               md={2}
               sm={2}
             >
               <StyleButton
                 style={{
-                  width: "70%",
+                  width: "100%",
                   height: "100%",
                   display: "flex",
                   justifyContent: "space-between",
@@ -236,10 +249,13 @@ const HeaderSearch = (props) => {
                 }}
                 onClick={() => handleLogout()}
               >
-                <Typography style={{ color: "#F36D12" }} component="p">
+                <Typography
+                  style={{ color: "#F36D12", fontSize: "12px" }}
+                  component="p"
+                >
                   Log out
                 </Typography>
-                <PersonIcon />
+                <PersonIcon style={{ width: "15px" }} />
               </StyleButton>
             </ActionBottomButtonContainer>
           </HeaderBottomMenu>

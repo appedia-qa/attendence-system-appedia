@@ -40,22 +40,18 @@ const ImgDiv = styled.div`
 `}
 `;
 
-export default function App() {
-  const [images, setImages] = React.useState([]);
+export default function App(props) {
+
   const maxNumber = 69;
 
-  const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList);
-  };
+ 
 
   return (
     <div className="App">
       <ImageUploading
         multiple
-        value={images}
-        onChange={onChange}
+        value={props.images}
+        onChange={props.onChange}
         maxNumber={maxNumber}
         dataURLKey="data_url"
       >

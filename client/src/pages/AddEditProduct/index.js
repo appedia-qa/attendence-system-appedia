@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import Breakpoints from "../../constants/Breakpoints";
 import { withRouter } from "react-router";
@@ -16,7 +16,6 @@ import {
   Button,
 } from "@material-ui/core";
 import { Row, Col, Grid } from "react-flexbox-grid";
-import { useState } from "react";
 import { ReactComponent as Logo } from "../../assets/icons/logo.svg";
 import { ReactComponent as Sign } from "../../assets/icons/sign.svg";
 import SearchIcon from "@material-ui/icons/Search";
@@ -58,7 +57,10 @@ const SearchButton = styled.div`
   padding: 9px 12px;
   margin:0px;
   border: 1px solid #BAB8B8;
-
+  input {
+    line-break:anywhere;
+    font: revert;
+  }
 
 .MuiSelect-selectMenu {
     padding:"0px";
@@ -177,14 +179,101 @@ const Container = styled(Grid)`
 
 const Board = (props) => {
   const [id, setId] = useState("");
+  const [productIdState, setProductId] = useState("");
+  const [productUrl, setProductUrl] = useState("");
   const classes = useStyles();
-  const [age, setAge] = React.useState("");
+  const [age, setAge] = useState("");
+  const [images, setImages] = useState([]);
+  const productDescrtopAndnameObj = {
+    arabic: {
+      nmae: "",
+      description: "",
+    },
+    english: {
+      nmae: "",
+      description: "",
+    },
+    francias: {
+      nmae: "",
+      description: "",
+    },
+  };
+  const [
+    productDescrtopAndnameState,
+    setProductDescrtopAndnameState,
+  ] = useState(productDescrtopAndnameObj);
+
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
+
   const setActive = (val) => {
     setId(val);
   };
 
   const handleChange = (event) => {
     setAge(event.target.value);
+  };
+const productId =(event) =>{
+  setProductId(event);
+  setProductUrl(`http://localhost:3000/view/${event}`)
+
+}
+  const handleChangeTextArabicBox = (event) => {
+    setProductDescrtopAndnameState({
+      ...productDescrtopAndnameState,
+      arabic: {
+        description: event,
+      },
+    });
+  };
+
+  const handleChangeTextEnglishBox = (event) => {
+    setProductDescrtopAndnameState({
+      ...productDescrtopAndnameState,
+      english: {
+        description: event,
+      },
+    });
+  };
+
+  const handleChangeFranciasTextBox = (event) => {
+    setProductDescrtopAndnameState({
+      ...productDescrtopAndnameState,
+      francias: {
+        description: event,
+      },
+    });
+  };
+
+  const handleNameChange = (event) => {
+    if (event.target.name === "arabic") {
+      setProductDescrtopAndnameState({
+        ...productDescrtopAndnameState,
+        arabic: {
+          name: event.target.value,
+        },
+      });
+    }
+    if (event.target.name === "english") {
+      setProductDescrtopAndnameState({
+        ...productDescrtopAndnameState,
+        english: {
+          name: event.target.value,
+        },
+      });
+    }
+
+    if (event.target.name === "francias") {
+      setProductDescrtopAndnameState({
+        ...productDescrtopAndnameState,
+        francias: {
+          name: event.target.value,
+        },
+      });
+    }
   };
 
   return (
@@ -202,7 +291,7 @@ const Board = (props) => {
             md={2}
             sm={2}
           >
-            <Images />
+            <Images onChange={onChange} images={images} />
           </ActionHomeButtonContainer>
           <ActionButtonContainer
             lg={6}
@@ -221,7 +310,10 @@ const Board = (props) => {
               setActive={setActive}
               mount={id == "1" ? true : false}
               name={"عربي"}
-            ></TextBox>
+              EventName={"arabic"}
+              handleChange={handleChangeTextArabicBox}
+              handleNameChange={handleNameChange}
+            />
             <div style={{ marginTop: "30px" }}>
               <TextBox
                 id="2"
@@ -229,7 +321,10 @@ const Board = (props) => {
                 setActive={setActive}
                 mount={id == "2" ? true : false}
                 name={"English"}
-              ></TextBox>
+                EventName={"english"}
+                handleNameChange={handleNameChange}
+                handleChange={handleChangeTextEnglishBox}
+              />
             </div>
             <div style={{ marginTop: "30px" }}>
               <TextBox
@@ -238,13 +333,15 @@ const Board = (props) => {
                 setActive={setActive}
                 mount={id == "3" ? true : false}
                 name={"Francias"}
-              ></TextBox>
+                EventName={"francias"}
+                handleNameChange={handleNameChange}
+                handleChange={handleChangeFranciasTextBox}
+              />
             </div>
             <Button
               style={{
                 marginTop: "5px",
                 marginBottom: "15px",
-
                 color: "#FFFFFF",
                 border: "1px solid #6E9F21",
                 background: "#6E9F21",
@@ -286,12 +383,11 @@ const Board = (props) => {
                   width: "100%",
                   margin: "10px",
                 }}
+                value={productIdState}
                 disableUnderline={true}
                 placeholder="Enter  Product Name"
-                // onChange={(event) => setSearchText(event.target.value)}
-                // onKeyUp={(event) => {
-                //   handleSearch(props, searchText);
-                // }}
+                onChange={(event) => productId(event.target.value)}
+               
               />
             </SearchButton>
             <Typography
@@ -304,22 +400,21 @@ const Board = (props) => {
             <SearchButton
               style={{
                 height: "50px",
+                lineBreak:"anywhere"
               }}
             >
               <Input
                 style={{
                   width: "100%",
                   margin: "10px",
+                  lineBreak:"anywhere"
                 }}
                 disableUnderline={true}
-                placeholder="Enter  Product Name"
-                // onChange={(event) => setSearchText(event.target.value)}
-                // onKeyUp={(event) => {
-                //   handleSearch(props, searchText);
-                // }}
+                value={productUrl}
+                readOnly={true}
               />
             </SearchButton>
-            <CopyToClipboard text={"i am coppit"}>
+            <CopyToClipboard text={productUrl}>
               <Button style={{ marginTop: "5px", border: "1px solid #6E9F21" }}>
                 Copy Url
               </Button>
