@@ -1,9 +1,10 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as ErrorIcon } from "../../assets/icons/error-404.svg";
 import { Row, Col, Grid } from "react-flexbox-grid";
 import Carosal from "../../components/ProductCarousel";
+import { apiUrl } from "../../constants/urls";
 import {
   Typography,
   IconButton,
@@ -11,6 +12,7 @@ import {
   Badge,
   Button,
 } from "@material-ui/core";
+import axios from "axios";
 
 const Container = styled(Grid)`
   ${({ theme }) => `
@@ -18,7 +20,8 @@ const Container = styled(Grid)`
   display:flex;
   flex-direction:column;
   align-items:center;
- 
+  padding: 25px;
+  padding-top: 5px;
   background:#362222;
   [class^="col-"], [class*=" col-"] {
     height: 100%;
@@ -32,6 +35,7 @@ const StyleButton = styled(Button)`
   height 40px;
   display: flex;
   justify-content: center;
+  border-radius:8px;
   align-items: center;
   margin:0px;
   
@@ -45,6 +49,20 @@ const ProductDesciption = (props) => {
     arabic: false,
     francais: false,
   });
+  const [productData, setProductData] = useState("");
+  const url = `${apiUrl}/products/find`;
+
+  const fetchproduct = async () => {
+    const { data } = await axios.get(url);
+    if (data) {
+      console.log(data);
+      setProductData(data);
+    }
+  };
+
+  useEffect(() => {
+    fetchproduct();
+  }, []);
 
   const setselectedAndPaulateData = (value) => {
     if (value === "english") {
@@ -83,6 +101,7 @@ const ProductDesciption = (props) => {
               variant="subtitle1"
               style={{
                 color: selected.english ? "#FFFFFF" : "",
+                fontSize: "14px",
               }}
             >
               English
@@ -92,6 +111,7 @@ const ProductDesciption = (props) => {
             style={{
               margin: "10px",
               background: selected.francais ? "#6E9F19" : "",
+              fontSize: "14px",
             }}
             onClick={() => {
               setselectedAndPaulateData("francais");
@@ -102,6 +122,7 @@ const ProductDesciption = (props) => {
               variant="subtitle1"
               style={{
                 color: selected.francais ? "#FFFFFF" : "",
+                fontSize: "14px",
               }}
             >
               Français
@@ -121,6 +142,7 @@ const ProductDesciption = (props) => {
               variant="subtitle1"
               style={{
                 color: selected.arabic ? "#FFFFFF" : "",
+                fontSize: "14px",
               }}
             >
               عربي
@@ -139,8 +161,9 @@ const ProductDesciption = (props) => {
           <Col lg={4} sm={4} md={4}>
             <Carosal
               items={[
+                "https://beautyharmonylife.com/wp-content/uploads/2013/09/nature-4-800x940.jpg",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQiIhoX0S1Zv01cWhLuSUDREL6SOt_pD6nL9Q&usqp=CAU",
                 "",
-                "https://convertingcolors.com/color-palette-image/view/FFED0000FFFF22ECFFFF90D5.png",
               ]}
             />
           </Col>
@@ -157,7 +180,7 @@ const ProductDesciption = (props) => {
           <Col
             style={{
               background: "rgba(189,152,152, 0.2)",
-              marginTop: "50px",
+              marginTop: "10px",
               marginBottom: "50px",
               borderRadius: "10px",
             }}

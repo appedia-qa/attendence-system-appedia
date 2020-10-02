@@ -195,7 +195,7 @@ const QRCodeContainer = styled.div`
 const Board = (props) => {
   const [id, setId] = useState("");
   const [productIdState, setProductId] = useState("");
-  const [productUrl, setProductUrl] = useState("12");
+  const [productUrl, setProductUrl] = useState("");
   const classes = useStyles();
   const [age, setAge] = useState("");
   const [images, setImages] = useState([]);
@@ -297,23 +297,24 @@ const productId =(event) =>{
         <HeaderBottomMenu>
           <ActionHomeButtonContainer
             style={{
-              width: "100%",
+              minWidth: "230px",
               minHeight: "500px",
               background: "#FFFFFF",
               padding: "15px",
             }}
             lg={2}
             md={2}
-            sm={2}
+            sm={12}
           >
             <Images onChange={onChange} images={images} />
           </ActionHomeButtonContainer>
           <ActionButtonContainer
-            lg={6}
-            md={6}
-            sm={6}
+            lg={7}
+            md={7}
+            sm={12}
             style={{
               maxHeight: "500px",
+              maxWidth: "606px",
               overflow: "auto",
               padding: "20px",
               paddingTop: "0px",
@@ -377,13 +378,13 @@ const productId =(event) =>{
           </ActionButtonContainer>
 
           <ActionButtonContainer
-            lg={3}
-            md={3}
-            sm={3}
+            lg={2}
+            md={2}
+            sm={12}
             style={{
               padding: "15px",
               minHeight: "500px",
-              width: "100%",
+              minWidth: "230px",
               background: "#FFFFFF",
               display: "flex",
               flexDirection: "column",

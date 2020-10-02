@@ -4,7 +4,7 @@ import Breakpoints from "../../constants/Breakpoints";
 import { withRouter } from "react-router";
 import { useDispatch } from "react-redux";
 import { logoutRequest } from "../../redux/actions/authentication.action";
-import PersonIcon from "@material-ui/icons/Person";
+import PersonIcon from '@material-ui/icons/AccountCircle';
 import {
   Typography,
   IconButton,
@@ -12,6 +12,7 @@ import {
   Badge,
   Button,
 } from "@material-ui/core";
+import HomeIcon from '@material-ui/icons/Home';
 import { Row, Col, Grid } from "react-flexbox-grid";
 import { useState } from "react";
 import { ReactComponent as Logo } from "../../assets/icons/logo.svg";
@@ -209,12 +210,12 @@ const HeaderSearch = (props) => {
                 onClick={() => handleHomeCilck()}
               >
                 <Typography
-                  style={{ color: "#6E9F21", fontSize: "12px" }}
+                  style={{ color: "#6E9F21", fontSize: "12px", fontWeight:"800" }}
                   component="p"
                 >
                   Home
                 </Typography>
-                <PersonIcon style={{ width: "15px" }} />
+                <HomeIcon style={{ width: "15px" }} />
               </StyleButton>
             </ActionHomeButtonContainer>
 
@@ -243,7 +244,7 @@ const HeaderSearch = (props) => {
                 width: "100%",
               }}
               lg={1}
-              md={2}
+              md={1}
               sm={2}
             >
               <StyleButton
@@ -257,7 +258,7 @@ const HeaderSearch = (props) => {
                 onClick={() => handleLogout()}
               >
                 <Typography
-                  style={{ color: "#F36D12", fontSize: "12px" }}
+                  style={{ color: "#F36D12", fontSize: "12px" ,  fontWeight:"800"}}
                   component="p"
                 >
                   Log out

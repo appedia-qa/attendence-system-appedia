@@ -11,6 +11,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import axios from "axios";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Model from "../../components/ProductDialog";
+import Pagination from "@material-ui/lab/Pagination";
 import { apiUrl } from "../../constants/urls";
 import {
   Typography,
@@ -32,7 +33,7 @@ const StyleButton = styled(Button)`
   ${({ theme }) => `
   
   background-color:#FFFFFF !important;
-  height: 20px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,8 +91,13 @@ const AdminDashbord = (props) => {
   const [open, setOpen] = useState("");
   const [SeletedId, setSeletedId] = useState("");
   const [productData, setProductData] = useState("");
+  const [paginationCount, setPaginationCount] = useState(1);
   const url = `${apiUrl}/products`;
-  const fetchproduct = async () => {
+
+  const fetchproduct = async (page) => {
+    if (!page) {
+      page = 1;
+    }
     const { data } = await axios.get(url);
     if (data) {
       console.log(data);
@@ -103,6 +109,11 @@ const AdminDashbord = (props) => {
     fetchproduct();
   }, []);
 
+  const handleProductPageChange = async (event, value) => {
+    /// call here for pagination
+    // fetchproduct(value);
+  };
+
   const closeProductDialog = () => {
     setOpen(false);
   };
@@ -112,11 +123,9 @@ const AdminDashbord = (props) => {
   const checkname = (lan) => {
     if (lan && lan.eng && lan.ar.name) {
       return lan.ar.name;
-    }
-    else if (lan && lan.fr && lan.ar.name) {
+    } else if (lan && lan.fr && lan.ar.name) {
       return lan.ar.name;
-    }
-    else if (lan && lan.ar && lan.ar.name) {
+    } else if (lan && lan.ar && lan.ar.name) {
       return lan.ar.name;
     }
   };
@@ -144,7 +153,7 @@ const AdminDashbord = (props) => {
               props.history.push("/product");
             }}
           >
-            <Typography component="p" variant="subtitle1">
+            <Typography component="p" variant="subtitle3">
               Edit Item
             </Typography>
           </StyleButton>
@@ -153,7 +162,7 @@ const AdminDashbord = (props) => {
               margin: "10px",
             }}
           >
-            <Typography component="p" variant="subtitle1">
+            <Typography component="p" variant="subtitle3">
               Delete Item
             </Typography>
           </StyleButton>
@@ -165,7 +174,7 @@ const AdminDashbord = (props) => {
               props.history.push("/product");
             }}
           >
-            <Typography component="p" variant="subtitle1">
+            <Typography component="p" variant="subtitle3">
               Add Item
             </Typography>
           </StyleButton>
@@ -197,6 +206,17 @@ const AdminDashbord = (props) => {
             })}
         </div>
       </Container>
+      <div
+        style={{ width: "90%", display: "flex", justifyContent: "flex-end" }}
+      >
+        <Pagination
+          count={paginationCount}
+          shape="rounded"
+          style={{ marginTop: "40px", marginBottom: "40px" }}
+          onChange={handleProductPageChange}
+        />
+      </div>
+
       <Model isDialogOpen={open} closeProductDialog={closeProductDialog} />
     </React.Fragment>
   );

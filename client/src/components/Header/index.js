@@ -17,7 +17,7 @@ const HeaderTopMenu = styled.div`
     background-color: ${theme.palette.primary[900]}; 
     display: flex;
     align-items: center;
-    flex-direction:${width > Breakpoints.SM_MAX ? "row" : "column"};
+    flex-direction:${width > Breakpoints.SM_MAX ? "row" : "row"};
     justify-content: space-between;
     padding: 5px 10%;
 
