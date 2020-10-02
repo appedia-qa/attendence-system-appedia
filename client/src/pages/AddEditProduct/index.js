@@ -35,6 +35,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import EditorToolbar, { modules, formats } from "./quillTollbar";
+var QRCode = require('qrcode.react');
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -177,10 +178,24 @@ const Container = styled(Grid)`
 `}
 `;
 
+const QRCodeContainer = styled.div`
+  margin-top: 24px;
+  padding: 30px;
+  border: 2px #707070 dashed;
+  border-radius: 5px;
+  display:flex;
+  justify-content:center;
+  background-color: #F7F7F7;
+  .qr-code {
+    width: 80% !important;
+    height: auto !important;
+  }
+`
+
 const Board = (props) => {
   const [id, setId] = useState("");
   const [productIdState, setProductId] = useState("");
-  const [productUrl, setProductUrl] = useState("");
+  const [productUrl, setProductUrl] = useState("12");
   const classes = useStyles();
   const [age, setAge] = useState("");
   const [images, setImages] = useState([]);
@@ -449,9 +464,25 @@ const productId =(event) =>{
                 </Select>
               </FormControl>
             </SearchButton>
-            <Button style={{ marginTop: "5px", border: "1px solid #6E9F21" }}>
-              Generate Code
+            <Button style={{ marginTop: "5px", border: "1px solid #6E9F21", backgroundColor:"#6E9F21" }}>
+              Print Code
             </Button>
+            { productUrl ?
+              <QRCodeContainer>
+                <QRCode 
+                  className="qr-code" 
+                  value={productUrl || ""} 
+                  bgColor="#080040" 
+                  fgColor="#fff"
+                  level="L"
+                  includeMargin={true}
+                  color="red"
+                  renderAs="svg"
+                />
+              </QRCodeContainer>
+              : null
+            }
+
           </ActionButtonContainer>
         </HeaderBottomMenu>
       </Container>
