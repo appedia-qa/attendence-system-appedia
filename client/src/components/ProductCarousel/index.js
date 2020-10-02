@@ -3,6 +3,7 @@ import * as StyledComponent from "./styles";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { handleImageArray } from "../../utils/image";
+import Image from "../Image";
 import {
   Magnifier,
   GlassMagnifier,
@@ -26,8 +27,8 @@ const ProductCarousel = (props) => {
             props.items.length > 0 &&
             props.items.map((item) => {
               return (
-                <Magnifier
-                  imageSrc={fetchImageURL(item)[0]}
+                <Image
+                  src={fetchImageURL(item)[0]}
                   className="carousel-image"
                   ref={imageRef}
                 />

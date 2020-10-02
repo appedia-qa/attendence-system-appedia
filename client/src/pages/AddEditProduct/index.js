@@ -35,7 +35,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import EditorToolbar, { modules, formats } from "./quillTollbar";
-var QRCode = require('qrcode.react');
+var QRCode = require("qrcode.react");
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -183,34 +183,34 @@ const QRCodeContainer = styled.div`
   padding: 30px;
   border: 2px #707070 dashed;
   border-radius: 5px;
-  display:flex;
-  justify-content:center;
-  background-color: #F7F7F7;
+  display: flex;
+  justify-content: center;
+  background-color: #f7f7f7;
   .qr-code {
     width: 80% !important;
     height: auto !important;
   }
-`
+`;
 
 const Board = (props) => {
   const [id, setId] = useState("");
   const [productIdState, setProductId] = useState("");
-  const [productUrl, setProductUrl] = useState("12");
+  const [productUrl, setProductUrl] = useState("");
   const classes = useStyles();
   const [age, setAge] = useState("");
   const [images, setImages] = useState([]);
   const [errorString, seterrorString] = useState(null)
   const productDescrtopAndnameObj = {
     arabic: {
-      nmae: "",
+      name: "",
       description: "",
     },
     english: {
-      nmae: "",
+      name: "",
       description: "",
     },
     francias: {
-      nmae: "",
+      name: "",
       description: "",
     },
   };
@@ -231,15 +231,15 @@ const Board = (props) => {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-const productId =(event) =>{
-  setProductId(event);
-  setProductUrl(`http://localhost:3000/view/${event}`)
-
-}
+  const productId = (event) => {
+    setProductId(event);
+    setProductUrl(`http://localhost:3000/view/${event}`);
+  };
   const handleChangeTextArabicBox = (event) => {
     setProductDescrtopAndnameState({
       ...productDescrtopAndnameState,
       arabic: {
+        ...productDescrtopAndnameState.arabic,
         description: event,
       },
     });
@@ -249,6 +249,7 @@ const productId =(event) =>{
     setProductDescrtopAndnameState({
       ...productDescrtopAndnameState,
       english: {
+        ...productDescrtopAndnameState.english,
         description: event,
       },
     });
@@ -258,6 +259,7 @@ const productId =(event) =>{
     setProductDescrtopAndnameState({
       ...productDescrtopAndnameState,
       francias: {
+        ...productDescrtopAndnameState.francias,
         description: event,
       },
     });
@@ -268,6 +270,7 @@ const productId =(event) =>{
       setProductDescrtopAndnameState({
         ...productDescrtopAndnameState,
         arabic: {
+          ...productDescrtopAndnameState.arabic,
           name: event.target.value,
         },
       });
@@ -276,6 +279,7 @@ const productId =(event) =>{
       setProductDescrtopAndnameState({
         ...productDescrtopAndnameState,
         english: {
+          ...productDescrtopAndnameState.english,
           name: event.target.value,
         },
       });
@@ -285,6 +289,7 @@ const productId =(event) =>{
       setProductDescrtopAndnameState({
         ...productDescrtopAndnameState,
         francias: {
+          ...productDescrtopAndnameState.francias,
           name: event.target.value,
         },
       });
@@ -328,23 +333,24 @@ const productId =(event) =>{
         <HeaderBottomMenu>
           <ActionHomeButtonContainer
             style={{
-              width: "100%",
+              minWidth: "230px",
               minHeight: "500px",
               background: "#FFFFFF",
               padding: "15px",
             }}
             lg={2}
             md={2}
-            sm={2}
+            sm={12}
           >
             <Images onChange={onChange} images={images} />
           </ActionHomeButtonContainer>
           <ActionButtonContainer
-            lg={6}
-            md={6}
-            sm={6}
+            lg={7}
+            md={7}
+            sm={12}
             style={{
               maxHeight: "500px",
+              maxWidth: "606px",
               overflow: "auto",
               padding: "20px",
               paddingTop: "0px",
@@ -410,13 +416,13 @@ const productId =(event) =>{
           </ActionButtonContainer>
 
           <ActionButtonContainer
-            lg={3}
-            md={3}
-            sm={3}
+            lg={2}
+            md={2}
+            sm={12}
             style={{
               padding: "15px",
               minHeight: "500px",
-              width: "100%",
+              minWidth: "230px",
               background: "#FFFFFF",
               display: "flex",
               flexDirection: "column",
@@ -435,7 +441,6 @@ const productId =(event) =>{
                 disableUnderline={true}
                 placeholder="Enter  Product Name"
                 onChange={(event) => productId(event.target.value)}
-               
               />
             </SearchButton>
             <Typography
@@ -448,14 +453,14 @@ const productId =(event) =>{
             <SearchButton
               style={{
                 height: "50px",
-                lineBreak:"anywhere"
+                lineBreak: "anywhere",
               }}
             >
               <Input
                 style={{
                   width: "100%",
                   margin: "10px",
-                  lineBreak:"anywhere"
+                  lineBreak: "anywhere",
                 }}
                 disableUnderline={true}
                 value={productUrl}
@@ -497,15 +502,21 @@ const productId =(event) =>{
                 </Select>
               </FormControl>
             </SearchButton>
-            <Button style={{ marginTop: "5px", border: "1px solid #6E9F21", backgroundColor:"#6E9F21" }}>
+            <Button
+              style={{
+                marginTop: "5px",
+                border: "1px solid #6E9F21",
+                backgroundColor: "#6E9F21",
+              }}
+            >
               Print Code
             </Button>
-            { productUrl ?
+            {productUrl ? (
               <QRCodeContainer>
-                <QRCode 
-                  className="qr-code" 
-                  value={productUrl || ""} 
-                  bgColor="#080040" 
+                <QRCode
+                  className="qr-code"
+                  value={productUrl || ""}
+                  bgColor="#080040"
                   fgColor="#fff"
                   level="L"
                   includeMargin={true}
@@ -513,9 +524,7 @@ const productId =(event) =>{
                   renderAs="svg"
                 />
               </QRCodeContainer>
-              : null
-            }
-
+            ) : null}
           </ActionButtonContainer>
         </HeaderBottomMenu>
       </Container>

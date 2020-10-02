@@ -6,7 +6,15 @@ export const Container = styled.div`
   max-width: 425px;
   .carousel {
     max-width: 425px;
+    
+    
+    .slide img{
+      border-radius: 16px;
+    }
+
     .slide {
+      border:5px solid #F36D12;
+      border-radius: 22px;
       min-height: 250px;
     }
     max-width: 425px;
@@ -22,21 +30,25 @@ export const Container = styled.div`
     }
 
     .thumb {
+     
       width: 76px !important;
       padding: 0;
     }
 
     .thumb.selected{
+      border-radius: 16px;
       border-width: 2px;
       border-color ${theme.palette.primary.main};
     }
 
     .thumb img{
+      
       width: 76px;
       height: 76px;
       object-fit: contain;
     }
     .control-arrow {
+      border-radius: 16px;
       opacity:1;
     }
     .control-next.control-arrow:before {
@@ -48,6 +60,7 @@ export const Container = styled.div`
   }
 
   .carousel-image {
+    border-radius: 16px;
     max-width: 100%;
     max-height: 400px;
     height: auto;

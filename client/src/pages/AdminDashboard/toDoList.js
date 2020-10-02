@@ -56,7 +56,7 @@ const List = (props) => {
                 <Checkbox checked={props.selected} color="primary" onClick={() => props.onCheckBoxClick(props.id)} />
               </Col>
               <Col>
-                <Typography component="p" variant="subtitle1">
+                <Typography component="p" variant="subtitle2">
                   {props.id}
                 </Typography>
               </Col>
@@ -66,7 +66,7 @@ const List = (props) => {
             <Typography
               component="p"
               style={{ paddingLeft: "12px" }}
-              variant="subtitle1"
+              variant="subtitle2"
             >
               {props.name}
             </Typography>
@@ -74,7 +74,7 @@ const List = (props) => {
           <ListColumn lg={3}>
             <Typography
               component="p"
-              variant="subtitle1"
+              variant="subtitle2"
               style={{ paddingLeft: "12px" }}
             >
               {props.url}
@@ -94,7 +94,7 @@ const List = (props) => {
                 color="disabled"
                 style={{ width: "16px", marginRight: "5px" }}
               />
-              <Typography component="p" variant="subtitle1">
+              <Typography component="p" variant="subtitle2">
                 {props.code}
               </Typography>
             </StyleButton>

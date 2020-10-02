@@ -103,7 +103,6 @@ class App extends Component {
       sidebarOpen: false,
       windowHeight: 0,
       windowWidth: 0,
-      lang: currentLanguage ? currentLanguage : ENGLISH_LANGUAGE,
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
@@ -140,28 +139,22 @@ class App extends Component {
   };
 
   render() {
-    const { lang } = this.state;
-
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <I18nProvider
-            language={this.state.lang === ENGLISH_LANGUAGE ? "en" : "ar"}
-            catalogs={catalogs}
-          >
+          <I18nProvider catalogs={catalogs}>
             <BrowserRouter history={history}>
               <StylesProvider injectFirst jss={jss}>
                 <MuiThemeProvider theme={theme}>
                   <StyledThemeProvider theme={theme}>
                     {/* dir div was originally body tag, check */}
-                    <div dir={useRTL ? "rtl" : "ltr"}>
+                    <div>
                       <GlobalStyle />
                       <AlertProvider template={AlertTemplate} {...alertOptions}>
                         <Header
                           onDrawerOpen={this.onDrawerOpen}
                           width={this.state.windowWidth}
                           height={this.state.windowHeight}
-                          language={lang}
                         />
                         <Search />
                         <Switch>
@@ -174,7 +167,6 @@ class App extends Component {
                                   {...props}
                                   windowWidth={this.state.windowWidth}
                                   windowHeight={this.state.windowHeight}
-                                  language={lang}
                                 />
                               )}
                             />
