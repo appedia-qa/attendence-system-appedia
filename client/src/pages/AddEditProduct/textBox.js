@@ -39,10 +39,13 @@ const SearchButton = styled.div`
   padding: 9px 12px;
   margin:0px;
   border: 1px solid #BAB8B8;
+<<<<<<< HEAD
   input {
     line-break:anywhere;
     font: revert;
   }
+=======
+>>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
   
   
 `}
@@ -122,6 +125,10 @@ const ActionBottomButtonContainer = styled(Col)`
                 fill:#6E9F21;
             }
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
     },
     svg{
         path{
