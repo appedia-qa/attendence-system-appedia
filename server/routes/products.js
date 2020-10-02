@@ -5,6 +5,23 @@ const jwt = require('jsonwebtoken');
 const ObjectId = require("mongodb").ObjectID
 const checkValid =  require('../utils');
 
+const authGuard = (req, res, next) => {
+  try {
+    const { authorization } = req.headers
+    if (!authorization) {
+      res.status(401).send('You must send an Authorization header')
+    }
+
+    if (!jwt.verify(authorization.split("Bearer ")[1], "secretkey123secretkey")) {
+      res.status(401).send("Authorization token not valid");
+    }
+    next();
+  }
+  catch(e) {
+    res.status(400).send(e);
+  }
+}
+
 const verifyProductDetails = (details) => {
   try {
     if (!details) {
@@ -29,7 +46,7 @@ router.route('/products').get(async (req, res) => {
   }
 });
 
-router.route('/products/add').post( async(req, res) => {
+router.route('/products/add').post(authGuard, async(req, res) => {
 
   const {
     product_code,
@@ -63,7 +80,7 @@ router.route('/products/add').post( async(req, res) => {
   }
 });
 
-router.route('/products/update').put(async (req, res) => {
+router.route('/products/update').put(authGuard, async (req, res) => {
   const {
     product_code,
     product_details,
@@ -96,10 +113,18 @@ router.route('/products/update').put(async (req, res) => {
   }
 });
 
-router.route('/products/remove').delete(async (req, res) => {
-  let { product_code } = req.body;
+router.route('/products/remove').delete(
+  authGuard,
+  async (req, res) => {
   try {
-    let productDeleted = await Product.remove({ product_code });
+    let { product_codes } = req.body;
+    if (!Array.isArray(product_codes)) {
+      product_codes = [product_codes];
+    }
+  
+    let productDeleted = await Product.deleteMany({
+      product_code: { $in: product_codes }
+    })
     if (productDeleted.deletedCount > 0) {
       res.status(200).send('Product deleted');
     }

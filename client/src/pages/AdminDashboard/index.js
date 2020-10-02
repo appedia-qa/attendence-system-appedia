@@ -89,8 +89,8 @@ const toDoList = [
 
 const AdminDashbord = (props) => {
   const [open, setOpen] = useState("");
-  const [SeletedId, setSeletedId] = useState("");
   const [productData, setProductData] = useState("");
+  const [isAllSelected, setAllSelected] = useState(false);
   const [paginationCount, setPaginationCount] = useState(1);
   const url = `${apiUrl}/products`;
 
@@ -100,7 +100,9 @@ const AdminDashbord = (props) => {
     }
     const { data } = await axios.get(url);
     if (data) {
-      console.log(data);
+      data = data.map(item => {
+        return { ...item, selected:false }
+      })
       setProductData(data);
     }
   };
@@ -131,8 +133,38 @@ const AdminDashbord = (props) => {
   };
 
   const onCheckBoxClick = (id) => {
-    setSeletedId(id);
+    setProductData(productData.map((p) => p.id === id ? { ...p, selected: !p.selected } : p));
   };
+
+  const getSelectedItemsProductCodes = () =>  {
+    return productData.map(x => {
+      if (x.selected) {
+        return x.product_code
+      }
+    })
+  }
+
+  const onSelectAllAction = () => {
+    setProductData(productData.map((p) => {
+      return { ...p, selected: !isAllSelected };
+    }));
+    setAllSelected(!isAllSelected);
+  }
+
+  const deleteItem = async () => {
+
+    const product_codes = getSelectedItemsProductCodes()
+    if (product_codes.length > 0) {
+      // TODO: replace code with proper login auth code
+      await axios.delete(`${apiUrl}/products/remove`, { 
+        data: { product_codes },
+        headers: {
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJpZCI6IjVmNzc2OTExYTJhNTc5ZDEyOTc0NWY5OCJ9LCJpYXQiOjE2MDE2NjE2Mzd9.d8F9Wcvvpsui3a5FU4vtU3dB5V0YzBf_MIpRWlZkslI"
+        }
+      });
+      fetchproduct();
+    }
+  }
   return (
     <React.Fragment>
       <Container>
@@ -162,7 +194,7 @@ const AdminDashbord = (props) => {
               margin: "10px",
             }}
           >
-            <Typography component="p" variant="subtitle3">
+            <Typography component="p" variant="subtitle3" onClick={deleteItem}>
               Delete Item
             </Typography>
           </StyleButton>
@@ -184,17 +216,20 @@ const AdminDashbord = (props) => {
             <FormControlLabel
               control={<Checkbox name="checkedB" color="primary" />}
               label="Select All"
+              value={isAllSelected}
+              onClick={onSelectAllAction}
             />
           </FormGroup>
         </Row>
         <ToDoListHeader />
         <div style={{ width: "100%", margin: "0px" }}>
           {productData &&
-            productData.map((obj, i) => {
+            productData.map((obj) => {
               return (
                 <ToDoList
-                  id={obj.product_category_id}
+                  id={obj.id}
                   url={obj.product_url}
+                  selected={obj.selected}
                   name={checkname(
                     obj.product_details ? obj.product_details : ""
                   )}
