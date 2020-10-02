@@ -19,6 +19,16 @@ const userSchema = new Schema({
     minlength: 6,
     // select: false
   },
+  status: {
+    type: String,
+    enum: ['approved', 'unapproved'],
+    default: 'unapproved'
+  },
+  role: {
+    type: String,
+    required: true,
+    enum: ['admin', 'contributor'],
+  }
 }, {
   timestamps: true,
   toJSON: {
