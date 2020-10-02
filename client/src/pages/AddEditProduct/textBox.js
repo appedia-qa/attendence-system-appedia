@@ -39,6 +39,13 @@ const SearchButton = styled.div`
   padding: 9px 12px;
   margin:0px;
   border: 1px solid #BAB8B8;
+<<<<<<< HEAD
+  input {
+    line-break:anywhere;
+    font: revert;
+  }
+=======
+>>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
   
   
 `}
@@ -118,7 +125,10 @@ const ActionBottomButtonContainer = styled(Col)`
                 fill:#6E9F21;
             }
         }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
     },
     svg{
         path{
@@ -132,17 +142,12 @@ const ActionBottomButtonContainer = styled(Col)`
 `;
 
 const ActionHomeButtonContainer = styled(Col)`
-  ${({ theme }) => `
-    
-
-    
-    
-   
+  ${({ theme }) => ` 
     }
   `}
 `;
 
-const Header = (props) => {
+const TextBox = (props) => {
   return (
     <React.Fragment>
       <ActionButtonContainer
@@ -156,7 +161,7 @@ const Header = (props) => {
         }}
       >
         <Typography component="p" variant="caption">
-          Product Name
+          Product Name({props.name})
         </Typography>
         <SearchButton>
           <Input
@@ -164,9 +169,10 @@ const Header = (props) => {
               width: "100%",
               margin: "10px",
             }}
+            name={props.EventName}
             disableUnderline={true}
             placeholder="Enter  Product Name"
-            // onChange={(event) => setSearchText(event.target.value)}
+            onChange={(event) => props.handleNameChange(event)}
             // onKeyUp={(event) => {
             //   handleSearch(props, searchText);
             // }}
@@ -200,7 +206,7 @@ const Header = (props) => {
               ref={props.ref}
               theme="snow"
               id={props.id}
-              // onChange={handleChange}
+              onChange={props.handleChange}
               placeholder={"Write something awesome..."}
               modules={modules}
               formats={formats}
@@ -213,7 +219,7 @@ const Header = (props) => {
               ref={props.ref}
               theme="snow"
               id={props.id}
-              // onChange={handleChange}
+              onChange={props.handleChange}
               placeholder={"Write something awesome..."}
               onFocus={() => props.setActive(props.id)}
             />
@@ -224,4 +230,4 @@ const Header = (props) => {
   );
 };
 
-export default withRouter(Header);
+export default withRouter(TextBox);

@@ -3,6 +3,7 @@ import PageNotFound from "../pages/Empty";
 import Login from "../pages/Login/index";
 import AdminDashboard from "../pages/AdminDashboard";
 import AdminAddProduct from "../pages/AddEditProduct";
+import productDiscription from "../pages/productDescription";
 
 export const ProductPageEndPoint = "/";
 export const CheckoutEndPoint = "/checkout";
@@ -14,6 +15,12 @@ const Routes = [
     name: "home",
     exact: true,
     component: Login,
+  },
+  {
+    path: "/view",
+    name: "productDiscription",
+    exact: true,
+    component: productDiscription,
   },
   {
     path: "/",
