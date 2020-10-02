@@ -218,7 +218,7 @@ const Board = (props) => {
   };
 const productId =(event) =>{
   setProductId(event);
-  setProductUrl(`http://localhost:3000/product/view/${event}`)
+  setProductUrl(`http://localhost:3000/view/${event}`)
 
 }
   const handleChangeTextArabicBox = (event) => {
