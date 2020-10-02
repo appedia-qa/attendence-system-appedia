@@ -69,6 +69,7 @@ router.route('/users/login').post(async (req, res) => {
       if (userExist && userExist.username === username && isCorrect) {
         user.id = userExist._id;
         user.role = userExist.role;
+        user.status = userExist.status;
         jwt.sign({ user: user }, 'secretkey123secretkey', (error, token) => {
           token = 'Bearer' + ' ' + token;
           res.status(200).send({
@@ -77,11 +78,11 @@ router.route('/users/login').post(async (req, res) => {
         });
       }
       else {
-        res.status(404).send('incorrect Username or Password');
+        res.status(404).send('incorrect Username or password');
       }
   }
   catch(error) {
-       res.status(400).send(error);
+       res.status(400).send('incorrect Username or password');
   }
 });  
 
@@ -111,6 +112,42 @@ router.route('/users/signup').post(async(req, res) => {
     }
   }
 });
+
+router.delete('/users/remove', checkAuthentication, (req, res, next) => {
+    jwt.verify(req.token, 'secretkey123secretkey', async (error, user) => {
+      if (error) {
+        res.sendStatus(403);
+      }
+      try {
+        const username = user.user.username;
+        let userExist = await User.findOne({ username });
+        if (userExist.role === 'admin') {
+          next();
+        }
+        else {
+          res.sendStatus(403);
+        }
+      }
+      catch (error) {
+        res.sendStatus(403);
+      }
+    })
+  }, (async (req, res) => {
+    let { username } = req.body;
+    try {
+      let userDeleted = await User.remove({ username });
+      if (userDeleted.deletedCount > 0) {
+        res.status(200).send('user deleted');
+      }
+      else {
+        res.status(400).send('user not deleted');
+      }
+    }
+    catch (error) {
+      res.status(400).send(error);
+    }
+  })
+);
 
 function checkAuthentication(req, res, next) {
 
