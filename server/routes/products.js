@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let Product = require('../models/product.model');
 const jwt = require('jsonwebtoken');
+
 const ObjectId = require("mongodb").ObjectID
 const checkValid =  require('../utils');
 
@@ -123,6 +124,7 @@ router.route('/products/find').post(async (req, res) => {
     }
   }
   catch (error) {
+
     res.status(400).send(error);
   }
 });
