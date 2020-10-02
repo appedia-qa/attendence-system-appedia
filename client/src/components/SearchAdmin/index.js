@@ -170,7 +170,7 @@ const Container = styled(Grid)`
 
 const HeaderSearch = (props) => {
   const handleLogout = () => {
-    console.log("i am logout");
+    props.history.push("/login");
   };
   const handleHomeCilck = () => {
     props.history.push("/");
