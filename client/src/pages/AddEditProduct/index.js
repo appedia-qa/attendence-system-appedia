@@ -199,6 +199,7 @@ const Board = (props) => {
   const classes = useStyles();
   const [age, setAge] = useState("");
   const [images, setImages] = useState([]);
+  const [errorString, seterrorString] = useState(null)
   const productDescrtopAndnameObj = {
     arabic: {
       nmae: "",
@@ -220,7 +221,6 @@ const Board = (props) => {
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
 
@@ -291,6 +291,37 @@ const productId =(event) =>{
     }
   };
 
+  const saveItem = () => {
+
+    const arabicValid = isProductDetailValid(productDescrtopAndnameObj.arabic);
+    const englishValid = isProductDetailValid(productDescrtopAndnameObj.english);
+    const frenchValid = isProductDetailValid(productDescrtopAndnameObj.francias);
+
+    if (!(arabicValid || englishValid || frenchValid)) {
+      if (arabicValid) {
+        seterrorString("Fill both name and description for Arabic")
+      }
+      else if (englishValid) {
+        seterrorString("Fill both name and description for English")
+      }
+      else if (frenchValid) {
+        seterrorString("Fill both name and description for French")
+      } else {
+        seterrorString("Fill both name and description for a language");
+      }
+    } else {
+      seterrorString(null)
+    }
+  }
+
+  const isProductDetailValid = (item) => {
+    if (item.name && item.name.trim().length > 0 && item.description && item.description.trim().length > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
   return (
     <I18n>
       <Container>
@@ -319,6 +350,7 @@ const productId =(event) =>{
               paddingTop: "0px",
             }}
           >
+            {errorString && <div>{errorString}</div>}
             <TextBox
               id="1"
               show={true}
@@ -362,6 +394,7 @@ const productId =(event) =>{
                 background: "#6E9F21",
                 marginRight: "20px",
               }}
+              onClick={saveItem}
             >
               Save
             </Button>

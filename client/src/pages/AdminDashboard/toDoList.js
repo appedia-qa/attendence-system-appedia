@@ -53,7 +53,7 @@ const List = (props) => {
           <ListColumn lg={3}>
             <Row style={{ alignItems: "center", paddingLeft: "10px" }}>
               <Col>
-                <Checkbox defaultChecked color="primary" />
+                <Checkbox checked={props.selected} color="primary" onClick={() => props.onCheckBoxClick(props.id)} />
               </Col>
               <Col>
                 <Typography component="p" variant="subtitle1">
