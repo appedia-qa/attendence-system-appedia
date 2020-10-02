@@ -14,12 +14,13 @@ import * as URL_CONSTANTS from "../../constants/urls";
 
 export function* login(action) {
   try {
-    const url = URL_CONSTANTS.apiUrl + URL_CONSTANTS.authEndpoint;
+    const url = URL_CONSTANTS.baseUrl + URL_CONSTANTS.authEndpoint;
 
     yield put({ type: authenticationConstants.LOGIN_INPROGRESS });
-    const { email, password } = action.payload;
+    const { password } = action.payload;
+    const username =action.payload.email
 
-    if (!email) {
+    if (!username) {
       throw new Error("Empty email found in params");
     }
     if (!password) {
@@ -27,7 +28,7 @@ export function* login(action) {
     }
 
     const requestResponce = yield call(makePostRequest, url, {
-      email,
+      username,
       password,
     });
 

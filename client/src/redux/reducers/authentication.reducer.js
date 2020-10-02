@@ -75,7 +75,7 @@ export function authentication(state = initialState, action) {
 
 const storeAuthToken = (action) => {
   try {
-    const token = action.payload.data.success.token;
+    const token = action.payload.data.access_token;
     localStorage.setItem(USER_AUTH_KEY, JSON.stringify(token));
   } catch (e) {
     // write method to add this to popup reducer

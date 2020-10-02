@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as ErrorIcon } from "../../assets/icons/error-404.svg";
@@ -8,8 +8,10 @@ import ToDoListHeader from "./todoHeader";
 import { Row, Col, Grid } from "react-flexbox-grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
+import axios from "axios";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Model from "../../components/ProductDialog";
+import { apiUrl } from "../../constants/urls";
 import {
   Typography,
   IconButton,
@@ -39,14 +41,88 @@ const StyleButton = styled(Button)`
   
 `}
 `;
+const toDoList = [
+  {
+    Product_id: "000 0003",
+    Product_name: "testing product",
+    Product_url: "Https//www.producturl..",
+    code: "12345",
+  },
+  {
+    Product_id: "000 0003",
+    Product_name: "testing product",
+    Product_url: "Https//www.producturl..",
+    code: "12345",
+  },
+  {
+    Product_id: "000 0003",
+    Product_name: "testing product",
+    Product_url: "Https//www.producturl..",
+    code: "12345",
+  },
+  {
+    Product_id: "000 0003",
+    Product_name: "testing product",
+    Product_url: "Https//www.producturl..",
+    code: "12345",
+  },
+  {
+    Product_id: "000 0003",
+    Product_name: "testing product",
+    Product_url: "Https//www.producturl..",
+    code: "12345",
+  },
+  {
+    Product_id: "000 0003",
+    Product_name: "testing product",
+    Product_url: "Https//www.producturl..",
+    code: "12345",
+  },
+  {
+    Product_id: "000 0003",
+    Product_name: "testing product",
+    Product_url: "Https//www.producturl..",
+    code: "12345",
+  },
+];
+
 const AdminDashbord = (props) => {
   const [open, setOpen] = useState("");
+  const [SeletedId, setSeletedId] = useState("");
+  const [productData, setProductData] = useState("");
+  const url = `${apiUrl}/products`;
+  const fetchproduct = async () => {
+    const { data } = await axios.get(url);
+    if (data) {
+      console.log(data);
+      setProductData(data);
+    }
+  };
+
+  useEffect(() => {
+    fetchproduct();
+  }, []);
 
   const closeProductDialog = () => {
     setOpen(false);
   };
   const print = () => {
     setOpen(true);
+  };
+  const checkname = (lan) => {
+    if (lan && lan.eng && lan.ar.name) {
+      return lan.ar.name;
+    }
+    else if (lan && lan.fr && lan.ar.name) {
+      return lan.ar.name;
+    }
+    else if (lan && lan.ar && lan.ar.name) {
+      return lan.ar.name;
+    }
+  };
+
+  const onCheckBoxClick = (id) => {
+    setSeletedId(id);
   };
   return (
     <React.Fragment>
@@ -104,11 +180,21 @@ const AdminDashbord = (props) => {
         </Row>
         <ToDoListHeader />
         <div style={{ width: "100%", margin: "0px" }}>
-          <ToDoList print={print} />
-          <ToDoList print={print} />
-          <ToDoList print={print} />
-          <ToDoList print={print} />
-          <ToDoList print={print} />
+          {productData &&
+            productData.map((obj, i) => {
+              return (
+                <ToDoList
+                  id={obj.product_category_id}
+                  url={obj.product_url}
+                  name={checkname(
+                    obj.product_details ? obj.product_details : ""
+                  )}
+                  code={obj.product_code}
+                  print={print}
+                  onCheckBoxClick={onCheckBoxClick}
+                />
+              );
+            })}
         </div>
       </Container>
       <Model isDialogOpen={open} closeProductDialog={closeProductDialog} />
