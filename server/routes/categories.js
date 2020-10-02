@@ -1,7 +1,17 @@
 const router = require('express').Router();
 let Category = require('../models/category.model');
 
-router.route('/add').post( async (req, res) => {
+router.route('/categories').get(async (req, res) => {
+  try {
+    let categories = await Category.find({});
+    res.status(200).send(categories);
+  }
+  catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.route('/categories/add').post( async (req, res) => {
 
     const { name } = req.body;
     try {
@@ -20,7 +30,7 @@ router.route('/add').post( async (req, res) => {
     }
 });
 
-router.route('/remove').delete( async (req, res) => {
+router.route('/categories/remove').delete( async (req, res) => {
     const { name } = req.body;
     try {
       let categoryRemoved = await Category.remove({ name });

@@ -1,7 +1,10 @@
 const express = require('express');
+// require("esm")
 const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
+const config = require('./config');
+// import {config} from './config/index'
 
 require('dotenv').config();
 
@@ -20,14 +23,13 @@ connection.once('open', () => {
 })
 
 const usersRouter = require('./routes/users');
-app.use('/users', usersRouter);
-
 const productsRouter = require('./routes/products');
-app.use('/products', productsRouter);
-
 const categoriesRouter = require('./routes/categories');
-app.use('/categories', categoriesRouter);
 
-app.listen(port, 'nodeapp', () => {
+app.use(config.api.prefix, usersRouter);
+app.use(config.api.prefix, productsRouter);
+app.use(config.api.prefix, categoriesRouter);
+
+app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
