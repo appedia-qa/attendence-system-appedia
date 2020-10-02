@@ -35,13 +35,6 @@ const SearchButton = styled.div`
   align-items: center;
   padding: 9px 12px;
   margin:0px;
-<<<<<<< HEAD
-  input {
-    line-break:anywhere;
-    font: revert;
-  }
-=======
->>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
   
   
 `}
@@ -188,47 +181,25 @@ const HeaderSearch = (props) => {
           alignItems: "center",
           display: "flex",
           justifyContent: "center",
-<<<<<<< HEAD
-=======
           minHeight: "90px",
->>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
         }}
       >
         <Container>
           <HeaderBottomMenu className="home">
-<<<<<<< HEAD
-            <ActionHomeButtonContainer
-              style={{ padding: "0", marginTop: "20px", marginBottom: "20px" }}
-              lg={1}
-              md={1}
-              sm={2}
-            >
-              <StyleButton
-                style={{
-                  width: "100%",
-=======
             <ActionHomeButtonContainer lg={2} md={2} sm={2}>
               <StyleButton
                 style={{
                   width: "70%",
->>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
                   height: "100%",
                   display: "flex",
                   justifyContent: "space-between",
                 }}
                 onClick={() => handleHomeCilck()}
               >
-<<<<<<< HEAD
-                <Typography style={{ color: "#6E9F21", fontSize:"12px" }} component="p">
-                  Home
-                </Typography>
-                <PersonIcon style={{ width: "15px" }} />
-=======
                 <Typography style={{ color: "#6E9F21" }} component="p">
                   Home
                 </Typography>
                 <PersonIcon />
->>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
               </StyleButton>
             </ActionHomeButtonContainer>
 
@@ -250,28 +221,14 @@ const HeaderSearch = (props) => {
               </SearchButton>
             </ActionButtonContainer>
             <ActionBottomButtonContainer
-<<<<<<< HEAD
-              style={{
-                padding: "0",
-                marginTop: "20px",
-                marginBottom: "20px",
-                width: "100%",
-              }}
-              lg={1}
-=======
               style={{ width: "100%" }}
               lg={2}
->>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
               md={2}
               sm={2}
             >
               <StyleButton
                 style={{
-<<<<<<< HEAD
-                  width: "100%",
-=======
                   width: "70%",
->>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
                   height: "100%",
                   display: "flex",
                   justifyContent: "space-between",
@@ -279,20 +236,10 @@ const HeaderSearch = (props) => {
                 }}
                 onClick={() => handleLogout()}
               >
-<<<<<<< HEAD
-                <Typography
-                  style={{ color: "#F36D12", fontSize: "12px" }}
-                  component="p"
-                >
-                  Log out
-                </Typography>
-                <PersonIcon style={{ width: "15px" }} />
-=======
                 <Typography style={{ color: "#F36D12" }} component="p">
                   Log out
                 </Typography>
                 <PersonIcon />
->>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
               </StyleButton>
             </ActionBottomButtonContainer>
           </HeaderBottomMenu>

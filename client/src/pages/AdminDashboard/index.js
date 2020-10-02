@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as ErrorIcon } from "../../assets/icons/error-404.svg";
@@ -9,7 +9,6 @@ import { Row, Col, Grid } from "react-flexbox-grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Model from "../../components/ProductDialog";
 import {
   Typography,
   IconButton,
@@ -40,14 +39,6 @@ const StyleButton = styled(Button)`
 `}
 `;
 const AdminDashbord = (props) => {
-  const [open, setOpen] = useState("");
-
-  const closeProductDialog = () => {
-    setOpen(false);
-  };
-  const print = () => {
-    setOpen(true);
-  };
   return (
     <React.Fragment>
       <Container>
@@ -77,7 +68,7 @@ const AdminDashbord = (props) => {
               margin: "10px",
             }}
           >
-            <Typography component="p" variant="subtitle1">
+            <Typography component="p"  variant="subtitle1">
               Delete Item
             </Typography>
           </StyleButton>
@@ -103,15 +94,14 @@ const AdminDashbord = (props) => {
           </FormGroup>
         </Row>
         <ToDoListHeader />
-        <div style={{ width: "100%", margin: "0px" }}>
-          <ToDoList print={print} />
-          <ToDoList print={print} />
-          <ToDoList print={print} />
-          <ToDoList print={print} />
-          <ToDoList print={print} />
+        <div style={{width:"100%", margin:'0px'}}>
+        <ToDoList />
+        <ToDoList />
+        <ToDoList />
+        <ToDoList />
+        <ToDoList />
         </div>
       </Container>
-      <Model isDialogOpen={open} closeProductDialog={closeProductDialog} />
     </React.Fragment>
   );
 };

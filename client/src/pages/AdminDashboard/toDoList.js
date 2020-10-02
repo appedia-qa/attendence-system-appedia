@@ -4,7 +4,6 @@ import { I18n } from "@lingui/react";
 import { Row, Col, Grid } from "react-flexbox-grid";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
-import PrintRoundedIcon from "@material-ui/icons/PrintRounded";
 import {
   Typography,
   IconButton,
@@ -62,7 +61,7 @@ const List = (props) => {
             </Row>
           </ListColumn>
           <ListColumn lg={3}>
-            <Typography component="p" variant="subtitle1">
+            <Typography component="p" variant="subtitle1" >
               Name of Product Here
             </Typography>
           </ListColumn>
@@ -75,18 +74,10 @@ const List = (props) => {
             <StyleButton
               style={{
                 margin: "10px",
-                border: "1px solid #08004015",
-              }}
-              onClick={() => {
-                props.print(true);
               }}
             >
-              <PrintRoundedIcon
-                color="disabled"
-                style={{ width: "16px", marginRight: "5px" }}
-              />
               <Typography component="p" variant="subtitle1">
-                Print Code
+                Edit Item
               </Typography>
             </StyleButton>
           </ListColumn>
