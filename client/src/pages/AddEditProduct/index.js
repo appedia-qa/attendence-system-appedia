@@ -35,7 +35,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import EditorToolbar, { modules, formats } from "./quillTollbar";
-var QRCode = require('qrcode.react');
+var QRCode = require("qrcode.react");
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -183,14 +183,14 @@ const QRCodeContainer = styled.div`
   padding: 30px;
   border: 2px #707070 dashed;
   border-radius: 5px;
-  display:flex;
-  justify-content:center;
-  background-color: #F7F7F7;
+  display: flex;
+  justify-content: center;
+  background-color: #f7f7f7;
   .qr-code {
     width: 80% !important;
     height: auto !important;
   }
-`
+`;
 
 const Board = (props) => {
   const [id, setId] = useState("");
@@ -201,15 +201,15 @@ const Board = (props) => {
   const [images, setImages] = useState([]);
   const productDescrtopAndnameObj = {
     arabic: {
-      nmae: "",
+      name: "",
       description: "",
     },
     english: {
-      nmae: "",
+      name: "",
       description: "",
     },
     francias: {
-      nmae: "",
+      name: "",
       description: "",
     },
   };
@@ -220,7 +220,6 @@ const Board = (props) => {
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
 
@@ -231,15 +230,15 @@ const Board = (props) => {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-const productId =(event) =>{
-  setProductId(event);
-  setProductUrl(`http://localhost:3000/view/${event}`)
-
-}
+  const productId = (event) => {
+    setProductId(event);
+    setProductUrl(`http://localhost:3000/view/${event}`);
+  };
   const handleChangeTextArabicBox = (event) => {
     setProductDescrtopAndnameState({
       ...productDescrtopAndnameState,
       arabic: {
+        ...productDescrtopAndnameState.arabic,
         description: event,
       },
     });
@@ -249,6 +248,7 @@ const productId =(event) =>{
     setProductDescrtopAndnameState({
       ...productDescrtopAndnameState,
       english: {
+        ...productDescrtopAndnameState.english,
         description: event,
       },
     });
@@ -258,6 +258,7 @@ const productId =(event) =>{
     setProductDescrtopAndnameState({
       ...productDescrtopAndnameState,
       francias: {
+        ...productDescrtopAndnameState.francias,
         description: event,
       },
     });
@@ -268,6 +269,7 @@ const productId =(event) =>{
       setProductDescrtopAndnameState({
         ...productDescrtopAndnameState,
         arabic: {
+          ...productDescrtopAndnameState.arabic,
           name: event.target.value,
         },
       });
@@ -276,6 +278,7 @@ const productId =(event) =>{
       setProductDescrtopAndnameState({
         ...productDescrtopAndnameState,
         english: {
+          ...productDescrtopAndnameState.english,
           name: event.target.value,
         },
       });
@@ -285,6 +288,7 @@ const productId =(event) =>{
       setProductDescrtopAndnameState({
         ...productDescrtopAndnameState,
         francias: {
+          ...productDescrtopAndnameState.francias,
           name: event.target.value,
         },
       });
@@ -403,7 +407,6 @@ const productId =(event) =>{
                 disableUnderline={true}
                 placeholder="Enter  Product Name"
                 onChange={(event) => productId(event.target.value)}
-               
               />
             </SearchButton>
             <Typography
@@ -416,14 +419,14 @@ const productId =(event) =>{
             <SearchButton
               style={{
                 height: "50px",
-                lineBreak:"anywhere"
+                lineBreak: "anywhere",
               }}
             >
               <Input
                 style={{
                   width: "100%",
                   margin: "10px",
-                  lineBreak:"anywhere"
+                  lineBreak: "anywhere",
                 }}
                 disableUnderline={true}
                 value={productUrl}
@@ -465,15 +468,21 @@ const productId =(event) =>{
                 </Select>
               </FormControl>
             </SearchButton>
-            <Button style={{ marginTop: "5px", border: "1px solid #6E9F21", backgroundColor:"#6E9F21" }}>
+            <Button
+              style={{
+                marginTop: "5px",
+                border: "1px solid #6E9F21",
+                backgroundColor: "#6E9F21",
+              }}
+            >
               Print Code
             </Button>
-            { productUrl ?
+            {productUrl ? (
               <QRCodeContainer>
-                <QRCode 
-                  className="qr-code" 
-                  value={productUrl || ""} 
-                  bgColor="#080040" 
+                <QRCode
+                  className="qr-code"
+                  value={productUrl || ""}
+                  bgColor="#080040"
                   fgColor="#fff"
                   level="L"
                   includeMargin={true}
@@ -481,9 +490,7 @@ const productId =(event) =>{
                   renderAs="svg"
                 />
               </QRCodeContainer>
-              : null
-            }
-
+            ) : null}
           </ActionButtonContainer>
         </HeaderBottomMenu>
       </Container>
