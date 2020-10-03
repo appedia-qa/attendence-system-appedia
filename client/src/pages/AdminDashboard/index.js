@@ -237,18 +237,6 @@ const AdminDashbord = (props) => {
             style={{
               margin: "10px",
             }}
-            onClick={() => {
-              handelEditClick();
-            }}
-          >
-            <Typography component="p" variant="subtitle3">
-              Edit Item
-            </Typography>
-          </StyleButton>
-          <StyleButton
-            style={{
-              margin: "10px",
-            }}
           >
             <Typography component="p" variant="subtitle3" onClick={deleteItem}>
               Delete Item
