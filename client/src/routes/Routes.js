@@ -1,4 +1,3 @@
-
 import PageNotFound from "../pages/Empty";
 import Login from "../pages/Login/index";
 import AdminDashboard from "../pages/AdminDashboard";
@@ -29,8 +28,14 @@ const Routes = [
     component: AdminDashboard,
   },
   {
+    path: "/product/:id",
+    name: "AdminAddProduct",
+    exact: true,
+    component: AdminAddProduct,
+  },
+  {
     path: "/product",
-    name: "AdminDashboard",
+    name: "AdminAddProduct",
     exact: true,
     component: AdminAddProduct,
   },
@@ -39,7 +44,6 @@ const Routes = [
     name: "error",
     component: PageNotFound,
   },
-  
 ];
 
 export default Routes;

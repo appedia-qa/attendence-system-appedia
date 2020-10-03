@@ -28,7 +28,7 @@ const StyleButton = styled(Button)`
   
   border-radius: 10px;
   background-color:#FFFFFF !important;
-  height: 20px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,7 +80,7 @@ const List = (props) => {
               {props.url}
             </Typography>
           </ListColumn>
-          <ListColumn lg={3}>
+          <ListColumn style={{display:'flex',flexDirection:"row"}}lg={3}>
             <StyleButton
               style={{
                 margin: "10px",
@@ -95,7 +95,20 @@ const List = (props) => {
                 style={{ width: "16px", marginRight: "5px" }}
               />
               <Typography component="p" variant="subtitle2">
-                {props.code}
+               print
+              </Typography>
+            </StyleButton>
+            <StyleButton
+              style={{
+                margin: "10px",
+                border: "1px solid #08004015",
+              }}
+              onClick={() => {
+                props.handelEditClick(props.code);
+              }}
+            >
+              <Typography component="p" variant="subtitle2">
+               edit
               </Typography>
             </StyleButton>
           </ListColumn>

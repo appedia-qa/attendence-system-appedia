@@ -7,7 +7,8 @@ import PersonIcon from "@material-ui/icons/Person";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
-
+import axios from "axios";
+import { apiUrl } from "../../constants/urls";
 import {
   Typography,
   IconButton,
@@ -27,6 +28,7 @@ import {
   ARABIC_LANGUAGE,
   CURRENT_LANGUAGE_KEY,
 } from "../../constants";
+import { getTokken } from "../../redux/reducers/authentication.reducer";
 import { emptyCartRequest } from "../../redux/actions/cart.action";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -36,7 +38,7 @@ import Select from "@material-ui/core/Select";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import EditorToolbar, { modules, formats } from "./quillTollbar";
 var QRCode = require("qrcode.react");
-
+const imageToBase64 = require("image-to-base64");
 const useStyles = makeStyles((theme) =>
   createStyles({
     formControl: {
@@ -194,12 +196,13 @@ const QRCodeContainer = styled.div`
 
 const Board = (props) => {
   const [id, setId] = useState("");
+  const [isAdd, setAdd] = useState(null);
   const [productIdState, setProductId] = useState("");
   const [productUrl, setProductUrl] = useState("");
   const classes = useStyles();
   const [age, setAge] = useState("");
   const [images, setImages] = useState([]);
-  const [errorString, seterrorString] = useState(null)
+  const [errorString, seterrorString] = useState(null);
   const productDescrtopAndnameObj = {
     arabic: {
       name: "",
@@ -219,8 +222,23 @@ const Board = (props) => {
     setProductDescrtopAndnameState,
   ] = useState(productDescrtopAndnameObj);
 
+  useEffect(() => {
+    const query = new URLSearchParams(props.location.search);
+    const add = query.get("add-product");
+    if (add) {
+      setAdd(add);
+    }
+    else {
+      setAdd(false);
+      console.log(props.match.params.id)
+    }
+  }, []);
+
   const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
+    imageList[addUpdateIndex] = {
+      ...imageList[addUpdateIndex],
+      updated: false,
+    };
     setImages(imageList);
   };
 
@@ -296,36 +314,86 @@ const Board = (props) => {
     }
   };
 
-  const saveItem = () => {
+  const saveItem = async () => {
+    const arabicValid = isProductDetailValid(
+      productDescrtopAndnameState.arabic
+    );
+    const englishValid = isProductDetailValid(
+      productDescrtopAndnameState.english
+    );
+    const frenchValid = isProductDetailValid(
+      productDescrtopAndnameState.francias
+    );
+    const arbic = productDescrtopAndnameState.arabic;
+    const english = productDescrtopAndnameState.english;
+    const french = productDescrtopAndnameState.francias;
 
-    const arabicValid = isProductDetailValid(productDescrtopAndnameObj.arabic);
-    const englishValid = isProductDetailValid(productDescrtopAndnameObj.english);
-    const frenchValid = isProductDetailValid(productDescrtopAndnameObj.francias);
+    console.log(arbic, english, french);
 
     if (!(arabicValid || englishValid || frenchValid)) {
       if (arabicValid) {
-        seterrorString("Fill both name and description for Arabic")
-      }
-      else if (englishValid) {
-        seterrorString("Fill both name and description for English")
-      }
-      else if (frenchValid) {
-        seterrorString("Fill both name and description for French")
+        seterrorString("Fill both name and description for Arabic");
+      } else if (englishValid) {
+        seterrorString("Fill both name and description for English");
+      } else if (frenchValid) {
+        seterrorString("Fill both name and description for French");
       } else {
         seterrorString("Fill both name and description for a language");
       }
     } else {
-      seterrorString(null)
+      const obj = {
+        product_code: "0000 0021",
+        product_details: {
+          ar: {
+            name: arbic && arbic.name ? arbic.name : "",
+            description: arbic && arbic.description ? arbic.description : "",
+          },
+          eng: {
+            name: english && english.name ? english.name : "",
+            description:
+              english && english.description ? english.description : "",
+          },
+          fr: {
+            name: french && french.name ? french.name : "",
+            description: french && french.description ? french.description : "",
+          },
+        },
+        product_url: productUrl,
+        product_image:
+          "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
+        product_category_id: "5f75b84ea456c4ef19049547",
+      };
+      seterrorString(null);
+
+      // const tokken = getTokken();
+      // const url = apiUrl + "/fileUpload";
+      // const responceImg = await axios.post(url, {
+      //   data: {
+      //     file: images
+      //   },
+      //   headers: {
+      //     Authorization: tokken,
+      //   },
+      // });
+
+      const tokken = getTokken();
+      const url = apiUrl + "/products/add";
+      const responce = await axios.post(url, obj);
     }
-  }
+  };
 
   const isProductDetailValid = (item) => {
-    if (item.name && item.name.trim().length > 0 && item.description && item.description.trim().length > 0) {
+    if (
+      item.name &&
+      item.name.trim().length > 0 &&
+      item.description &&
+      item.description.trim().length > 0
+    ) {
       return true;
     }
 
     return false;
-  }
+  };
 
   return (
     <I18n>

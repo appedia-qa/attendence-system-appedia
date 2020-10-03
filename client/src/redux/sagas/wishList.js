@@ -182,26 +182,26 @@ function* loadWishlistData(payload) {
 }
 
 export default function* wishListSaga() {
-  yield takeLatest(
-    [
-      productConstants.UPDATE_PRODUCTS_ATER_LOGIN,
-      productConstants.ADD_PRODUCTS_TO_REDUCER,
-      wishlistConstants.EMPTY_WISH_LIST_DISPATCH,
-      cartConstants.ADD_ITEM,
-      cartConstants.DELETE_ITEM,
-    ],
-    updateWishList
-  );
-  yield takeEvery(
-    wishlistConstants.ADD_WISH_LIST_ITEM_INITIATE,
-    addwishListItem
-  );
-  yield takeEvery(
-    wishlistConstants.DELETE_WISH_LIST_ITEM_INITIATE,
-    DeleteWishListItem
-  );
-  yield takeEvery(
-    ["persist/REHYDRATE", authenticationTypes.LOGIN_SUCCESS],
-    loadWishlistData
-  );
+  // yield takeLatest(
+  //   [
+  //     productConstants.UPDATE_PRODUCTS_ATER_LOGIN,
+  //     productConstants.ADD_PRODUCTS_TO_REDUCER,
+  //     wishlistConstants.EMPTY_WISH_LIST_DISPATCH,
+  //     cartConstants.ADD_ITEM,
+  //     cartConstants.DELETE_ITEM,
+  //   ],
+  //   updateWishList
+  // );
+  // yield takeEvery(
+  //   wishlistConstants.ADD_WISH_LIST_ITEM_INITIATE,
+  //   addwishListItem
+  // );
+  // yield takeEvery(
+  //   wishlistConstants.DELETE_WISH_LIST_ITEM_INITIATE,
+  //   DeleteWishListItem
+  // );
+  // yield takeEvery(
+  //   ["persist/REHYDRATE", authenticationTypes.LOGIN_SUCCESS],
+  //   loadWishlistData
+  // );
 }
