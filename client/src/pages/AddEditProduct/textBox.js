@@ -166,6 +166,7 @@ const TextBox = (props) => {
               margin: "10px",
             }}
             name={props.EventName}
+            value={props.valueName ? props.valueName : ""}
             disableUnderline={true}
             placeholder="Enter  Product Name"
             onChange={(event) => props.handleNameChange(event)}
@@ -198,8 +199,10 @@ const TextBox = (props) => {
         {props.mount ? (
           <div className="text-editor">
             <EditorToolbar id={props.id} />
+            {console.log(props.valueDescription,'inside')}
             <ReactQuill
               ref={props.ref}
+              value={props.valueDescription ? props.valueDescription : ""}
               theme="snow"
               id={props.id}
               onChange={props.handleChange}
@@ -212,10 +215,7 @@ const TextBox = (props) => {
         ) : (
           <div className="text-editor">
             <ReactQuill
-              ref={props.ref}
-              theme="snow"
-              id={props.id}
-              onChange={props.handleChange}
+              value={props.valueDescription ? props.valueDescription : ""}
               placeholder={"Write something awesome..."}
               onFocus={() => props.setActive(props.id)}
             />

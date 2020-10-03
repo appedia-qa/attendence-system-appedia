@@ -8,6 +8,14 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import axios from "axios";
+import { bindActionCreators } from "redux";
+import {
+  addErrorItemInAlert,
+  addSuccessItemInAlert,
+} from "../../redux/actions/alert.action";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { apiUrl } from "../../constants/urls";
 import {
   Typography,
@@ -197,13 +205,16 @@ const QRCodeContainer = styled.div`
 const Board = (props) => {
   const [id, setId] = useState("");
   const [isAdd, setAdd] = useState(null);
-  const [productIdState, setProductId] = useState("");
-  const [productUrl, setProductUrl] = useState("");
+  // const [productIdState, setProductId] = useState("");
+  // const [productUrl, setProductUrl] = useState("");
   const classes = useStyles();
   const [age, setAge] = useState("");
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
   const [errorString, seterrorString] = useState(null);
   const productDescrtopAndnameObj = {
+    productIdState: "",
+    productUrl: "",
+    images: [],
     arabic: {
       name: "",
       description: "",
@@ -221,16 +232,101 @@ const Board = (props) => {
     productDescrtopAndnameState,
     setProductDescrtopAndnameState,
   ] = useState(productDescrtopAndnameObj);
+  const dispatch = useDispatch();
+
+  const papulateData = async (product_code) => {
+    if (!product_code) {
+    } else {
+      const url = apiUrl + "/products/find";
+
+      const { data } = await axios.post(url, { product_code });
+      console.log(data.data);
+
+      if (data) {
+        const arabicName =
+          data.product_details &&
+          data.product_details.ar &&
+          data.product_details.ar.name
+            ? data.product_details.ar.name
+            : "";
+
+        const arabicDiscription =
+          data.product_details &&
+          data.product_details.ar &&
+          data.product_details.ar.description
+            ? data.product_details.ar.description
+            : "";
+
+        const englishName =
+          data.product_details &&
+          data.product_details.eng &&
+          data.product_details.eng.name
+            ? data.product_details.eng.name
+            : "";
+
+        const englishDiscription =
+          data.product_details &&
+          data.product_details.eng &&
+          data.product_details.eng.description
+            ? data.product_details.eng.description
+            : "";
+
+        const frName =
+          data.product_details &&
+          data.product_details.fr &&
+          data.product_details.fr.name
+            ? data.product_details.fr.name
+            : "";
+
+        const frDiscription =
+          data.product_details &&
+          data.product_details.fr &&
+          data.product_details.fr.description
+            ? data.product_details.fr.description
+            : "";
+        const product_image = data.product_image ? data.product_image : "";
+        setProductDescrtopAndnameState({
+          ...productDescrtopAndnameState,
+          productIdState: data.product_code ? data.product_code : "",
+          productUrl: data.product_url ? data.product_url : "",
+          images: [{ product_image, uploaded: true }],
+          arabic: {
+            ...productDescrtopAndnameState.arabic,
+            name: arabicName,
+            description: arabicDiscription,
+          },
+          english: {
+            ...productDescrtopAndnameState.english,
+            name: englishName,
+            description: englishDiscription,
+          },
+          francias: {
+            ...productDescrtopAndnameState.francias,
+            name: frName,
+            description: frDiscription,
+          },
+        });
+      }
+
+      //////change login whem images come in array
+
+      // if (data) {
+      //   data = data.map((item) => {
+      //     return { ...item, selected: false };
+      //   });
+      //   setProductData(data);
+      // }
+    }
+  };
 
   useEffect(() => {
     const query = new URLSearchParams(props.location.search);
     const add = query.get("add-product");
     if (add) {
       setAdd(add);
-    }
-    else {
+    } else {
       setAdd(false);
-      console.log(props.match.params.id)
+      papulateData(props.match.params.id);
     }
   }, []);
 
@@ -239,7 +335,10 @@ const Board = (props) => {
       ...imageList[addUpdateIndex],
       updated: false,
     };
-    setImages(imageList);
+    setProductDescrtopAndnameState({
+      ...productDescrtopAndnameState,
+      images: imageList,
+    });
   };
 
   const setActive = (val) => {
@@ -250,9 +349,13 @@ const Board = (props) => {
     setAge(event.target.value);
   };
   const productId = (event) => {
-    setProductId(event);
-    setProductUrl(`http://localhost:3000/view/${event}`);
+    setProductDescrtopAndnameState({
+      ...productDescrtopAndnameState,
+      productIdState: event,
+      productUrl: `http://localhost:3000/view/${event}`,
+    });
   };
+
   const handleChangeTextArabicBox = (event) => {
     setProductDescrtopAndnameState({
       ...productDescrtopAndnameState,
@@ -332,17 +435,46 @@ const Board = (props) => {
 
     if (!(arabicValid || englishValid || frenchValid)) {
       if (arabicValid) {
-        seterrorString("Fill both name and description for Arabic");
+        dispatch(
+          props.addErrorItemInAlert({
+            message: "Please select one product to edit",
+          })
+        );
+        // seterrorString("Fill both name and description for Arabic");
       } else if (englishValid) {
+        dispatch(
+          props.addErrorItemInAlert({
+            message: "Fill both name and description for English",
+          })
+        );
         seterrorString("Fill both name and description for English");
       } else if (frenchValid) {
+        dispatch(
+          props.addErrorItemInAlert({
+            message: "Fill both name and description for French",
+          })
+        );
+
         seterrorString("Fill both name and description for French");
       } else {
+        dispatch(
+          props.addErrorItemInAlert({
+            message: "Fill both name and description for a language",
+          })
+        );
         seterrorString("Fill both name and description for a language");
       }
+    }
+    if (!productDescrtopAndnameState.productIdState) {
+      dispatch(
+        props.addErrorItemInAlert({
+          message: "Please add product code",
+        })
+      );
+      seterrorString("Please add product code");
     } else {
       const obj = {
-        product_code: "0000 0021",
+        product_code: productDescrtopAndnameState.productIdState,
         product_details: {
           ar: {
             name: arbic && arbic.name ? arbic.name : "",
@@ -358,7 +490,7 @@ const Board = (props) => {
             description: french && french.description ? french.description : "",
           },
         },
-        product_url: productUrl,
+        product_url: productDescrtopAndnameState.productUrl,
         product_image:
           "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
         product_category_id: "5f75b84ea456c4ef19049547",
@@ -375,10 +507,14 @@ const Board = (props) => {
       //     Authorization: tokken,
       //   },
       // });
-
       const tokken = getTokken();
-      const url = apiUrl + "/products/add";
-      const responce = await axios.post(url, obj);
+      if (isAdd) {
+        const url = apiUrl + "/products/add";
+        const responce = await axios.post(url, obj);
+      } else {
+        const url = apiUrl + "/products/update";
+        const responce = await axios.put(url, obj);
+      }
     }
   };
 
@@ -410,7 +546,10 @@ const Board = (props) => {
             md={2}
             sm={12}
           >
-            <Images onChange={onChange} images={images} />
+            <Images
+              onChange={onChange}
+              images={productDescrtopAndnameState.images}
+            />
           </ActionHomeButtonContainer>
           <ActionButtonContainer
             lg={7}
@@ -425,9 +564,12 @@ const Board = (props) => {
             }}
           >
             {errorString && <div>{errorString}</div>}
+            {console.log(productDescrtopAndnameState.arabic.description)}
             <TextBox
               id="1"
               show={true}
+              valueName={productDescrtopAndnameState.arabic.name}
+              valueDescription={productDescrtopAndnameState.arabic.description}
               setActive={setActive}
               mount={id == "1" ? true : false}
               name={"عربي"}
@@ -439,6 +581,10 @@ const Board = (props) => {
               <TextBox
                 id="2"
                 show={true}
+                valueName={productDescrtopAndnameState.english.name}
+                valueDescription={
+                  productDescrtopAndnameState.english.description
+                }
                 setActive={setActive}
                 mount={id == "2" ? true : false}
                 name={"English"}
@@ -451,6 +597,10 @@ const Board = (props) => {
               <TextBox
                 id="3"
                 show={true}
+                valueName={productDescrtopAndnameState.francias.name}
+                valueDescription={
+                  productDescrtopAndnameState.francias.description
+                }
                 setActive={setActive}
                 mount={id == "3" ? true : false}
                 name={"Francias"}
@@ -497,7 +647,7 @@ const Board = (props) => {
             }}
           >
             <Typography component="p" variant="caption">
-              Product ID
+              Product Code
             </Typography>
             <SearchButton>
               <Input
@@ -505,9 +655,10 @@ const Board = (props) => {
                   width: "100%",
                   margin: "10px",
                 }}
-                value={productIdState}
+                disabled={!isAdd}
+                value={productDescrtopAndnameState.productIdState}
                 disableUnderline={true}
-                placeholder="Enter  Product Name"
+                placeholder="Enter  Product Code"
                 onChange={(event) => productId(event.target.value)}
               />
             </SearchButton>
@@ -531,11 +682,11 @@ const Board = (props) => {
                   lineBreak: "anywhere",
                 }}
                 disableUnderline={true}
-                value={productUrl}
+                value={productDescrtopAndnameState.productUrl}
                 readOnly={true}
               />
             </SearchButton>
-            <CopyToClipboard text={productUrl}>
+            <CopyToClipboard text={productDescrtopAndnameState.productUrl}>
               <Button style={{ marginTop: "5px", border: "1px solid #6E9F21" }}>
                 Copy Url
               </Button>
@@ -579,11 +730,11 @@ const Board = (props) => {
             >
               Print Code
             </Button>
-            {productUrl ? (
+            {productDescrtopAndnameState.productUrl ? (
               <QRCodeContainer>
                 <QRCode
                   className="qr-code"
-                  value={productUrl || ""}
+                  value={productDescrtopAndnameState.productUrl || ""}
                   bgColor="#080040"
                   fgColor="#fff"
                   level="L"
@@ -600,4 +751,23 @@ const Board = (props) => {
   );
 };
 
-export default withRouter(Board);
+const mapStateToProps = (state) => {
+  const { updateError } = state.authentication;
+  return {
+    updateError,
+  };
+};
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      addErrorItemInAlert,
+      addSuccessItemInAlert,
+    },
+    dispatch
+  );
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Board);
