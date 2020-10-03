@@ -4,6 +4,14 @@ import styled from "styled-components";
 import { ReactComponent as ErrorIcon } from "../../assets/icons/error-404.svg";
 import Search from "./search";
 import ToDoList from "./toDoList";
+import { bindActionCreators } from "redux";
+import {
+  addErrorItemInAlert,
+  addSuccessItemInAlert,
+} from "../../redux/actions/alert.action";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import ToDoListHeader from "./todoHeader";
 import { Row, Col, Grid } from "react-flexbox-grid";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -13,6 +21,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Model from "../../components/ProductDialog";
 import Pagination from "@material-ui/lab/Pagination";
 import { apiUrl } from "../../constants/urls";
+import { getTokken } from "../../redux/reducers/authentication.reducer";
 import {
   Typography,
   IconButton,
@@ -93,17 +102,22 @@ const AdminDashbord = (props) => {
   const [isAllSelected, setAllSelected] = useState(false);
   const [paginationCount, setPaginationCount] = useState(1);
   const url = `${apiUrl}/products`;
+  const dispatch = useDispatch();
 
   const fetchproduct = async (page) => {
     if (!page) {
       page = 1;
     }
-    const { data } = await axios.get(url);
-    if (data) {
-      data = data.map(item => {
-        return { ...item, selected:false }
-      })
-      setProductData(data);
+    const tokken = getTokken();
+    const response = await axios.get(url);
+    const { products } = response.data;
+    if (products) {
+      const newdata =
+        products &&
+        products.map((item) => {
+          return { ...item, selected: false };
+        });
+      setProductData(newdata);
     }
   };
 
@@ -133,38 +147,80 @@ const AdminDashbord = (props) => {
   };
 
   const onCheckBoxClick = (id) => {
-    setProductData(productData.map((p) => p.id === id ? { ...p, selected: !p.selected } : p));
+    setProductData(
+      productData &&
+        productData.map((p) =>
+          p.id === id ? { ...p, selected: !p.selected } : p
+        )
+    );
   };
 
-  const getSelectedItemsProductCodes = () =>  {
-    return productData.map(x => {
-      if (x.selected) {
-        return x.product_code
-      }
-    })
-  }
+  const getSelectedItemsProductCodes = () => {
+    return (
+      productData &&
+      productData.map((x) => {
+        if (x.selected) {
+          return x.product_code;
+        }
+      })
+    );
+  };
 
-  const onSelectAllAction = () => {
-    setProductData(productData.map((p) => {
-      return { ...p, selected: !isAllSelected };
-    }));
+  const onSelectAllAction = async (event) => {
+    if (event.target.checked) {
+      await setProductData(
+        productData &&
+          productData.map((p) => {
+            return { ...p, selected: true };
+          })
+      );
+    } else {
+      await setProductData(
+        productData &&
+          productData.map((p) => {
+            return { ...p, selected: false };
+          })
+      );
+    }
+
     setAllSelected(!isAllSelected);
-  }
+  };
 
   const deleteItem = async () => {
-
-    const product_codes = getSelectedItemsProductCodes()
+    const product_codes = getSelectedItemsProductCodes();
+    const tokken = getTokken();
     if (product_codes.length > 0) {
       // TODO: replace code with proper login auth code
-      await axios.delete(`${apiUrl}/products/remove`, { 
+      await axios.delete(`${apiUrl}/products/remove`, {
         data: { product_codes },
         headers: {
-          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJpZCI6IjVmNzc2OTExYTJhNTc5ZDEyOTc0NWY5OCJ9LCJpYXQiOjE2MDE2NjE2Mzd9.d8F9Wcvvpsui3a5FU4vtU3dB5V0YzBf_MIpRWlZkslI"
-        }
+          Authorization: tokken,
+        },
       });
       fetchproduct();
     }
-  }
+  };
+
+  // const handelEditClick = () => {
+  //   const product_codes = getSelectedItemsProductCodes();
+  //   console.log(product_codes)
+  //   if (product_codes.length > 1) {
+  //     console.log('i am in')
+  //     dispatch(
+  //       props.addErrorItemInAlert({
+  //         message: "Please select one product to edit",
+  //       })
+  //     );
+  //   }
+  //   props.history.push();
+  // };
+
+  const handelEditClick = (code) => {
+    if (code) {
+      props.history.push(`/product/${code}`);
+    }
+  };
+
   return (
     <React.Fragment>
       <Container>
@@ -182,7 +238,7 @@ const AdminDashbord = (props) => {
               margin: "10px",
             }}
             onClick={() => {
-              props.history.push("/product");
+              handelEditClick();
             }}
           >
             <Typography component="p" variant="subtitle3">
@@ -203,7 +259,7 @@ const AdminDashbord = (props) => {
               margin: "10px",
             }}
             onClick={() => {
-              props.history.push("/product");
+              props.history.push(`/product/add?add-product=${true}`);
             }}
           >
             <Typography component="p" variant="subtitle3">
@@ -221,6 +277,7 @@ const AdminDashbord = (props) => {
             />
           </FormGroup>
         </Row>
+        {console.log(productData)}
         <ToDoListHeader />
         <div style={{ width: "100%", margin: "0px" }}>
           {productData &&
@@ -236,6 +293,7 @@ const AdminDashbord = (props) => {
                   code={obj.product_code}
                   print={print}
                   onCheckBoxClick={onCheckBoxClick}
+                  handelEditClick={handelEditClick}
                 />
               );
             })}
@@ -257,4 +315,23 @@ const AdminDashbord = (props) => {
   );
 };
 
-export default withRouter(AdminDashbord);
+const mapStateToProps = (state) => {
+  const { updateError } = state.authentication;
+  return {
+    updateError,
+  };
+};
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      addErrorItemInAlert,
+      addSuccessItemInAlert,
+    },
+    dispatch
+  );
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(AdminDashbord);

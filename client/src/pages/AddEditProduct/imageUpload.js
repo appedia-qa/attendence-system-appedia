@@ -41,10 +41,8 @@ const ImgDiv = styled.div`
 `;
 
 export default function App(props) {
-
   const maxNumber = 69;
-
- 
+  console.log(props.images);
 
   return (
     <div className="App">
@@ -74,7 +72,11 @@ export default function App(props) {
               {imageList && imageList.length > 0 ? (
                 imageList.map((image, index) => (
                   <ImgDiv key={index}>
-                    <img src={image["data_url"]} alt="" width="70%" />
+                    {!image.uploaded ? (
+                      <img src={image["data_url"]} alt="" width="70%" />
+                    ) : (
+                      <img src={image["product_image"]} alt="" width="70%" />
+                    )}
                     <div className="image-item__btn-wrapper">
                       <UpdateIcon
                         color="secondary"
