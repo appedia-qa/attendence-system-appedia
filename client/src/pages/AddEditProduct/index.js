@@ -626,7 +626,7 @@ const Board = (props) => {
                 }}
                 onClick={saveItem}
               >
-                   {i18n._(t`Save`)}
+                {i18n._(t`Save`)}
               </Button>
               <Button
                 style={{
@@ -635,7 +635,7 @@ const Board = (props) => {
                   border: "1px solid red",
                 }}
               >
-              {i18n._(t`Cancel`)}
+                {i18n._(t`Cancel`)}
               </Button>
             </ActionButtonContainer>
 
@@ -653,7 +653,7 @@ const Board = (props) => {
               }}
             >
               <Typography component="p" variant="caption">
-                   {i18n._(t`Product Code`)}
+                {i18n._(t`Product Code`)}
               </Typography>
               <SearchButton>
                 <Input
@@ -673,7 +673,7 @@ const Board = (props) => {
                 component="p"
                 variant="caption"
               >
-                  {i18n._(t`Product Url`)}
+                {i18n._(t`Product Url`)}
               </Typography>
               <SearchButton
                 style={{
@@ -696,7 +696,7 @@ const Board = (props) => {
                 <Button
                   style={{ marginTop: "5px", border: "1px solid #6E9F21" }}
                 >
-                     {i18n._(t`Copy Url`)}
+                  {i18n._(t`Copy Url`)}
                 </Button>
               </CopyToClipboard>
               <Typography
@@ -704,31 +704,9 @@ const Board = (props) => {
                 component="p"
                 variant="caption"
               >
-                   {i18n._(t`Product Code`)}
+                {i18n._(t`Product Code`)}
               </Typography>
-              <SearchButton>
-                <FormControl className={classes.formControl}>
-                  {!age && (
-                    <InputLabel shrink id="demo-simple-select-disabled-label">
-                      Select Code Type
-                    </InputLabel>
-                  )}
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    value={age}
-                    onChange={handleChange}
-                    disableUnderline={true}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl>
-              </SearchButton>
+
               <Button
                 style={{
                   marginTop: "5px",
@@ -736,7 +714,7 @@ const Board = (props) => {
                   backgroundColor: "#6E9F21",
                 }}
               >
-                  {i18n._(t`Print Code`)}
+                {i18n._(t`Print Code`)}
               </Button>
               {productDescrtopAndnameState.productUrl ? (
                 <QRCodeContainer>

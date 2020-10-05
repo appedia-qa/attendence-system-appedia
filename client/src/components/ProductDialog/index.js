@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import Modal from "@material-ui/core/Modal";
 import styled from "styled-components";
 import { withRouter } from "react-router";
@@ -26,6 +27,7 @@ import {
 import { closeProductDialog } from "../../redux/actions/productDialog.action";
 import { useEffect } from "react";
 import Image from "../Image";
+var PrintTemplate = require("react-print");
 
 const Container = styled.div`
   ${({ theme, width }) => `
@@ -193,11 +195,56 @@ const DivContainer = styled.div`
   `}
 `;
 
-const ProductDialog = (props) => {
+function areEqual(prevProps, nextProps) {
+  console.log(prevProps, nextProps);
+  if (prevProps.isDialogOpen == nextProps.isDialogOpen) {
+    return true;
+  }
+  return false;
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+}
+
+const ProductDialog = (props, prop2) => {
   let product = {};
   const dispatch = useDispatch();
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [prevProductId, setPrevProductId] = useState(-1);
+  const [render, noRender] = useState(false);
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  const componentRef = useRef();
+
+  const print = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  const handlePrint = () => {
+    print();
+  };
+
+  useEffect(() => {
+    if (width || height) {
+      noRender(true);
+    }
+  }, [[width, height]]);
+
+  const handleEditWidth = (value) => {
+    setWidth(value);
+  };
+
+  const handleEditHeight = (value) => {
+    setHeight(value);
+  };
+
+  const closeDialouge = () => {
+    props.closeProductDialog();
+    noRender(false);
+    setHeight("");
+    setWidth("");
+  };
 
   return props.isDialogOpen ? (
     <I18n>
@@ -208,10 +255,17 @@ const ProductDialog = (props) => {
           style={{ overflow: "scroll", zIndex: "4", border: "none" }}
         >
           <Container>
-            <DivContainer>
-              <Image src="https://www.qrcode-monkey.com/img/default-preview-qr.svg" />
+            <DivContainer
+              style={{ width: `${width}px`, height: `${height}px` }}
+              ref={componentRef}
+            >
+              <Image
+                id="page-main"
+                src="https://www.qrcode-monkey.com/img/default-preview-qr.svg"
+              />
             </DivContainer>
-            <DivContainer style={{ marginBottom: "10px" }}>
+
+            {/* <DivContainer style={{ marginBottom: "10px" }}>
               <Input
                 style={{
                   width: "100%",
@@ -222,10 +276,7 @@ const ProductDialog = (props) => {
                 }}
                 disableUnderline={true}
                 placeholder="W (Width) mm"
-                // onChange={(event) => setSearchText(event.target.value)}
-                // onKeyUp={(event) => {
-                //   handleSearch(props, searchText);
-                // }}
+                onChange={(event) => handleEditWidth(event.target.value)}
               />
               <Input
                 style={{
@@ -237,12 +288,9 @@ const ProductDialog = (props) => {
                 }}
                 disableUnderline={true}
                 placeholder="H (Height) mm"
-                // onChange={(event) => setSearchText(event.target.value)}
-                // onKeyUp={(event) => {
-                //   handleSearch(props, searchText);
-                // }}
+                onChange={(event) => handleEditHeight(event.target.value)}
               />
-            </DivContainer>
+            </DivContainer> */}
             <DivContainer style={{ justifyContent: "space-around" }}>
               <Button
                 style={{
@@ -250,11 +298,12 @@ const ProductDialog = (props) => {
                   color: "#FFFFFF",
                   width: "100px",
                 }}
+                onClick={handlePrint}
               >
                 {i18n._(t`Print`)}
               </Button>
               <Button
-                onClick={() => props.closeProductDialog()}
+                onClick={() => closeDialouge()}
                 style={{ border: "1px solid #707070", width: "100px" }}
               >
                 {i18n._(t`Cancel`)}
@@ -267,4 +316,4 @@ const ProductDialog = (props) => {
   ) : null;
 };
 
-export default withRouter(ProductDialog);
+export default React.memo(ProductDialog, areEqual);

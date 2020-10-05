@@ -173,7 +173,10 @@ class App extends Component {
                           language={language}
                         />
                         <AlertComponent style={{ zIndex: "1" }} />
-                        <Search />
+                        <Search
+                          width={this.state.windowWidth}
+                          height={this.state.windowHeight}
+                        />
                         <Switch>
                           {Routes.map(({ component: Cmp, ...route }, i) => (
                             <Route
