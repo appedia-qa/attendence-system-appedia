@@ -4,6 +4,8 @@ import styled from "styled-components";
 import PublishIcon from "@material-ui/icons/Publish";
 import UpdateIcon from "@material-ui/icons/Update";
 import CancelIcon from "@material-ui/icons/Cancel";
+import { t } from "@lingui/macro";
+import { I18n } from "@lingui/react";
 
 import {
   Typography,
@@ -42,80 +44,87 @@ const ImgDiv = styled.div`
 
 export default function App(props) {
   const maxNumber = 69;
-  console.log(props.images);
 
   return (
-    <div className="App">
-      <ImageUploading
-        multiple
-        value={props.images}
-        onChange={props.onChange}
-        maxNumber={maxNumber}
-        dataURLKey="data_url"
-      >
-        {({
-          imageList,
-          onImageUpload,
-          onImageRemoveAll,
-          onImageUpdate,
-          onImageRemove,
-          isDragging,
-          dragProps,
-        }) => (
-          // write your building UI
-          <div
-            style={{
-              marginTop: "40px",
-            }}
+    <I18n>
+      {({ i18n }) => (
+        <div className="App">
+          <ImageUploading
+            multiple
+            value={props.images}
+            onChange={props.onChange}
+            maxNumber={maxNumber}
+            dataURLKey="data_url"
           >
-            <StyleDiv {...dragProps}>
-              {imageList && imageList.length > 0 ? (
-                imageList.map((image, index) => (
-                  <ImgDiv key={index}>
-                    {!image.uploaded ? (
-                      <img src={image["data_url"]} alt="" width="70%" />
-                    ) : (
-                      <img src={image["product_image"]} alt="" width="70%" />
-                    )}
-                    <div className="image-item__btn-wrapper">
-                      <UpdateIcon
-                        color="secondary"
-                        onClick={() => onImageUpdate(index)}
-                      />
-                      <CancelIcon
-                        style={{ color: "red" }}
-                        onClick={() => onImageRemove(index)}
-                      />
-                    </div>
-                  </ImgDiv>
-                ))
-              ) : (
-                <PublishIcon color="action" fontSize="large" />
-              )}
-            </StyleDiv>
-            <div style={{ display: "grid" }}>
-              <button
-                style={
-                  (isDragging ? { color: "red" } : undefined,
-                  {
-                    height: "40px",
-                    marginTop: "20px",
-                    alignItems: "center",
-                    display: "grid",
-                    color: "#080040",
-                  })
-                }
-                onClick={onImageUpload}
-                {...dragProps}
+            {({
+              imageList,
+              onImageUpload,
+              onImageRemoveAll,
+              onImageUpdate,
+              onImageRemove,
+              isDragging,
+              dragProps,
+            }) => (
+              // write your building UI
+              <div
+                style={{
+                  marginTop: "40px",
+                }}
               >
-                Upload Photo
-              </button>
-            </div>
-            &nbsp;
-            {/* <button onClick={onImageRemoveAll}>Remove all images</button> */}
-          </div>
-        )}
-      </ImageUploading>
-    </div>
+                <StyleDiv {...dragProps}>
+                  {imageList && imageList.length > 0 ? (
+                    imageList.map((image, index) => (
+                      <ImgDiv key={index}>
+                        {!image.uploaded ? (
+                          <img src={image["data_url"]} alt="" width="70%" />
+                        ) : (
+                          <img
+                            src={image["product_image"]}
+                            alt=""
+                            width="70%"
+                          />
+                        )}
+                        <div className="image-item__btn-wrapper">
+                          <UpdateIcon
+                            color="secondary"
+                            onClick={() => onImageUpdate(index)}
+                          />
+                          <CancelIcon
+                            style={{ color: "red" }}
+                            onClick={() => onImageRemove(index)}
+                          />
+                        </div>
+                      </ImgDiv>
+                    ))
+                  ) : (
+                    <PublishIcon color="action" fontSize="large" />
+                  )}
+                </StyleDiv>
+                <div style={{ display: "grid" }}>
+                  <button
+                    style={
+                      (isDragging ? { color: "red" } : undefined,
+                      {
+                        height: "40px",
+                        marginTop: "20px",
+                        alignItems: "center",
+                        display: "grid",
+                        color: "#080040",
+                      })
+                    }
+                    onClick={onImageUpload}
+                    {...dragProps}
+                  >
+                    {i18n._(t`Upload Photo`)}
+                  </button>
+                </div>
+                &nbsp;
+                {/* <button onClick={onImageRemoveAll}>Remove all images</button> */}
+              </div>
+            )}
+          </ImageUploading>
+        </div>
+      )}
+    </I18n>
   );
 }

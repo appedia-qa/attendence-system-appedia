@@ -18,7 +18,6 @@ import { useState } from "react";
 import { ReactComponent as Logo } from "../../assets/icons/logo.svg";
 import { ReactComponent as Sign } from "../../assets/icons/sign.svg";
 import SearchIcon from "@material-ui/icons/Search";
-
 import { t } from "@lingui/macro";
 import { I18n } from "@lingui/react";
 import {
@@ -190,6 +189,7 @@ const HeaderSearch = (props) => {
 
   return (
     <I18n>
+       {({ i18n }) => (
       <div
         style={{
           width: "100%",
@@ -224,7 +224,8 @@ const HeaderSearch = (props) => {
                   }}
                   component="p"
                 >
-                  Home
+                  
+                  {i18n._(t`Home`)}
                 </Typography>
                 <HomeIcon style={{ width: "15px" }} />
               </StyleButton>
@@ -276,7 +277,8 @@ const HeaderSearch = (props) => {
                   }}
                   component="p"
                 >
-                  Log out
+                  {i18n._(t`Log out`)}
+                 
                 </Typography>
                 <PersonIcon style={{ width: "15px" }} />
               </StyleButton>
@@ -284,7 +286,7 @@ const HeaderSearch = (props) => {
           </HeaderBottomMenu>
         </Container>
       </div>
-    </I18n>
+     )}</I18n>
   );
 };
 

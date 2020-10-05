@@ -1,7 +1,5 @@
 {
-  
   "Quantity": "كمية",
-  
   "{0}": function (a) {
     "{0}": "{0}",
     "{zoneValue}": "{zoneValue}"

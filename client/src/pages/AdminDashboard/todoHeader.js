@@ -4,6 +4,7 @@ import { I18n } from "@lingui/react";
 import { Row, Col, Grid } from "react-flexbox-grid";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
+import { t } from "@lingui/macro";
 import {
   Typography,
   IconButton,
@@ -33,6 +34,7 @@ const ListColumn = styled(Col)`
 const List = (props) => {
   return (
     <I18n>
+       {({ i18n }) => (
       <ToDoList>
         <ListColumn lg={3}>
           <Typography
@@ -40,7 +42,7 @@ const List = (props) => {
             component="p"
             variant="subtitle1"
           >
-            Product ID
+              {i18n._(t` Product ID`)}
           </Typography>
         </ListColumn>
         <ListColumn lg={3}>
@@ -49,7 +51,7 @@ const List = (props) => {
             component="p"
             variant="subtitle1"
           >
-            Product Name
+           {i18n._(t` Product Name`)}
           </Typography>
         </ListColumn>
         <ListColumn lg={3}>
@@ -57,13 +59,13 @@ const List = (props) => {
             style={{ color: "#FFFFFF" }}
             component="p"
             variant="subtitle1"
-          >
-            Product URL
+          > 
+            {i18n._(t` Product URL`)}
           </Typography>
         </ListColumn>
         <ListColumn lg={3}></ListColumn>
       </ToDoList>
-    </I18n>
+    )}</I18n>
   );
 };
 

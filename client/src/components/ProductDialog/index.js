@@ -211,14 +211,14 @@ const ProductDialog = (props) => {
             <DivContainer>
               <Image src="https://www.qrcode-monkey.com/img/default-preview-qr.svg" />
             </DivContainer>
-            <DivContainer style={{marginBottom:"10px"}}>
+            <DivContainer style={{ marginBottom: "10px" }}>
               <Input
                 style={{
                   width: "100%",
                   marginLeft: "25px",
-                  marginRight:"25px",
+                  marginRight: "25px",
                   border: "1px solid #707070",
-                  borderRadius:"5px",
+                  borderRadius: "5px",
                 }}
                 disableUnderline={true}
                 placeholder="W (Width) mm"
@@ -231,10 +231,9 @@ const ProductDialog = (props) => {
                 style={{
                   width: "100%",
                   marginLeft: "25px",
-                  marginRight:"25px",
+                  marginRight: "25px",
                   border: "1px solid #707070",
-                  borderRadius:"5px",
-
+                  borderRadius: "5px",
                 }}
                 disableUnderline={true}
                 placeholder="H (Height) mm"
@@ -252,13 +251,13 @@ const ProductDialog = (props) => {
                   width: "100px",
                 }}
               >
-                Print
+                {i18n._(t`Print`)}
               </Button>
               <Button
                 onClick={() => props.closeProductDialog()}
                 style={{ border: "1px solid #707070", width: "100px" }}
               >
-                cancel
+                {i18n._(t`Cancel`)}
               </Button>
             </DivContainer>
           </Container>
@@ -267,8 +266,5 @@ const ProductDialog = (props) => {
     </I18n>
   ) : null;
 };
-
-
-
 
 export default withRouter(ProductDialog);

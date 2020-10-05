@@ -5,6 +5,7 @@ import { Row, Col, Grid } from "react-flexbox-grid";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import PrintRoundedIcon from "@material-ui/icons/PrintRounded";
+import { t } from "@lingui/macro";
 import {
   Typography,
   IconButton,
@@ -48,72 +49,81 @@ const ListColumn = styled(Col)`
 const List = (props) => {
   return (
     <I18n>
-      <React.Fragment>
-        <ToDoList style={{ alignItems: "center" }}>
-          <ListColumn lg={3}>
-            <Row style={{ alignItems: "center", paddingLeft: "10px" }}>
-              <Col>
-                <Checkbox checked={props.selected} color="primary" onClick={() => props.onCheckBoxClick(props.id)} />
-              </Col>
-              <Col>
+      {({ i18n }) => (
+        <React.Fragment>
+          <ToDoList style={{ alignItems: "center" }}>
+            <ListColumn lg={3}>
+              <Row style={{ alignItems: "center", paddingLeft: "10px" }}>
+                <Col>
+                  <Checkbox
+                    checked={props.selected}
+                    color="primary"
+                    onClick={() => props.onCheckBoxClick(props.id)}
+                  />
+                </Col>
+                <Col>
+                  <Typography component="p" variant="subtitle2">
+                    {props.id}
+                  </Typography>
+                </Col>
+              </Row>
+            </ListColumn>
+            <ListColumn lg={3}>
+              <Typography
+                component="p"
+                style={{ paddingLeft: "12px" }}
+                variant="subtitle2"
+              >
+                {props.name}
+              </Typography>
+            </ListColumn>
+            <ListColumn lg={3}>
+              <Typography
+                component="p"
+                variant="subtitle2"
+                style={{ paddingLeft: "12px" }}
+              >
+                {props.url}
+              </Typography>
+            </ListColumn>
+            <ListColumn
+              style={{ display: "flex", flexDirection: "row" }}
+              lg={3}
+            >
+              <StyleButton
+                style={{
+                  margin: "10px",
+                  border: "1px solid #08004015",
+                }}
+                onClick={() => {
+                  props.print(true);
+                }}
+              >
+                <PrintRoundedIcon
+                  color="disabled"
+                  style={{ width: "16px", marginRight: "5px" }}
+                />
                 <Typography component="p" variant="subtitle2">
-                  {props.id}
+                  {i18n._(t`Print`)}
                 </Typography>
-              </Col>
-            </Row>
-          </ListColumn>
-          <ListColumn lg={3}>
-            <Typography
-              component="p"
-              style={{ paddingLeft: "12px" }}
-              variant="subtitle2"
-            >
-              {props.name}
-            </Typography>
-          </ListColumn>
-          <ListColumn lg={3}>
-            <Typography
-              component="p"
-              variant="subtitle2"
-              style={{ paddingLeft: "12px" }}
-            >
-              {props.url}
-            </Typography>
-          </ListColumn>
-          <ListColumn style={{display:'flex',flexDirection:"row"}}lg={3}>
-            <StyleButton
-              style={{
-                margin: "10px",
-                border: "1px solid #08004015",
-              }}
-              onClick={() => {
-                props.print(true);
-              }}
-            >
-              <PrintRoundedIcon
-                color="disabled"
-                style={{ width: "16px", marginRight: "5px" }}
-              />
-              <Typography component="p" variant="subtitle2">
-               print
-              </Typography>
-            </StyleButton>
-            <StyleButton
-              style={{
-                margin: "10px",
-                border: "1px solid #08004015",
-              }}
-              onClick={() => {
-                props.handelEditClick(props.code);
-              }}
-            >
-              <Typography component="p" variant="subtitle2">
-               edit
-              </Typography>
-            </StyleButton>
-          </ListColumn>
-        </ToDoList>
-      </React.Fragment>
+              </StyleButton>
+              <StyleButton
+                style={{
+                  margin: "10px",
+                  border: "1px solid #08004015",
+                }}
+                onClick={() => {
+                  props.handelEditClick(props.code);
+                }}
+              >
+                <Typography component="p" variant="subtitle2">
+                  {i18n._(t`Edit`)}
+                </Typography>
+              </StyleButton>
+            </ListColumn>
+          </ToDoList>
+        </React.Fragment>
+      )}
     </I18n>
   );
 };

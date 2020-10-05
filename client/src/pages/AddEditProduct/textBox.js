@@ -145,6 +145,8 @@ const ActionHomeButtonContainer = styled(Col)`
 
 const TextBox = (props) => {
   return (
+    <I18n>
+    {({ i18n }) => (
     <React.Fragment>
       <ActionButtonContainer
         style={{
@@ -157,7 +159,7 @@ const TextBox = (props) => {
         }}
       >
         <Typography component="p" variant="caption">
-          Product Name({props.name})
+        {i18n._(t`Product Name`)} ({props.name})
         </Typography>
         <SearchButton>
           <Input
@@ -194,7 +196,7 @@ const TextBox = (props) => {
           }}
           variant="caption"
         >
-          Product Description({props.name})
+           {i18n._(t`Product Description`)} ({props.name})
         </Typography>
         {props.mount ? (
           <div className="text-editor">
@@ -223,7 +225,8 @@ const TextBox = (props) => {
         )}
       </ActionButtonContainer>
     </React.Fragment>
-  );
+  )}
+  </I18n>);
 };
 
 export default withRouter(TextBox);

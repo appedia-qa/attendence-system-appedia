@@ -249,8 +249,8 @@ const AdminDashbord = (props) => {
             }}
           >
             <Typography component="p" variant="subtitle3" onClick={deleteItem}>
-              {/* Delete Item */}
-              {i18n._(t`Quantity`)}
+              
+              {i18n._(t`Delete Item`)}
             </Typography>
           </StyleButton>
           <StyleButton
@@ -262,7 +262,8 @@ const AdminDashbord = (props) => {
             }}
           >
             <Typography component="p" variant="subtitle3">
-              Add Item
+             
+              {i18n._(t` Add Item`)}
             </Typography>
           </StyleButton>
         </Row>
@@ -270,13 +271,12 @@ const AdminDashbord = (props) => {
           <FormGroup row>
             <FormControlLabel
               control={<Checkbox name="checkedB" color="primary" />}
-              label="Select All"
+              label={i18n._(t`Select All`)}
               value={isAllSelected}
               onClick={onSelectAllAction}
             />
           </FormGroup>
         </Row>
-        {console.log(productData)}
         <ToDoListHeader />
         <div style={{ width: "100%", margin: "0px" }}>
           {productData &&

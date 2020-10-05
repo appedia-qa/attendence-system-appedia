@@ -9,7 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import axios from "axios";
 import { bindActionCreators } from "redux";
-import  { Redirect } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 import {
   addErrorItemInAlert,
   addSuccessItemInAlert,
@@ -325,7 +325,7 @@ const Board = (props) => {
 
     const tokken = getTokken();
     if (!tokken) {
-      props.history.push('/login')
+      props.history.push("/login");
     }
 
     if (add) {
@@ -537,219 +537,225 @@ const Board = (props) => {
 
   return (
     <I18n>
-      <Container>
-        <HeaderBottomMenu>
-          <ActionHomeButtonContainer
-            style={{
-              minWidth: "230px",
-              minHeight: "500px",
-              background: "#FFFFFF",
-              padding: "15px",
-            }}
-            lg={2}
-            md={2}
-            sm={12}
-          >
-            <Images
-              onChange={onChange}
-              images={productDescrtopAndnameState.images}
-            />
-          </ActionHomeButtonContainer>
-          <ActionButtonContainer
-            lg={7}
-            md={7}
-            sm={12}
-            style={{
-              maxHeight: "500px",
-              maxWidth: "606px",
-              overflow: "auto",
-              padding: "20px",
-              paddingTop: "0px",
-            }}
-          >
-            {errorString && <div>{errorString}</div>}
-            <TextBox
-              id="1"
-              show={true}
-              valueName={productDescrtopAndnameState.arabic.name}
-              valueDescription={productDescrtopAndnameState.arabic.description}
-              setActive={setActive}
-              mount={id == "1" ? true : false}
-              name={"عربي"}
-              EventName={"arabic"}
-              handleChange={handleChangeTextArabicBox}
-              handleNameChange={handleNameChange}
-            />
-            <div style={{ marginTop: "30px" }}>
-              <TextBox
-                id="2"
-                show={true}
-                valueName={productDescrtopAndnameState.english.name}
-                valueDescription={
-                  productDescrtopAndnameState.english.description
-                }
-                setActive={setActive}
-                mount={id == "2" ? true : false}
-                name={"English"}
-                EventName={"english"}
-                handleNameChange={handleNameChange}
-                handleChange={handleChangeTextEnglishBox}
-              />
-            </div>
-            <div style={{ marginTop: "30px" }}>
-              <TextBox
-                id="3"
-                show={true}
-                valueName={productDescrtopAndnameState.francias.name}
-                valueDescription={
-                  productDescrtopAndnameState.francias.description
-                }
-                setActive={setActive}
-                mount={id == "3" ? true : false}
-                name={"Francias"}
-                EventName={"francias"}
-                handleNameChange={handleNameChange}
-                handleChange={handleChangeFranciasTextBox}
-              />
-            </div>
-            <Button
+      {({ i18n }) => (
+        <Container>
+          <HeaderBottomMenu>
+            <ActionHomeButtonContainer
               style={{
-                marginTop: "5px",
-                marginBottom: "15px",
-                color: "#FFFFFF",
-                border: "1px solid #6E9F21",
-                background: "#6E9F21",
-                marginRight: "20px",
+                minWidth: "230px",
+                minHeight: "500px",
+                background: "#FFFFFF",
+                padding: "15px",
               }}
-              onClick={saveItem}
+              lg={2}
+              md={2}
+              sm={12}
             >
-              Save
-            </Button>
-            <Button
+              <Images
+                onChange={onChange}
+                images={productDescrtopAndnameState.images}
+              />
+            </ActionHomeButtonContainer>
+            <ActionButtonContainer
+              lg={7}
+              md={7}
+              sm={12}
               style={{
-                marginTop: "5px",
-                marginBottom: "15px",
-                border: "1px solid red",
+                maxHeight: "500px",
+                maxWidth: "606px",
+                overflow: "auto",
+                padding: "20px",
+                paddingTop: "0px",
               }}
             >
-              Cancel
-            </Button>
-          </ActionButtonContainer>
-
-          <ActionButtonContainer
-            lg={2}
-            md={2}
-            sm={12}
-            style={{
-              padding: "15px",
-              minHeight: "500px",
-              minWidth: "230px",
-              background: "#FFFFFF",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Typography component="p" variant="caption">
-              Product Code
-            </Typography>
-            <SearchButton>
-              <Input
+              {errorString && <div>{errorString}</div>}
+              <TextBox
+                id="1"
+                show={true}
+                valueName={productDescrtopAndnameState.arabic.name}
+                valueDescription={
+                  productDescrtopAndnameState.arabic.description
+                }
+                setActive={setActive}
+                mount={id == "1" ? true : false}
+                name={"عربي"}
+                EventName={"arabic"}
+                handleChange={handleChangeTextArabicBox}
+                handleNameChange={handleNameChange}
+              />
+              <div style={{ marginTop: "30px" }}>
+                <TextBox
+                  id="2"
+                  show={true}
+                  valueName={productDescrtopAndnameState.english.name}
+                  valueDescription={
+                    productDescrtopAndnameState.english.description
+                  }
+                  setActive={setActive}
+                  mount={id == "2" ? true : false}
+                  name={"English"}
+                  EventName={"english"}
+                  handleNameChange={handleNameChange}
+                  handleChange={handleChangeTextEnglishBox}
+                />
+              </div>
+              <div style={{ marginTop: "30px" }}>
+                <TextBox
+                  id="3"
+                  show={true}
+                  valueName={productDescrtopAndnameState.francias.name}
+                  valueDescription={
+                    productDescrtopAndnameState.francias.description
+                  }
+                  setActive={setActive}
+                  mount={id == "3" ? true : false}
+                  name={"Francias"}
+                  EventName={"francias"}
+                  handleNameChange={handleNameChange}
+                  handleChange={handleChangeFranciasTextBox}
+                />
+              </div>
+              <Button
                 style={{
-                  width: "100%",
-                  margin: "10px",
+                  marginTop: "5px",
+                  marginBottom: "15px",
+                  color: "#FFFFFF",
+                  border: "1px solid #6E9F21",
+                  background: "#6E9F21",
+                  marginRight: "20px",
                 }}
-                disabled={!isAdd}
-                value={productDescrtopAndnameState.productIdState}
-                disableUnderline={true}
-                placeholder="Enter  Product Code"
-                onChange={(event) => productId(event.target.value)}
-              />
-            </SearchButton>
-            <Typography
-              style={{ marginTop: "40px" }}
-              component="p"
-              variant="caption"
-            >
-              Product Url
-            </Typography>
-            <SearchButton
+                onClick={saveItem}
+              >
+                   {i18n._(t`Save`)}
+              </Button>
+              <Button
+                style={{
+                  marginTop: "5px",
+                  marginBottom: "15px",
+                  border: "1px solid red",
+                }}
+              >
+              {i18n._(t`Cancel`)}
+              </Button>
+            </ActionButtonContainer>
+
+            <ActionButtonContainer
+              lg={2}
+              md={2}
+              sm={12}
               style={{
-                height: "50px",
-                lineBreak: "anywhere",
+                padding: "15px",
+                minHeight: "500px",
+                minWidth: "230px",
+                background: "#FFFFFF",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
-              <Input
+              <Typography component="p" variant="caption">
+                   {i18n._(t`Product Code`)}
+              </Typography>
+              <SearchButton>
+                <Input
+                  style={{
+                    width: "100%",
+                    margin: "10px",
+                  }}
+                  disabled={!isAdd}
+                  value={productDescrtopAndnameState.productIdState}
+                  disableUnderline={true}
+                  placeholder="Enter  Product Code"
+                  onChange={(event) => productId(event.target.value)}
+                />
+              </SearchButton>
+              <Typography
+                style={{ marginTop: "40px" }}
+                component="p"
+                variant="caption"
+              >
+                  {i18n._(t`Product Url`)}
+              </Typography>
+              <SearchButton
                 style={{
-                  width: "100%",
-                  margin: "10px",
+                  height: "50px",
                   lineBreak: "anywhere",
                 }}
-                disableUnderline={true}
-                value={productDescrtopAndnameState.productUrl}
-                readOnly={true}
-              />
-            </SearchButton>
-            <CopyToClipboard text={productDescrtopAndnameState.productUrl}>
-              <Button style={{ marginTop: "5px", border: "1px solid #6E9F21" }}>
-                Copy Url
-              </Button>
-            </CopyToClipboard>
-            <Typography
-              style={{ marginTop: "40px" }}
-              component="p"
-              variant="caption"
-            >
-              Product Code
-            </Typography>
-            <SearchButton>
-              <FormControl className={classes.formControl}>
-                {!age && (
-                  <InputLabel shrink id="demo-simple-select-disabled-label">
-                    Select Code Type
-                  </InputLabel>
-                )}
-                <Select
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  value={age}
-                  onChange={handleChange}
+              >
+                <Input
+                  style={{
+                    width: "100%",
+                    margin: "10px",
+                    lineBreak: "anywhere",
+                  }}
                   disableUnderline={true}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-            </SearchButton>
-            <Button
-              style={{
-                marginTop: "5px",
-                border: "1px solid #6E9F21",
-                backgroundColor: "#6E9F21",
-              }}
-            >
-              Print Code
-            </Button>
-            {productDescrtopAndnameState.productUrl ? (
-              <QRCodeContainer>
-                <QRCode
-                  className="qr-code"
-                  value={productDescrtopAndnameState.productUrl || ""}
-                  bgColor="#080040"
-                  fgColor="#fff"
-                  level="L"
-                  includeMargin={true}
-                  color="red"
-                  renderAs="svg"
+                  value={productDescrtopAndnameState.productUrl}
+                  readOnly={true}
                 />
-              </QRCodeContainer>
-            ) : null}
-          </ActionButtonContainer>
-        </HeaderBottomMenu>
-      </Container>
+              </SearchButton>
+              <CopyToClipboard text={productDescrtopAndnameState.productUrl}>
+                <Button
+                  style={{ marginTop: "5px", border: "1px solid #6E9F21" }}
+                >
+                     {i18n._(t`Copy Url`)}
+                </Button>
+              </CopyToClipboard>
+              <Typography
+                style={{ marginTop: "40px" }}
+                component="p"
+                variant="caption"
+              >
+                   {i18n._(t`Product Code`)}
+              </Typography>
+              <SearchButton>
+                <FormControl className={classes.formControl}>
+                  {!age && (
+                    <InputLabel shrink id="demo-simple-select-disabled-label">
+                      Select Code Type
+                    </InputLabel>
+                  )}
+                  <Select
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    value={age}
+                    onChange={handleChange}
+                    disableUnderline={true}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>
+              </SearchButton>
+              <Button
+                style={{
+                  marginTop: "5px",
+                  border: "1px solid #6E9F21",
+                  backgroundColor: "#6E9F21",
+                }}
+              >
+                  {i18n._(t`Print Code`)}
+              </Button>
+              {productDescrtopAndnameState.productUrl ? (
+                <QRCodeContainer>
+                  <QRCode
+                    className="qr-code"
+                    value={productDescrtopAndnameState.productUrl || ""}
+                    bgColor="#080040"
+                    fgColor="#fff"
+                    level="L"
+                    includeMargin={true}
+                    color="red"
+                    renderAs="svg"
+                  />
+                </QRCodeContainer>
+              ) : null}
+            </ActionButtonContainer>
+          </HeaderBottomMenu>
+        </Container>
+      )}
     </I18n>
   );
 };
