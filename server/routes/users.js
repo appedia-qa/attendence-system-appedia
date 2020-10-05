@@ -149,6 +149,47 @@ router.delete('/users/remove', checkAuthentication, (req, res, next) => {
   })
 );
 
+router.post('/users/approve', checkAuthentication, (req, res, next) => {
+  jwt.verify(req.token, 'secretkey123secretkey', async (error, user) => {
+    if (error) {
+      res.sendStatus(403);
+    }
+    try {
+      const username = user.user.username;
+      let userExist = await User.findOne({ username });
+      if (userExist.role === 'admin') {
+        next();
+      }
+      else {
+        res.sendStatus(403);
+      }
+    }
+    catch (error) {
+      res.sendStatus(403);
+    }
+  })
+}, (async (req, res) => {
+  let { username } = req.body;
+  try {
+    let existUser = await User.findOne({ username });
+    if (existUser && existUser.username === username  && existUser.status === 'approved') {
+      res.status(200).send('user already approved');
+    }
+    else if (existUser && existUser.username === username  && existUser.status === 'unapproved'){
+        existUser.status = 'approved';
+        let updatedUser = await existUser.save();
+        res.status(200).send('User approved');
+    }
+    else {
+      res.status(400).send('User does not exist');
+    }
+  }
+  catch (error) {
+    res.status(400).send('User does not exist');
+  }
+})
+);
+
 function checkAuthentication(req, res, next) {
 
   const bearerHeader = req.headers['authorization'];
