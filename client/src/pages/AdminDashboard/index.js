@@ -9,6 +9,7 @@ import {
   addErrorItemInAlert,
   addSuccessItemInAlert,
 } from "../../redux/actions/alert.action";
+import { I18n } from "@lingui/react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -21,6 +22,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Model from "../../components/ProductDialog";
 import Pagination from "@material-ui/lab/Pagination";
 import { apiUrl } from "../../constants/urls";
+import { t } from "@lingui/macro";
 import { getTokken } from "../../redux/reducers/authentication.reducer";
 import {
   Typography,
@@ -122,6 +124,11 @@ const AdminDashbord = (props) => {
   };
 
   useEffect(() => {
+    const tokken = getTokken();
+    if (!tokken) {
+      props.history.push("/login");
+    }
+
     fetchproduct();
   }, []);
 
@@ -222,6 +229,9 @@ const AdminDashbord = (props) => {
   };
 
   return (
+    <I18n>
+    {({ i18n }) => (
+      <div>
     <React.Fragment>
       <Container>
         <Row
@@ -239,7 +249,8 @@ const AdminDashbord = (props) => {
             }}
           >
             <Typography component="p" variant="subtitle3" onClick={deleteItem}>
-              Delete Item
+              {/* Delete Item */}
+              {i18n._(t`Quantity`)}
             </Typography>
           </StyleButton>
           <StyleButton
@@ -300,7 +311,10 @@ const AdminDashbord = (props) => {
 
       <Model isDialogOpen={open} closeProductDialog={closeProductDialog} />
     </React.Fragment>
-  );
+
+    </div>
+      )}
+    </I18n>  );
 };
 
 const mapStateToProps = (state) => {

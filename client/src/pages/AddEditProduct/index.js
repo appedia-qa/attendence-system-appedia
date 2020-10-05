@@ -9,6 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import axios from "axios";
 import { bindActionCreators } from "redux";
+import  { Redirect } from 'react-router-dom'
 import {
   addErrorItemInAlert,
   addSuccessItemInAlert,
@@ -240,7 +241,6 @@ const Board = (props) => {
       const url = apiUrl + "/products/find";
 
       const { data } = await axios.post(url, { product_code });
-      console.log(data.data);
 
       if (data) {
         const arabicName =
@@ -322,6 +322,12 @@ const Board = (props) => {
   useEffect(() => {
     const query = new URLSearchParams(props.location.search);
     const add = query.get("add-product");
+
+    const tokken = getTokken();
+    if (!tokken) {
+      props.history.push('/login')
+    }
+
     if (add) {
       setAdd(add);
     } else {
@@ -430,8 +436,6 @@ const Board = (props) => {
     const arbic = productDescrtopAndnameState.arabic;
     const english = productDescrtopAndnameState.english;
     const french = productDescrtopAndnameState.francias;
-
-    console.log(arbic, english, french);
 
     if (!(arabicValid || englishValid || frenchValid)) {
       if (arabicValid) {
@@ -564,7 +568,6 @@ const Board = (props) => {
             }}
           >
             {errorString && <div>{errorString}</div>}
-            {console.log(productDescrtopAndnameState.arabic.description)}
             <TextBox
               id="1"
               show={true}

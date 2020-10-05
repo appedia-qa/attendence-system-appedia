@@ -1,3 +1,4 @@
 export const CURRENT_LANGUAGE_KEY = 'CURRENT_LANGUAGE_KEY';
 export const ARABIC_LANGUAGE = "ARABIC";
 export const ENGLISH_LANGUAGE = "ENGLISH";
+export const FRECH_LANGUAGE = "FRENCH";

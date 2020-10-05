@@ -22,10 +22,8 @@ import {
   passwordValidator,
   emailValidator,
 } from "../../utils/emailPasswordValidator";
-import { ReactComponent as FBICON1 } from "../../assets/icons/facebook-1.svg";
-import { ReactComponent as FBICON2 } from "../../assets/icons/facebook-2.svg";
-import { ReactComponent as GGICON1 } from "../../assets/icons/google-1.svg";
-import { ReactComponent as GGICON2 } from "../../assets/icons/google-2.svg";
+import { ReactComponent as HeaderArb } from "../../assets/images/headerArb.svg";
+import { ReactComponent as HeaderEng } from "../../assets/images/headerEng.svg";
 
 class Login extends Component {
   constructor(props) {
@@ -118,8 +116,12 @@ class Login extends Component {
       <LoginContainer width={this.props.windowWidth}>
         <ContainerRow width={this.props.windowWidth}>
           <Col md={6} className="image-section">
-            <ImageOverlay />
-            <ImageOverlay />
+            <ImageOverlay>
+              <HeaderArb />
+            </ImageOverlay>
+            <ImageOverlay>
+              <HeaderEng />
+            </ImageOverlay>
           </Col>
           <Col md={6}>
             {this.props.loading ? (

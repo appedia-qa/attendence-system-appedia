@@ -17,6 +17,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { useDispatch } from "react-redux";
 import { logoutRequest } from "../../redux/actions/authentication.action";
+
 import {
   ENGLISH_LANGUAGE,
   ARABIC_LANGUAGE,

@@ -201,9 +201,10 @@ export const ContainerRow = styled(Row)`
 
 export const ImageOverlay = styled.div`
   min-width: 200px;
-  min-height: 83px;
+  min-height: 50px;
+  display:flex;
+  justify-content:center;
   margin-top: 30px;
   margin-bottom: 30px;
-  background: url(${overlay});
   background-size: cover;
 `;

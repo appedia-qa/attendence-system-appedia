@@ -34,13 +34,19 @@ import {
   CURRENT_LANGUAGE_KEY,
   ARABIC_LANGUAGE,
   ENGLISH_LANGUAGE,
+  FRECH_LANGUAGE,
 } from "./constants";
 
-const catalogs = { es: catalogEs, ar: catalogAr };
+const catalogs = { fr: catalogEs, ar: catalogAr };
 
 // we will store a varialbe in localstorage language: 'en'
 const currentLanguage = localStorage.getItem(CURRENT_LANGUAGE_KEY);
-
+const language =
+  currentLanguage === ARABIC_LANGUAGE
+    ? "ar"
+    : currentLanguage === ENGLISH_LANGUAGE
+    ? "eng"
+    : "fr";
 export const useRTL =
   currentLanguage && currentLanguage === ARABIC_LANGUAGE ? true : false;
 // Configure JSS
@@ -103,6 +109,7 @@ class App extends Component {
       sidebarOpen: false,
       windowHeight: 0,
       windowWidth: 0,
+      lang: language,
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
@@ -138,23 +145,32 @@ class App extends Component {
     }
   };
 
+  handleLanguage = () => {
+    if (this.state.lang === ENGLISH_LANGUAGE) {
+      return "en";
+    }
+    if (this.state.lang === ARABIC_LANGUAGE) {
+      return "ar";
+    }
+  };
+
   render() {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <I18nProvider catalogs={catalogs}>
+          <I18nProvider language={this.state.lang} catalogs={catalogs}>
             <BrowserRouter history={history}>
               <StylesProvider injectFirst jss={jss}>
                 <MuiThemeProvider theme={theme}>
                   <StyledThemeProvider theme={theme}>
-                    {/* dir div was originally body tag, check */}
-                    <div>
+                    <div dir={useRTL ? "rtl" : "ltr"}>
                       <GlobalStyle />
                       <AlertProvider template={AlertTemplate} {...alertOptions}>
                         <Header
                           onDrawerOpen={this.onDrawerOpen}
                           width={this.state.windowWidth}
                           height={this.state.windowHeight}
+                          language={language}
                         />
                         <AlertComponent style={{ zIndex: "1" }} />
                         <Search />
@@ -168,6 +184,7 @@ class App extends Component {
                                   {...props}
                                   windowWidth={this.state.windowWidth}
                                   windowHeight={this.state.windowHeight}
+                                  language={language}
                                 />
                               )}
                             />
