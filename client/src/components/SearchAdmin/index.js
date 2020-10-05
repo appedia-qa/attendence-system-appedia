@@ -54,7 +54,6 @@ const StyleButton = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 9px 12px;
   margin:0px;
   border-radius: 5px;
   margin:0px;
@@ -114,9 +113,10 @@ const ActionButtonContainer = styled(Col)`
   `}
 `;
 const ActionBottomButtonContainer = styled(Col)`
-  ${({ theme }) => `
+  ${({ theme, width }) => `
     justify-content: flex-end;
     align-items: center;
+    max-width: ${width > Breakpoints.SM_MAX ? "130px" : ""};
     border-radius: 5px;
     margin:0px;
     .home {
@@ -142,10 +142,10 @@ const ActionBottomButtonContainer = styled(Col)`
 `;
 
 const ActionHomeButtonContainer = styled(Col)`
-  ${({ theme }) => `
+  ${({ theme, width }) => `
     justify-content: flex-end;
     align-items: center;
-   
+    max-width: ${width > Breakpoints.SM_MAX ? "130px" : ""};
         color:#6E9F21;
         svg{
             path{
@@ -189,104 +189,109 @@ const HeaderSearch = (props) => {
 
   return (
     <I18n>
-       {({ i18n }) => (
-      <div
-        style={{
-          width: "100%",
-          background: "#FFFFFF",
-          alignItems: "center",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Container>
-          <HeaderBottomMenu className="home">
-            <ActionHomeButtonContainer
-              style={{ padding: "0", marginTop: "20px", marginBottom: "20px" }}
-              lg={1}
-              md={1}
-              sm={2}
-            >
-              <StyleButton
+      {({ i18n }) => (
+        <div
+          style={{
+            width: "100%",
+            background: "#FFFFFF",
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Container>
+            <HeaderBottomMenu className="home">
+              <ActionHomeButtonContainer
+                width={props.width}
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
+                  padding: "0",
+                  marginTop: "10px",
+                  marginBottom: "10px",
                 }}
-                onClick={() => handleHomeCilck()}
+                lg={2}
+                md={2}
+                sm={2}
               >
-                <Typography
-                  style={{
-                    color: "#6E9F21",
-                    fontSize: "12px",
-                    fontWeight: "800",
-                  }}
-                  component="p"
-                >
-                  
-                  {i18n._(t`Home`)}
-                </Typography>
-                <HomeIcon style={{ width: "15px" }} />
-              </StyleButton>
-            </ActionHomeButtonContainer>
-
-            <ActionButtonContainer lg={7} md={7} sm={7}>
-              <SearchButton>
-                <SearchIcon />
-                <Input
+                <StyleButton
                   style={{
                     width: "100%",
-                    margin: "10px",
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
                   }}
-                  disableUnderline={true}
-                  placeholder="Enter Search Text"
-                  // onChange={(event) => setSearchText(event.target.value)}
-                  // onKeyUp={(event) => {
-                  //   handleSearch(props, searchText);
-                  // }}
-                />
-              </SearchButton>
-            </ActionButtonContainer>
-            <ActionBottomButtonContainer
-              style={{
-                padding: "0",
-                marginTop: "20px",
-                marginBottom: "20px",
-                width: "100%",
-              }}
-              lg={1}
-              md={1}
-              sm={2}
-            >
-              <StyleButton
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  border: "1px solid #F36D12",
-                }}
-                onClick={() => handleLogout()}
-              >
-                <Typography
-                  style={{
-                    color: "#F36D12",
-                    fontSize: "12px",
-                    fontWeight: "800",
-                  }}
-                  component="p"
+                  onClick={() => handleHomeCilck()}
                 >
-                  {i18n._(t`Log out`)}
-                 
-                </Typography>
-                <PersonIcon style={{ width: "15px" }} />
-              </StyleButton>
-            </ActionBottomButtonContainer>
-          </HeaderBottomMenu>
-        </Container>
-      </div>
-     )}</I18n>
+                  <Typography
+                    style={{
+                      color: "#6E9F21",
+                      fontSize: "12px",
+                      fontWeight: "800",
+                    }}
+                    component="p"
+                  >
+                    {i18n._(t`Home`)}
+                  </Typography>
+                  <HomeIcon style={{ width: "15px" }} />
+                </StyleButton>
+              </ActionHomeButtonContainer>
+
+              <ActionButtonContainer lg={7} md={7} sm={7}>
+                <SearchButton>
+                  <SearchIcon />
+                  <Input
+                    style={{
+                      width: "100%",
+                      margin: "10px",
+                    }}
+                    disableUnderline={true}
+                    placeholder="Enter Search Text"
+                    // onChange={(event) => setSearchText(event.target.value)}
+                    // onKeyUp={(event) => {
+                    //   handleSearch(props, searchText);
+                    // }}
+                  />
+                </SearchButton>
+              </ActionButtonContainer>
+              <ActionBottomButtonContainer
+                style={{
+                  padding: "0",
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  width: "100%",
+                }}
+                width={props.width}
+                lg={2}
+                md={2}
+                sm={2}
+              >
+                <StyleButton
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    border: "1px solid #F36D12",
+                  }}
+                  onClick={() => handleLogout()}
+                >
+                  <Typography
+                    style={{
+                      color: "#F36D12",
+                      fontSize: "12px",
+                      fontWeight: "800",
+                    }}
+                    component="p"
+                  >
+                    {i18n._(t`Log out`)}
+                  </Typography>
+                  <PersonIcon style={{ width: "15px" }} />
+                </StyleButton>
+              </ActionBottomButtonContainer>
+            </HeaderBottomMenu>
+          </Container>
+        </div>
+      )}
+    </I18n>
   );
 };
 

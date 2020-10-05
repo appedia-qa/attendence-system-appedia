@@ -150,8 +150,9 @@ const TextBox = (props) => {
     <React.Fragment>
       <ActionButtonContainer
         style={{
-          padding: "10px",
+          marginTop: "0px",
           width: "100%",
+          padding: "10px",
           background: "#FFFFFF",
           display: "flex",
           flexDirection: "column",
@@ -177,18 +178,6 @@ const TextBox = (props) => {
             // }}
           />
         </SearchButton>
-      </ActionButtonContainer>
-      <ActionButtonContainer
-        style={{
-          marginTop: "10px",
-          width: "100%",
-          padding: "10px",
-          background: "#FFFFFF",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
         <Typography
           component="p"
           style={{
