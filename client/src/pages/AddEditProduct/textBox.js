@@ -190,7 +190,7 @@ const TextBox = (props) => {
         {props.mount ? (
           <div className="text-editor">
             <EditorToolbar id={props.id} />
-            {console.log(props.valueDescription,'inside')}
+          
             <ReactQuill
               ref={props.ref}
               value={props.valueDescription ? props.valueDescription : ""}

@@ -80,10 +80,10 @@ const List = (props) => {
             <ListColumn lg={3}>
               <Typography
                 component="p"
-                variant="subtitle2"
                 style={{ paddingLeft: "12px" }}
+                variant="subtitle2"
               >
-                {props.url}
+               Status
               </Typography>
             </ListColumn>
             <ListColumn
@@ -95,16 +95,12 @@ const List = (props) => {
                   margin: "10px",
                   border: "1px solid #08004015",
                 }}
-                onClick={() => {
-                  props.print(true);
-                }}
+                // onClick={() => {
+                //   props.print(true);
+                // }}
               >
-                <PrintRoundedIcon
-                  color="disabled"
-                  style={{ width: "16px", marginRight: "5px" }}
-                />
                 <Typography component="p" variant="subtitle2">
-                  {i18n._(t`Print`)}
+                  {i18n._(t`Approve`)}
                 </Typography>
               </StyleButton>
               <StyleButton
@@ -112,12 +108,12 @@ const List = (props) => {
                   margin: "10px",
                   border: "1px solid #08004015",
                 }}
-                onClick={() => {
-                  props.handelEditClick(props.code);
-                }}
+                // onClick={() => {
+                //   props.handelEditClick(props.code);
+                // }}
               >
                 <Typography component="p" variant="subtitle2">
-                  {i18n._(t`Edit`)}
+                  {i18n._(t`DisApprove`)}
                 </Typography>
               </StyleButton>
             </ListColumn>

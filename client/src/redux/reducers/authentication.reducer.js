@@ -12,7 +12,7 @@ let initialState = {
 
 // const user = JSON.parse(localStorage.getItem(USER_PROFILE_ITEM));
 // if (user) {
-//   console.log('i am in',user)
+//
 //   initialState = {
 //     ...initialState,
 //     user,
@@ -76,7 +76,7 @@ export function authentication(state = initialState, action) {
 const storeAuthToken = (action) => {
   try {
     const token = action.payload.data.access_token;
-    localStorage.setItem(USER_AUTH_KEY,token);
+    localStorage.setItem(USER_AUTH_KEY, token);
   } catch (e) {
     // write method to add this to popup reducer
   }

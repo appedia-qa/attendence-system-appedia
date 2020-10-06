@@ -301,7 +301,7 @@ const Board = (props) => {
               ? data.product_details.fr.description
               : "";
           const product_image = data.product_image ? data.product_image : "";
-          console.log(data.product_code);
+          
           setProductDescrtopAndnameState({
             ...productDescrtopAndnameState,
             productIdState: data.product_code ? data.product_code : "",

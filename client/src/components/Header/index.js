@@ -71,16 +71,16 @@ const Header = (props) => {
       window.location.reload(false);
     }
   };
+  
   return (
     <I18n>
       {({ i18n }) => (
         <div style={{ position: "sticky", top: "0", zIndex: "3" }}>
-          {console.log(props.language, 'seleted lang')}
           <HeaderTopMenu width={props.width}>
             <HeaderArb />
             <HeaderEng />
           </HeaderTopMenu>
-          <HeaderDiv>
+          {!props.location.pathname.includes("/view/") && <HeaderDiv>
             <Typography
               component="p"
               className={
@@ -105,7 +105,7 @@ const Header = (props) => {
             >
               FR
             </Typography>
-          </HeaderDiv>
+          </HeaderDiv>}
         </div>
       )}
     </I18n>
