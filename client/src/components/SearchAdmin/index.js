@@ -170,6 +170,17 @@ const Container = styled(Grid)`
 `}
 `;
 
+const handleSearch = (key, props, searchText) => {
+
+  // console.log('Key Entered', key);
+  if (key === 'Enter') {
+    props.history.push({
+      pathname: "/",
+      search: `query=${searchText}`,
+    });
+  }
+}
+
 const HeaderSearch = (props) => {
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -246,9 +257,9 @@ const HeaderSearch = (props) => {
                     disableUnderline={true}
                     placeholder="Enter Search Text"
                     // onChange={(event) => setSearchText(event.target.value)}
-                    // onKeyUp={(event) => {
-                    //   handleSearch(props, searchText);
-                    // }}
+                    onKeyUp={(event) => {
+                      handleSearch(event.key, props, 'hello');
+                    }}
                   />
                 </SearchButton>
               </ActionButtonContainer>
