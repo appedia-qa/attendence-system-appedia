@@ -24,6 +24,18 @@ const authGuard = (req, res, next) => {
   }
 };
 
+const getPageNumber = (req) => {
+  if (req?.query?.page) {
+    let pageNum = parseInt(req?.query?.page.toString(), 10);
+    if (!(pageNum && pageNum > 0 && pageNum < 1000000)) {
+      pageNum = 1;
+    }
+    return pageNum;
+  }
+
+  return 1;
+}
+
 const getPaginateOptions = (req) => {
   const MAX_LIMIT = 100;
   let select = null;
@@ -58,14 +70,9 @@ const getPaginateOptions = (req) => {
     paginateOptionItem.limit = 10;
   }
 
-  if (req?.query?.page) {
-    let pageNum = parseInt(req?.query?.page.toString(), 10);
-    if (!(pageNum && pageNum > 0 && pageNum < MAX_LIMIT)) {
-      pageNum = 1;
-    }
-    paginateOptionItem.skip = (pageNum - 1) * paginateOptionItem.limit;
-  }
-
+  const pageNum = getPageNumber(req);
+  paginateOptionItem.skip = (pageNum - 1) * paginateOptionItem.limit;
+ 
   return paginateOptionItem;
 };
 
@@ -225,16 +232,24 @@ router.route("/products/search").get(async (req, res) => {
       simpleSearchQuery = {
         $or: [
           {
-            product_code: query,
+            product_code: {
+              $regex: query
+            },
           },
           {
-            "product_details.eng.name": query,
+            "product_details.eng.name": {
+              $regex: query
+            },
           },
           {
-            "product_details.ar.name": query,
+            "product_details.ar.name": {
+              $regex: query
+            },
           },
           {
-            "product_details.fr.name": query,
+            "product_details.fr.name": {
+              $regex: query
+            },
           },
         ],
       };
@@ -254,7 +269,8 @@ router.route("/products/search").get(async (req, res) => {
     res.status(200).send({
       products,
       meta: {
-        ...paginateOptionItem,
+        page: getPageNumber(req),
+        limit: paginateOptionItem.limit
       },
     });
   } catch (e) {
