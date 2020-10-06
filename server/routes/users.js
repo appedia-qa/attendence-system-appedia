@@ -2,18 +2,51 @@ const router = require('express').Router();
 let User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const upload = require('../config/FileUpload');
+const fs = require('fs');
+const path = require('path');
 
 const bcrypt = require('bcryptjs');
 
 
-router.post('/fileUpload', upload.single('image'), (req, res, next) => {
-  if(!req.file) {
-    res.status(400).send('Please upload png OR jpeg image');
+// router.post('/users/fileUpload', upload.single('image'), (req, res, next) => {
+//   if(!req.file) {
+//     res.status(400).send('Please upload png OR jpeg image');
+//   }
+//   else {
+//     const filePath = 'files/uploads/' + req.file.filename;
+//     res.status(200).send(filePath);
+//   } 
+// });
+
+// router.post('/users/fileUpload', upload.array('images',12), (req, res, next) => {
+//   if(!req.files) {
+//     res.status(400).send('Please upload png OR jpeg image');
+//   }
+//   else {
+//     // const filePath = 'files/uploads/' + req.file.filename;
+//     res.status(200).send(req.files);
+//   } 
+// });
+
+router.post('/users/imageUpload', (req, res) => {
+
+  var dir = './files/images';
+  if(!fs.existsSync(dir)) {
+    fs.mkdirSync(dir,{ recursive: true });
   }
-  else {
-    const filePath = 'files/uploads/' + req.file.filename;
-    res.status(200).send(filePath);
-  } 
+  
+  const { images } = req.body;
+  uploadedList = [];
+  for (i = 0; i < images.length ; i++) {
+    fileName = `${images[i].name}-${Date.now()}.png`;
+    filePath = `files/images/` + fileName;
+    uploadedList.push(fileName);
+    fs.writeFile(filePath, images[i].image, function(err) {
+      if(!err) {}
+    }); 
+  }
+  
+  res.status(200).send({images: uploadedList})
 });
 
 router.route('/users').get(async (req, res) => {
