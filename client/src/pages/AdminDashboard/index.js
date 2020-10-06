@@ -144,10 +144,10 @@ const AdminDashbord = (props) => {
     setOpen(true);
   };
   const checkname = (lan) => {
-    if (lan && lan.eng && lan.ar.name) {
-      return lan.ar.name;
-    } else if (lan && lan.fr && lan.ar.name) {
-      return lan.ar.name;
+    if (lan && lan.eng && lan.eng.name) {
+      return lan.eng.name;
+    } else if (lan && lan.fr && lan.fr.name) {
+      return lan.fr.name;
     } else if (lan && lan.ar && lan.ar.name) {
       return lan.ar.name;
     }

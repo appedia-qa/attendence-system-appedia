@@ -45,9 +45,10 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import EditorToolbar, { modules, formats } from "./quillTollbar";
+import { useReactToPrint } from "react-to-print";
 var QRCode = require("qrcode.react");
 const imageToBase64 = require("image-to-base64");
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     formControl: {
@@ -206,11 +207,9 @@ const QRCodeContainer = styled.div`
 const Board = (props) => {
   const [id, setId] = useState("");
   const [isAdd, setAdd] = useState(null);
-  // const [productIdState, setProductId] = useState("");
-  // const [productUrl, setProductUrl] = useState("");
+  const componentRef = useRef();
   const classes = useStyles();
   const [age, setAge] = useState("");
-  // const [images, setImages] = useState([]);
   const [errorString, seterrorString] = useState(null);
   const productDescrtopAndnameObj = {
     productIdState: "",
@@ -235,78 +234,103 @@ const Board = (props) => {
   ] = useState(productDescrtopAndnameObj);
   const dispatch = useDispatch();
 
+  const print = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  const handlePrint = () => {
+    if (productDescrtopAndnameState.productIdState) {
+      print();
+    } else {
+      dispatch(
+        props.addErrorItemInAlert({
+          message: "Please enter product code",
+        })
+      );
+    }
+  };
+
   const papulateData = async (product_code) => {
     if (!product_code) {
+      props.history.push("/");
     } else {
       const url = apiUrl + "/products/find";
 
-      const { data } = await axios.post(url, { product_code });
+      try {
+        const { data, status } = await axios.post(url, { product_code });
+        if (data && (status == 200 || status == 201)) {
+          const arabicName =
+            data.product_details &&
+            data.product_details.ar &&
+            data.product_details.ar.name
+              ? data.product_details.ar.name
+              : "";
 
-      if (data) {
-        const arabicName =
-          data.product_details &&
-          data.product_details.ar &&
-          data.product_details.ar.name
-            ? data.product_details.ar.name
-            : "";
+          const arabicDiscription =
+            data.product_details &&
+            data.product_details.ar &&
+            data.product_details.ar.description
+              ? data.product_details.ar.description
+              : "";
 
-        const arabicDiscription =
-          data.product_details &&
-          data.product_details.ar &&
-          data.product_details.ar.description
-            ? data.product_details.ar.description
-            : "";
+          const englishName =
+            data.product_details &&
+            data.product_details.eng &&
+            data.product_details.eng.name
+              ? data.product_details.eng.name
+              : "";
 
-        const englishName =
-          data.product_details &&
-          data.product_details.eng &&
-          data.product_details.eng.name
-            ? data.product_details.eng.name
-            : "";
+          const englishDiscription =
+            data.product_details &&
+            data.product_details.eng &&
+            data.product_details.eng.description
+              ? data.product_details.eng.description
+              : "";
 
-        const englishDiscription =
-          data.product_details &&
-          data.product_details.eng &&
-          data.product_details.eng.description
-            ? data.product_details.eng.description
-            : "";
+          const frName =
+            data.product_details &&
+            data.product_details.fr &&
+            data.product_details.fr.name
+              ? data.product_details.fr.name
+              : "";
 
-        const frName =
-          data.product_details &&
-          data.product_details.fr &&
-          data.product_details.fr.name
-            ? data.product_details.fr.name
-            : "";
-
-        const frDiscription =
-          data.product_details &&
-          data.product_details.fr &&
-          data.product_details.fr.description
-            ? data.product_details.fr.description
-            : "";
-        const product_image = data.product_image ? data.product_image : "";
-        setProductDescrtopAndnameState({
-          ...productDescrtopAndnameState,
-          productIdState: data.product_code ? data.product_code : "",
-          productUrl: data.product_url ? data.product_url : "",
-          images: [{ product_image, uploaded: true }],
-          arabic: {
-            ...productDescrtopAndnameState.arabic,
-            name: arabicName,
-            description: arabicDiscription,
-          },
-          english: {
-            ...productDescrtopAndnameState.english,
-            name: englishName,
-            description: englishDiscription,
-          },
-          francias: {
-            ...productDescrtopAndnameState.francias,
-            name: frName,
-            description: frDiscription,
-          },
-        });
-      }
+          const frDiscription =
+            data.product_details &&
+            data.product_details.fr &&
+            data.product_details.fr.description
+              ? data.product_details.fr.description
+              : "";
+          const product_image = data.product_image ? data.product_image : "";
+          console.log(data.product_code);
+          setProductDescrtopAndnameState({
+            ...productDescrtopAndnameState,
+            productIdState: data.product_code ? data.product_code : "",
+            productUrl: data.product_url ? data.product_url : "",
+            images: [{ product_image, uploaded: true }],
+            arabic: {
+              ...productDescrtopAndnameState.arabic,
+              name: arabicName,
+              description: arabicDiscription,
+            },
+            english: {
+              ...productDescrtopAndnameState.english,
+              name: englishName,
+              description: englishDiscription,
+            },
+            francias: {
+              ...productDescrtopAndnameState.francias,
+              name: frName,
+              description: frDiscription,
+            },
+          });
+        } else {
+          dispatch(
+            props.addErrorItemInAlert({
+              message: "please try again latter",
+            })
+          );
+        }
+      } catch (e) {}
 
       //////change login whem images come in array
 
@@ -513,11 +537,33 @@ const Board = (props) => {
       // });
       const tokken = getTokken();
       if (isAdd) {
-        const url = apiUrl + "/products/add";
-        const responce = await axios.post(url, obj);
+        try {
+          const url = apiUrl + "/products/add";
+          const responce = await axios.post(url, obj);
+          if (responce.status == 200 || responce.status == 201) {
+            props.history.push("/");
+          } else {
+            dispatch(
+              props.addErrorItemInAlert({
+                message: "Please add product code",
+              })
+            );
+          }
+        } catch (e) {}
       } else {
-        const url = apiUrl + "/products/update";
-        const responce = await axios.put(url, obj);
+        try {
+          const url = apiUrl + "/products/update";
+          const responce = await axios.put(url, obj);
+          if (responce.status == 200 || Response.staus == 201) {
+            props.history.push("/");
+          } else {
+            dispatch(
+              props.addErrorItemInAlert({
+                message: "Please add product code",
+              })
+            );
+          }
+        } catch (e) {}
       }
     }
   };
@@ -713,11 +759,12 @@ const Board = (props) => {
                   border: "1px solid #6E9F21",
                   backgroundColor: "#6E9F21",
                 }}
+                onClick={handlePrint}
               >
                 {i18n._(t`Print Code`)}
               </Button>
-              {productDescrtopAndnameState.productUrl ? (
-                <QRCodeContainer>
+              {productDescrtopAndnameState.productIdState ? (
+                <QRCodeContainer ref={componentRef}>
                   <QRCode
                     className="qr-code"
                     value={productDescrtopAndnameState.productUrl || ""}
