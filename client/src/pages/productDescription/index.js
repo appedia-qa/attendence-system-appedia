@@ -46,23 +46,125 @@ const StyleButton = styled(Button)`
 const ProductDesciption = (props) => {
   const [selected, setSelected] = useState({
     english: false,
-    arabic: false,
+    arabic: true,
     francais: false,
   });
-  const [productData, setProductData] = useState("");
+  const [showData, setShowData] = useState({
+    name: "",
+    dis: "",
+  });
+  const [productData, setProductData] = useState({
+    images: [],
+    ar: {
+      name: "",
+      dis: "",
+    },
+    fr: {
+      name: "",
+      dis: "",
+    },
+    eng: {
+      name: "",
+      dis: "",
+    },
+  });
   const url = `${apiUrl}/products/find`;
 
-  const fetchproduct = async () => {
-    const { data } = await axios.get(url);
-    if (data) {
-      console.log(data);
-      setProductData(data);
+  const fetchproduct = async (product_code) => {
+    const { data, status } = await axios.post(url, { product_code });
+    if (data && (status == 200 || status == 201)) {
+      const arabicName =
+        data.product_details &&
+        data.product_details.ar &&
+        data.product_details.ar.name
+          ? data.product_details.ar.name
+          : "";
+
+      const arabicDiscription =
+        data.product_details &&
+        data.product_details.ar &&
+        data.product_details.ar.description
+          ? data.product_details.ar.description
+          : "";
+
+      const englishName =
+        data.product_details &&
+        data.product_details.eng &&
+        data.product_details.eng.name
+          ? data.product_details.eng.name
+          : "";
+
+      const englishDiscription =
+        data.product_details &&
+        data.product_details.eng &&
+        data.product_details.eng.description
+          ? data.product_details.eng.description
+          : "";
+
+      const frName =
+        data.product_details &&
+        data.product_details.fr &&
+        data.product_details.fr.name
+          ? data.product_details.fr.name
+          : "";
+
+      const frDiscription =
+        data.product_details &&
+        data.product_details.fr &&
+        data.product_details.fr.description
+          ? data.product_details.fr.description
+          : "";
+      const product_image = data.product_image ? data.product_image : "";
+
+      setProductData({
+        ...productData,
+        images: [{ product_image, uploaded: true }],
+        ar: {
+          ...productData.ar,
+          name: arabicName,
+          dis: arabicDiscription,
+        },
+        fr: {
+          ...productData.fr,
+          name: frName,
+          dis: frDiscription,
+        },
+        eng: {
+          ...productData.eng,
+          name: englishName,
+          dis: englishDiscription,
+        },
+      });
     }
   };
 
   useEffect(() => {
-    fetchproduct();
+    fetchproduct(props.match.params.id);
   }, []);
+
+  useEffect(() => {
+    if (productData) {
+      if (selected.english) {
+        setShowData({
+          ...showData,
+          name: productData.eng.name,
+          dis: productData.eng.dis,
+        });
+      } else if (selected.francais) {
+        setShowData({
+          ...showData,
+          name: productData.fr.name,
+          dis: productData.fr.dis,
+        });
+      } else if (selected.arabic) {
+        setShowData({
+          ...showData,
+          name: productData.ar.name,
+          dis: productData.ar.dis,
+        });
+      }
+    }
+  }, [selected, productData]);
 
   const setselectedAndPaulateData = (value) => {
     if (value === "english") {
@@ -159,13 +261,7 @@ const ProductDesciption = (props) => {
           }}
         >
           <Col lg={4} sm={4} md={4}>
-            <Carosal
-              items={[
-                "https://beautyharmonylife.com/wp-content/uploads/2013/09/nature-4-800x940.jpg",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQiIhoX0S1Zv01cWhLuSUDREL6SOt_pD6nL9Q&usqp=CAU",
-                "",
-              ]}
-            />
+            <Carosal items={productData.images} />
           </Col>
         </Row>
         <Row
@@ -189,15 +285,25 @@ const ProductDesciption = (props) => {
             md={5}
           >
             <div>
-              <p style={{ color: "#FFFFFF" }}>Product Name</p>
-              <p style={{ color: "#FFFFFF" }}>
-                Zwei flinke Boxer jagen die quirlige Eva und ihren Mops durch
-                Sylt. Franz jagt im komplett verwahrlosten Taxi quer durch
-                Bayern. Zwölf Boxkämpfer jagen Viktor quer über den großenZwei
-                flinke Boxer jagen die quirlige Eva und ihren Mops durch Sylt.
-                Franz jagt im komplett verwahrlosten Taxi quer durch Bayern.
-                Zwölf Boxkämpfer jagen Viktor quer über den großen
+              <p
+                style={{
+                  color: "#6E9F21",
+                  textAlign: "center",
+                  fontSize: "20px",
+                  fontWeight: "600",
+                }}
+              >
+                {showData && showData.name ? showData.name : "Not Available"}
               </p>
+              <p
+                style={{ color: "#FFFFFF" }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    showData && showData.dis
+                      ? showData.dis
+                      : "<p>Not Available</p>",
+                }}
+              ></p>
             </div>
           </Col>
         </Row>

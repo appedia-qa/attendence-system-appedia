@@ -20,7 +20,7 @@ const fetchImageURL = (props) => {
 const ProductCarousel = (props) => {
   const imageRef = useRef();
   return (
-    <div>
+    <div style={{minHeight:"150px"}}>
       <StyledComponent.Container>
         <Carousel>
           {props.items &&
@@ -28,7 +28,7 @@ const ProductCarousel = (props) => {
             props.items.map((item) => {
               return (
                 <Image
-                  src={fetchImageURL(item)[0]}
+                  src={fetchImageURL(item.product_image)[0]}
                   className="carousel-image"
                   ref={imageRef}
                 />

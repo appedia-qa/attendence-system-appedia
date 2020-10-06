@@ -179,10 +179,9 @@ const HeaderSearch = (props) => {
   const handleHomeCilck = () => {
     props.history.push("/");
   };
-
   if (
     props.location.pathname === "/login" ||
-    props.location.pathname === "/view"
+    props.location.pathname.includes("/view/")
   ) {
     return false;
   }

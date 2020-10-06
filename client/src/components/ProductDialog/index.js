@@ -196,7 +196,6 @@ const DivContainer = styled.div`
 `;
 
 function areEqual(prevProps, nextProps) {
-  console.log(prevProps, nextProps);
   if (prevProps.isDialogOpen == nextProps.isDialogOpen) {
     return true;
   }

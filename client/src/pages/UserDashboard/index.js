@@ -38,6 +38,7 @@ const Container = styled(Grid)`
   display:flex;
   flex-direction:column;
   align-items:center;
+  margin-top:50px;
 `}
 `;
 const StyleButton = styled(Button)`
@@ -157,7 +158,7 @@ const AdminDashbord = (props) => {
     setProductData(
       productData &&
         productData.map((p) =>
-          p.id === id ? { ...p, selected:  e.target.checked  } : p
+          p.id === id ? { ...p, selected: e.target.checked } : p
         )
     );
   };
@@ -230,91 +231,55 @@ const AdminDashbord = (props) => {
 
   return (
     <I18n>
-    {({ i18n }) => (
-      <div>
-    <React.Fragment>
-      <Container>
-        <Row
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            width: "100%",
-            marginTop: "20px",
-            padding: "0px",
-          }}
-        >
-          <StyleButton
-            style={{
-              margin: "10px",
-            }}
-          >
-            <Typography component="p" variant="subtitle3" onClick={deleteItem}>
-              
-              {i18n._(t`Delete Item`)}
-            </Typography>
-          </StyleButton>
-          <StyleButton
-            style={{
-              margin: "10px",
-            }}
-            onClick={() => {
-              props.history.push(`/product/add?add-product=${true}`);
-            }}
-          >
-            <Typography component="p" variant="subtitle3">
-             
-              {i18n._(t` Add Item`)}
-            </Typography>
-          </StyleButton>
-        </Row>
-        <Row style={{ width: "100%", marginTop: "20px" }}>
-          <FormGroup row>
-            <FormControlLabel
-              control={<Checkbox name="checkedB" color="primary" />}
-              label={i18n._(t`Select All`)}
-              value={isAllSelected}
-              onClick={onSelectAllAction}
+      {({ i18n }) => (
+        <div>
+          <React.Fragment>
+            <Container>
+              <ToDoListHeader />
+              <div style={{ width: "100%", margin: "0px" }}>
+                {productData &&
+                  productData.map((obj) => {
+                    return (
+                      <ToDoList
+                        id={obj.id}
+                        url={obj.product_url}
+                        selected={obj.selected}
+                        name={checkname(
+                          obj.product_details ? obj.product_details : ""
+                        )}
+                        code={obj.product_code}
+                        print={print}
+                        onCheckBoxClick={onCheckBoxClick}
+                        handelEditClick={handelEditClick}
+                      />
+                    );
+                  })}
+              </div>
+            </Container>
+            <div
+              style={{
+                width: "90%",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Pagination
+                count={paginationCount}
+                shape="rounded"
+                style={{ marginTop: "40px", marginBottom: "40px" }}
+                onChange={handleProductPageChange}
+              />
+            </div>
+
+            <Model
+              isDialogOpen={open}
+              closeProductDialog={closeProductDialog}
             />
-          </FormGroup>
-        </Row>
-        <ToDoListHeader />
-        <div style={{ width: "100%", margin: "0px" }}>
-          {productData &&
-            productData.map((obj) => {
-              return (
-                <ToDoList
-                  id={obj.id}
-                  url={obj.product_url}
-                  selected={obj.selected}
-                  name={checkname(
-                    obj.product_details ? obj.product_details : ""
-                  )}
-                  code={obj.product_code}
-                  print={print}
-                  onCheckBoxClick={onCheckBoxClick}
-                  handelEditClick={handelEditClick}
-                />
-              );
-            })}
+          </React.Fragment>
         </div>
-      </Container>
-      <div
-        style={{ width: "90%", display: "flex", justifyContent: "flex-end" }}
-      >
-        <Pagination
-          count={paginationCount}
-          shape="rounded"
-          style={{ marginTop: "40px", marginBottom: "40px" }}
-          onChange={handleProductPageChange}
-        />
-      </div>
-
-      <Model isDialogOpen={open} closeProductDialog={closeProductDialog} />
-    </React.Fragment>
-
-    </div>
       )}
-    </I18n>  );
+    </I18n>
+  );
 };
 
 const mapStateToProps = (state) => {

@@ -1,6 +1,7 @@
 import PageNotFound from "../pages/Empty";
 import Login from "../pages/Login/index";
 import AdminDashboard from "../pages/AdminDashboard";
+import UserDashboard from "../pages/UserDashboard";
 import AdminAddProduct from "../pages/AddEditProduct";
 import productDiscription from "../pages/productDescription";
 
@@ -16,7 +17,7 @@ const Routes = [
     component: Login,
   },
   {
-    path: "/view",
+    path: "/view/:id",
     name: "productDiscription",
     exact: true,
     component: productDiscription,
@@ -26,6 +27,12 @@ const Routes = [
     name: "AdminDashboard",
     exact: true,
     component: AdminDashboard,
+  },
+  {
+    path: "/user",
+    name: "UserDashboard",
+    exact: true,
+    component: UserDashboard,
   },
   {
     path: "/product/:id",

@@ -10,7 +10,7 @@ const AlertComponent = () => {
   const alert = useAlert();
 
   useEffect( () => {
-    console.log(alertReducer)
+    
     switch (alertReducer.type) {
       case alertConstants.SUCCESS:
         alert.success(alertReducer.message);
