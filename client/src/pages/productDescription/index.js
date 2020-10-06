@@ -24,14 +24,14 @@ const Container = styled(Grid)`
   padding-top: 5px;
   background:#362222;
 
-  div > div > div { 
+  
     white-space: pre-wrap;      /* CSS3 */   
     white-space: -moz-pre-wrap; /* Firefox */    
     white-space: -pre-wrap;     /* Opera <7 */   
     white-space: -o-pre-wrap;   /* Opera 7 */    
     word-wrap: break-word;      /* IE */
- }
  
+
   [class^="col-"], [class*=" col-"] {
     height: 100%;
   }
