@@ -121,18 +121,23 @@ const AdminDashbord = (props) => {
   };
 
   const onCheckBoxClick = (e, id) => {
-    setProductData(
+    const data =
       productData &&
-        productData.map((p) =>
-          p.id === id ? { ...p, selected: e.target.checked } : p
-        )
-    );
+      productData.products &&
+      productData.products.map((p) =>
+        p.id === id ? { ...p, selected: e.target.checked } : p
+      );
+    setProductData({
+      ...productData,
+      products: data,
+    });
   };
 
   const getSelectedItemsProductCodes = () => {
     return (
       productData &&
-      productData.map((x) => {
+      productData.products &&
+      productData.products.map((x) => {
         if (x.selected) {
           return x.product_code;
         }
@@ -142,19 +147,31 @@ const AdminDashbord = (props) => {
 
   const onSelectAllAction = async (event) => {
     if (event.target.checked) {
-      await setProductData(
+      console.log(productData.products);
+
+      const newProducts =
         productData &&
-          productData.map((p) => {
-            return { ...p, selected: true };
-          })
-      );
+        productData.products &&
+        productData.products.map((p) => {
+          return { ...p, selected: true };
+        });
+
+      await setProductData({
+        ...productData,
+        products: newProducts,
+      });
     } else {
-      await setProductData(
+      const newProducts =
         productData &&
-          productData.map((p) => {
-            return { ...p, selected: false };
-          })
-      );
+        productData.products &&
+        productData.products.map((p) => {
+          return { ...p, selected: false };
+        });
+
+      await setProductData({
+        ...productData,
+        products: newProducts,
+      });
     }
 
     setAllSelected(!isAllSelected);
@@ -171,23 +188,9 @@ const AdminDashbord = (props) => {
           Authorization: tokken,
         },
       });
-      fetchproduct();
+      fetchproduct(currentPage);
     }
   };
-
-  // const handelEditClick = () => {
-  //   const product_codes = getSelectedItemsProductCodes();
-  //
-  //   if (product_codes.length > 1) {
-  //
-  //     dispatch(
-  //       props.addErrorItemInAlert({
-  //         message: "Please select one product to edit",
-  //       })
-  //     );
-  //   }
-  //   props.history.push();
-  // };
 
   const handelEditClick = (code) => {
     if (code) {
