@@ -5,6 +5,8 @@ import { withRouter } from "react-router";
 import { useDispatch } from "react-redux";
 import { logoutRequest } from "../../redux/actions/authentication.action";
 import PersonIcon from "@material-ui/icons/AccountCircle";
+import CloseIcon from "@material-ui/icons/Close";
+import { getSearchParameters } from "../../utils/url";
 import {
   Typography,
   IconButton,
@@ -102,13 +104,18 @@ const HeaderImg = styled.div`
 `;
 
 const ActionButtonContainer = styled(Col)`
-  ${({ theme }) => `
+  ${({ theme, active }) => `
     justify-content: flex-end;
     align-items: center;
-    border: 1px solid #BAB8B8;
+    border: 1.5px solid #BAB8B8;
     border-radius: 5px;
     margin:0px;
-   
+    svg {
+      path{
+        fill:${active ? "#F36D12" : ""};
+        stroke:${active ? "#F36D12" : ""};
+      }
+    }
     }
   `}
 `;
@@ -153,10 +160,6 @@ const ActionHomeButtonContainer = styled(Col)`
                 fill:#6E9F21;
             }
         }
-
-    
-    
-   
     }
   `}
 `;
@@ -171,22 +174,35 @@ const Container = styled(Grid)`
 `;
 
 const handleSearch = (key, props, searchText) => {
-
   // console.log('Key Entered', key);
-  if (key === 'Enter') {
+  if (key === "Enter") {
     props.history.push({
       pathname: "/",
-      search: `query=${searchText}`,
+      search: `?query=${searchText}`,
     });
   }
-}
+};
 
 const HeaderSearch = (props) => {
   const dispatch = useDispatch();
+  const params = getSearchParameters();
+  const [active, setActive] = useState(null);
+  const [searchText, setSearchText] = useState(
+    params.query ? params.query.replace(/%20/g, " ") : ""
+  );
   const handleLogout = () => {
     dispatch(logoutRequest());
     props.history.push("/login");
   };
+
+  const activeSearch = () => {
+    setActive(true);
+  };
+
+  const unActiveSearch = () => {
+    setActive(false);
+  };
+
   const handleHomeCilck = () => {
     props.history.push("/");
   };
@@ -244,22 +260,31 @@ const HeaderSearch = (props) => {
                   <HomeIcon style={{ width: "15px" }} />
                 </StyleButton>
               </ActionHomeButtonContainer>
-
-              <ActionButtonContainer lg={7} md={7} sm={7}>
+              <ActionButtonContainer
+                active={active}
+                style={{ border: active ? "1px solid #F36D12" : "" }}
+                lg={7}
+                md={7}
+                sm={7}
+              >
                 <SearchButton>
-                  <SearchIcon />
+                  {!active && <SearchIcon />}
                   <Input
                     style={{
                       width: "100%",
                       margin: "10px",
                     }}
+                    onClick={() => activeSearch()}
+                    value={searchText}
                     disableUnderline={true}
                     placeholder="Enter Search Text"
-                    // onChange={(event) => setSearchText(event.target.value)}
+                    onChange={(event) => setSearchText(event.target.value)}
                     onKeyUp={(event) => {
-                      handleSearch(event.key, props, 'hello');
+                      handleSearch(event.key, props, searchText);
                     }}
                   />
+
+                  {active && <CloseIcon onClick={() => unActiveSearch()} />}
                 </SearchButton>
               </ActionButtonContainer>
               <ActionBottomButtonContainer
