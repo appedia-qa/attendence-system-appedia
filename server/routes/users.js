@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const upload = require('../config/FileUpload');
 const fs = require('fs');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const bcrypt = require('bcryptjs');
 
@@ -38,10 +39,10 @@ router.post('/users/imageUpload', (req, res) => {
   const { images } = req.body;
   uploadedList = [];
   for (i = 0; i < images.length ; i++) {
-    fileName = `${images[i].name}-${Date.now()}.png`;
+    fileName = `${uuidv4()}.png`;
     filePath = `files/images/` + fileName;
     uploadedList.push(fileName);
-    fs.writeFile(filePath, images[i].image, function(err) {
+    fs.writeFile(filePath, images[i].data_url, function(err) {
       if(!err) {}
     }); 
   }
