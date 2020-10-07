@@ -7,7 +7,8 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
 const { checkAuthentication, checkAuthorization } = require('../middlewares');
-
+let Product = require("../models/product.model");
+const ObjectId = require("mongodb").ObjectID;
 
 // router.post('/users/fileUpload', upload.single('image'), (req, res, next) => {
 //   if(!req.file) {
@@ -111,6 +112,24 @@ router.post('/users/imageUpload', (req, res) => {
     uploadedList.push(fileName)
   }
   res.status(200).send({ images: uploadedList })
+});
+
+router.post('/users/imageDelete', async(req, res) => {
+
+  const { _id, image_name } = req.body;
+
+  try {
+    let productExist = await Product.findById({_id});
+    if(productExist && productExist._id === _id) {
+      productExist.product_image = productExist.product_image.filter((image) => image !== image_name)
+    }
+    const productSaved = await productExist.save();
+    res.status(200).send(productSaved);
+  }
+  catch(error) {
+    console.log('Error');
+    res.status(400).send(error.message);
+  }
 });
 
 router.route('/users').get(async (req, res) => {
