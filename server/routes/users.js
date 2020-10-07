@@ -1,7 +1,8 @@
 const router = require('express').Router();
-let User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
+let User = require('../models/user.model');
 const upload = require('../config/FileUpload');
+const { checkAuthentication, checkAuthorization } = require('../middlewares');
 
 const bcrypt = require('bcryptjs');
 
@@ -35,7 +36,10 @@ router.route('/users/login').post(async (req, res) => {
   try {
       let userExist = await User.findOne({ username });
       let isCorrect = await bcrypt.compare(password, userExist.hashedPassword);
-      if (userExist && userExist.username === username && isCorrect) {
+      if (userExist && userExist.username === username && isCorrect && userExist.status === 'unapproved') {
+        res.status(400).send('User is not approved yet');
+      }
+      else if (userExist && userExist.username === username && isCorrect && userExist.status === 'approved') {
         user.id = userExist._id;
         user.role = userExist.role;
         user.status = userExist.status;
@@ -47,11 +51,11 @@ router.route('/users/login').post(async (req, res) => {
         });
       }
       else {
-        res.status(404).send('incorrect Username or password');
+        res.status(400).send('incorrect Username or password');
       }
   }
   catch(error) {
-       res.status(400).send('incorrect Username or password');
+       res.status(404).send('User not exists');
   }
 });  
 
@@ -82,26 +86,7 @@ router.route('/users/signup').post(async(req, res) => {
   }
 });
 
-router.delete('/users/remove', checkAuthentication, (req, res, next) => {
-    jwt.verify(req.token, 'secretkey123secretkey', async (error, user) => {
-      if (error) {
-        res.sendStatus(403);
-      }
-      try {
-        const username = user.user.username;
-        let userExist = await User.findOne({ username });
-        if (userExist.role === 'admin') {
-          next();
-        }
-        else {
-          res.sendStatus(403);
-        }
-      }
-      catch (error) {
-        res.sendStatus(403);
-      }
-    })
-  }, (async (req, res) => {
+router.delete('/users/remove', checkAuthentication, checkAuthorization, (async (req, res) => {
     let { username } = req.body;
     try {
       let userDeleted = await User.remove({ username });
@@ -118,26 +103,7 @@ router.delete('/users/remove', checkAuthentication, (req, res, next) => {
   })
 );
 
-router.post('/users/approve', checkAuthentication, (req, res, next) => {
-  jwt.verify(req.token, 'secretkey123secretkey', async (error, user) => {
-    if (error) {
-      res.sendStatus(403);
-    }
-    try {
-      const username = user.user.username;
-      let userExist = await User.findOne({ username });
-      if (userExist.role === 'admin') {
-        next();
-      }
-      else {
-        res.sendStatus(403);
-      }
-    }
-    catch (error) {
-      res.sendStatus(403);
-    }
-  })
-}, (async (req, res) => {
+router.post('/users/approve', checkAuthentication, checkAuthorization, (async (req, res) => {
   let { username } = req.body;
   try {
     let existUser = await User.findOne({ username });
@@ -158,23 +124,5 @@ router.post('/users/approve', checkAuthentication, (req, res, next) => {
   }
 })
 );
-
-function checkAuthentication(req, res, next) {
-
-  const bearerHeader = req.headers['authorization'];
-
-  // Format of Token
-  // Authorization: Bearer <access_token>
-  if (typeof bearerHeader !== 'undefined') {
-
-    const bearer = bearerHeader.split(' ');
-    req.token = bearer[1];
-    next();
-
-  } else {
-    res.sendStatus(403);
-  }
-
-}
 
 module.exports = router;

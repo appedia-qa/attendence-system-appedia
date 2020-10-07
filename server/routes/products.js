@@ -1,6 +1,7 @@
 const router = require("express").Router();
 let Product = require("../models/product.model");
 const jwt = require("jsonwebtoken");
+const { checkAuthentication, checkAuthorization } = require('../middlewares');
 
 const ObjectId = require("mongodb").ObjectID;
 const checkValid = require("../utils");
@@ -93,7 +94,7 @@ const verifyProductDetails = (details) => {
   }
 };
 
-router.route("/products").get(async (req, res) => {
+router.route("/products").get( checkAuthentication, checkAuthorization, async(req, res) => {
   try {
     const paginateOptionItem = getPaginateOptions(req);
 
@@ -110,7 +111,7 @@ router.route("/products").get(async (req, res) => {
   }
 });
 
-router.route("/products/add").post(authGuard, async (req, res) => {
+router.route("/products/add").post( checkAuthentication, checkAuthorization, async (req, res) => {
   const {
     product_code,
     product_details,
@@ -147,7 +148,7 @@ router.route("/products/add").post(authGuard, async (req, res) => {
   }
 });
 
-router.route("/products/update").put(authGuard, async (req, res) => {
+router.route("/products/update").put( checkAuthentication, checkAuthorization, async (req, res) => {
   const {
     product_code,
     product_details,
@@ -187,7 +188,7 @@ router.route("/products/update").put(authGuard, async (req, res) => {
   }
 });
 
-router.route("/products/remove").delete(authGuard, async (req, res) => {
+router.route("/products/remove").delete( checkAuthentication, checkAuthorization, async (req, res) => {
   try {
     let { product_codes } = req.body;
     if (!Array.isArray(product_codes)) {
