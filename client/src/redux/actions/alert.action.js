@@ -14,9 +14,3 @@ export const addErrorItemInAlert = (payload) => {
   })
 }
 
-export const clearItemInAlert = (payload) => {
-  return dispatch => dispatch({
-    type: alertConstants.SUCCESS,
-    message: payload.message
-  })
-}

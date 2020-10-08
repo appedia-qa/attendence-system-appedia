@@ -6,7 +6,15 @@ import UpdateIcon from "@material-ui/icons/Update";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { t } from "@lingui/macro";
 import { I18n } from "@lingui/react";
-
+import {
+  addErrorItemInAlert,
+  addSuccessItemInAlert,
+} from "../../redux/actions/alert.action";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
+import { withRouter } from "react-router";
+import { bindActionCreators } from "redux";
 import {
   Typography,
   IconButton,
@@ -21,7 +29,6 @@ const StyleDiv = styled.div`
   background-color:#E6E4E4 !important;
   display: flex;
   min-height:150px;
-  justify-content: center;
   align-items: center;
   margin:0px;
   overflow:auto;
@@ -42,8 +49,21 @@ const ImgDiv = styled.div`
 `}
 `;
 
-export default function App(props) {
-  const maxNumber = 69;
+export function App(props) {
+  const maxNumber = 10;
+  const dispatch = useDispatch();
+
+  const callErr = (e) => {
+    if (e.maxNumber == true) {
+      dispatch(
+        addErrorItemInAlert({
+          message: "You can upload 10 files at a time",
+        })
+      );
+    }
+  };
+
+  
 
   return (
     <I18n>
@@ -55,6 +75,8 @@ export default function App(props) {
             onChange={props.onChange}
             maxNumber={maxNumber}
             dataURLKey="data_url"
+            maxFileSize={"4000000"}
+            onError={(e) => callErr(e)}
           >
             {({
               imageList,
@@ -78,11 +100,7 @@ export default function App(props) {
                         {!image.uploaded ? (
                           <img src={image["data_url"]} alt="" width="70%" />
                         ) : (
-                          <img
-                            src={image["product_image"]}
-                            alt=""
-                            width="70%"
-                          />
+                          <img src={image["data_url"]} alt="" width="70%" />
                         )}
                         <div className="image-item__btn-wrapper">
                           <UpdateIcon
@@ -91,13 +109,24 @@ export default function App(props) {
                           />
                           <CancelIcon
                             style={{ color: "red" }}
-                            onClick={() => onImageRemove(index)}
+                            onClick={() => {
+                              onImageRemove(index);
+                              props.delImages(index);
+                            }}
                           />
                         </div>
                       </ImgDiv>
                     ))
                   ) : (
-                    <PublishIcon color="action" fontSize="large" />
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        width: "100%",
+                      }}
+                    >
+                      <PublishIcon color="action" fontSize="large" />
+                    </div>
                   )}
                 </StyleDiv>
                 <div style={{ display: "grid" }}>
@@ -128,3 +157,24 @@ export default function App(props) {
     </I18n>
   );
 }
+
+const mapStateToProps = (state) => {
+  const { updateError } = state.authentication;
+  return {
+    updateError,
+  };
+};
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      addErrorItemInAlert,
+      addSuccessItemInAlert,
+    },
+    dispatch
+  );
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(App);

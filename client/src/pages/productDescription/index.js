@@ -23,6 +23,8 @@ const Container = styled(Grid)`
   padding: 25px;
   padding-top: 5px;
   background:#362222;
+  height:100vh;
+  
 
   
     white-space: pre-wrap;      /* CSS3 */   
@@ -63,6 +65,9 @@ const ProductDesciption = (props) => {
     dis: "",
   });
   const [productData, setProductData] = useState({
+    showArabic: false,
+    showEnglish: false,
+    showFr: false,
     images: [],
     ar: {
       name: "",
@@ -124,10 +129,14 @@ const ProductDesciption = (props) => {
           ? data.product_details.fr.description
           : "";
       const product_image = data.product_image ? data.product_image : "";
+      console.log(product_image)
 
       setProductData({
         ...productData,
-        images: [{ product_image, uploaded: true }],
+        images: product_image,
+        showArabic: arabicName ? true : false,
+        showEnglish: englishName ? true : false,
+        showFr: frName ? true : false,
         ar: {
           ...productData.ar,
           name: arabicName,
@@ -198,67 +207,73 @@ const ProductDesciption = (props) => {
             padding: "0px",
           }}
         >
-          <StyleButton
-            style={{
-              margin: "10px",
-              background: selected.english ? "#6E9F19" : "",
-            }}
-            onClick={() => {
-              setselectedAndPaulateData("english");
-            }}
-          >
-            <Typography
-              component="p"
-              variant="subtitle1"
+          {productData.showEnglish && (
+            <StyleButton
               style={{
-                color: selected.english ? "#FFFFFF" : "",
-                fontSize: "14px",
+                margin: "10px",
+                background: selected.english ? "#6E9F19" : "",
+              }}
+              onClick={() => {
+                setselectedAndPaulateData("english");
               }}
             >
-              English
-            </Typography>
-          </StyleButton>
-          <StyleButton
-            style={{
-              margin: "10px",
-              background: selected.francais ? "#6E9F19" : "",
-              fontSize: "14px",
-            }}
-            onClick={() => {
-              setselectedAndPaulateData("francais");
-            }}
-          >
-            <Typography
-              component="p"
-              variant="subtitle1"
+              <Typography
+                component="p"
+                variant="subtitle1"
+                style={{
+                  color: selected.english ? "#FFFFFF" : "",
+                  fontSize: "14px",
+                }}
+              >
+                English
+              </Typography>
+            </StyleButton>
+          )}
+          {productData.showFr && (
+            <StyleButton
               style={{
-                color: selected.francais ? "#FFFFFF" : "",
+                margin: "10px",
+                background: selected.francais ? "#6E9F19" : "",
                 fontSize: "14px",
               }}
-            >
-              Français
-            </Typography>
-          </StyleButton>
-          <StyleButton
-            style={{
-              margin: "10px",
-              background: selected.arabic ? "#6E9F19" : "",
-            }}
-            onClick={() => {
-              setselectedAndPaulateData("arabic");
-            }}
-          >
-            <Typography
-              component="p"
-              variant="subtitle1"
-              style={{
-                color: selected.arabic ? "#FFFFFF" : "",
-                fontSize: "14px",
+              onClick={() => {
+                setselectedAndPaulateData("francais");
               }}
             >
-              عربي
-            </Typography>
-          </StyleButton>
+              <Typography
+                component="p"
+                variant="subtitle1"
+                style={{
+                  color: selected.francais ? "#FFFFFF" : "",
+                  fontSize: "14px",
+                }}
+              >
+                Français
+              </Typography>
+            </StyleButton>
+          )}
+          {productData.showArabic && (
+            <StyleButton
+              style={{
+                margin: "10px",
+                background: selected.arabic ? "#6E9F19" : "",
+              }}
+              onClick={() => {
+                setselectedAndPaulateData("arabic");
+              }}
+            >
+              <Typography
+                component="p"
+                variant="subtitle1"
+                style={{
+                  color: selected.arabic ? "#FFFFFF" : "",
+                  fontSize: "14px",
+                }}
+              >
+                عربي
+              </Typography>
+            </StyleButton>
+          )}
         </Row>
         <Row
           style={{
@@ -269,9 +284,11 @@ const ProductDesciption = (props) => {
             padding: "0px",
           }}
         >
-          <Col lg={4} sm={4} md={4}>
-            <Carosal items={productData.images} />
-          </Col>
+          {productData.images && (
+            <Col lg={4} sm={4} md={4}>
+              <Carosal items={productData.images} />
+            </Col>
+          )}
         </Row>
         <Row
           style={{
@@ -305,7 +322,7 @@ const ProductDesciption = (props) => {
                 {showData && showData.name ? showData.name : "Not Available"}
               </p>
               <p
-                style={{ color: "#FFFFFF" ,maxWidth:"100%"}}
+                style={{ color: "#FFFFFF", maxWidth: "100%" }}
                 dangerouslySetInnerHTML={{
                   __html:
                     showData && showData.dis

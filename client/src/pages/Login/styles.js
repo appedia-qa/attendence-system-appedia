@@ -12,7 +12,7 @@ export const LoginContainer = styled.div`
     .image-section{
         width: 60%;
         height: auto;
-        background: ${theme.palette.brown.main};
+        background: #F36D12;
         background-size: cover;
         ${width < Breakpoints.SM_MAX ? `display: none;` : `display: flex;`}  
         justify-Content: center;
