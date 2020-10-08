@@ -17,7 +17,7 @@ import {
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
-import { apiUrl } from "../../constants/urls";
+import { apiUrl, apiBaseUrl } from "../../constants/urls";
 import {
   Typography,
   IconButton,
@@ -41,9 +41,7 @@ import { getTokken } from "../../redux/reducers/authentication.reducer";
 import { emptyCartRequest } from "../../redux/actions/cart.action";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import LoaderComponent from "../../components/LoaderComponent";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useReactToPrint } from "react-to-print";
 var QRCode = require("qrcode.react");
@@ -210,10 +208,12 @@ const Board = (props) => {
   const componentRef = useRef();
   const classes = useStyles();
   const [age, setAge] = useState("");
+  const [loading, setLoading] = useState(false);
   const [errorString, seterrorString] = useState(null);
   const productDescrtopAndnameObj = {
     productIdState: "",
     productUrl: "",
+    uploadImages: [],
     images: [],
     arabic: {
       name: "",
@@ -243,7 +243,7 @@ const Board = (props) => {
       print();
     } else {
       dispatch(
-        props.addErrorItemInAlert({
+        addErrorItemInAlert({
           message: "Please enter product code",
         })
       );
@@ -300,13 +300,18 @@ const Board = (props) => {
             data.product_details.fr.description
               ? data.product_details.fr.description
               : "";
-          const product_image = data.product_image ? data.product_image : "";
-          
+          let pData = data.product_image ? data.product_image : "";
+          if (pData) {
+            pData = await pData.map((item) => {
+              return { data_url: item, uploaded: true };
+            });
+          }
+
           setProductDescrtopAndnameState({
             ...productDescrtopAndnameState,
             productIdState: data.product_code ? data.product_code : "",
             productUrl: data.product_url ? data.product_url : "",
-            images: [{ product_image, uploaded: true }],
+            images: pData,
             arabic: {
               ...productDescrtopAndnameState.arabic,
               name: arabicName,
@@ -323,23 +328,14 @@ const Board = (props) => {
               description: frDiscription,
             },
           });
-        } else {
-          dispatch(
-            props.addErrorItemInAlert({
-              message: "please try again latter",
-            })
-          );
         }
-      } catch (e) {}
-
-      //////change login whem images come in array
-
-      // if (data) {
-      //   data = data.map((item) => {
-      //     return { ...item, selected: false };
-      //   });
-      //   setProductData(data);
-      // }
+      } catch (e) {
+        dispatch(
+          addErrorItemInAlert({
+            message: "please try again latter",
+          })
+        );
+      }
     }
   };
 
@@ -360,11 +356,48 @@ const Board = (props) => {
     }
   }, []);
 
-  const onChange = (imageList, addUpdateIndex) => {
-    imageList[addUpdateIndex] = {
-      ...imageList[addUpdateIndex],
-      updated: false,
-    };
+  const delImages = (index) => {
+    if (
+      productDescrtopAndnameState &&
+      productDescrtopAndnameState.images &&
+      productDescrtopAndnameState.images[index].uploaded
+    ) {
+      try {
+        const tokken = getTokken();
+        const url = apiUrl + "/users/imageDelete";
+        let imagesToDel = productDescrtopAndnameState.images[index].data_url;
+        imagesToDel = imagesToDel.split("/");
+        const responceImg = axios.post(
+          url,
+          { image_name: imagesToDel[4] },
+          { headers: { Authorization: tokken } }
+        );
+        if (responceImg.status == 200 || responceImg.status == 201) {
+          dispatch(
+            addErrorItemInAlert({
+              message: "Image is deleted",
+            })
+          );
+        }
+      } catch (e) {
+        dispatch(
+          addErrorItemInAlert({
+            message: "Please try again latter",
+          })
+        );
+        setLoading(false);
+      }
+    }
+  };
+
+  const onChange = async (imageList, addUpdateIndex) => {
+    imageList = imageList.map((obj) => {
+      if (!(obj && obj.uploaded)) {
+        return { ...obj, uploaded: false };
+      } else {
+        return { ...obj };
+      }
+    });
     setProductDescrtopAndnameState({
       ...productDescrtopAndnameState,
       images: imageList,
@@ -382,7 +415,7 @@ const Board = (props) => {
     setProductDescrtopAndnameState({
       ...productDescrtopAndnameState,
       productIdState: event,
-      productUrl: `http://localhost:3000/view/${event}`,
+      productUrl: `${apiBaseUrl}/view/${event}`,
     });
   };
 
@@ -446,6 +479,113 @@ const Board = (props) => {
       });
     }
   };
+  const validations = (arabicValid, englishValid, frenchValid) => {
+    if (!(arabicValid == 2 && englishValid == 2 && frenchValid == 2)) {
+      if (arabicValid == 1) {
+        dispatch(
+          addErrorItemInAlert({
+            message: "Fill both name and description for Arabic",
+          })
+        );
+        seterrorString("Fill both name and description for Arabic");
+        return false;
+      }
+      if (englishValid == 1) {
+        dispatch(
+          addErrorItemInAlert({
+            message: "Fill both name and description for English",
+          })
+        );
+        seterrorString("Fill both name and description for English");
+        return false;
+      }
+      if (frenchValid == 1) {
+        dispatch(
+          addErrorItemInAlert({
+            message: "Fill both name and description for French",
+          })
+        );
+        seterrorString("Fill both name and description for French");
+        return false;
+      }
+      if (arabicValid == 0 && englishValid == 0 && frenchValid == 0) {
+        dispatch(
+          addErrorItemInAlert({
+            message: "Fill both name and description for atleat one language",
+          })
+        );
+        seterrorString(
+          "Fill both name and description for atleat one language"
+        );
+        return false;
+      }
+      return true;
+    }
+    return true;
+  };
+
+  const setImages = (images, response) => {
+    let newImages = [];
+    if (response && response.data && response.data.images) {
+      response.data.images.map((d) => {
+        newImages.push(`${apiBaseUrl}/uploads/${d}`);
+      });
+    }
+
+    let newSavedImages = [];
+    if (images && images.length > 0) {
+      images.map((obj) => {
+        if (obj.uploaded == true) {
+          newSavedImages.push(obj.data_url);
+        }
+      });
+    }
+    return [...newSavedImages, ...newImages];
+  };
+
+  const chkNewImages = (images) => {
+    let newImages = [];
+    if (images && images.length > 0) {
+      images.map((obj) => {
+        if (obj.uploaded == false) {
+          newImages.push(obj.data_url);
+        }
+      });
+    }
+    return newImages;
+  };
+
+  const imageUploadApi = async (imagesToUpload) => {
+    const tokken = getTokken();
+    const url = apiUrl + "/users/imageUpload";
+    if (imagesToUpload.length > 0) {
+      setLoading(true);
+      try {
+        const responceImg = await axios.post(
+          url,
+          { images: imagesToUpload },
+          { headers: { Authorization: tokken } }
+        );
+        if (responceImg.status == 200 || responceImg.status == 201) {
+          return responceImg;
+        } else {
+          dispatch(
+            addErrorItemInAlert({
+              message: "Please try again latter",
+            })
+          );
+        }
+      } catch (e) {
+        dispatch(
+          addErrorItemInAlert({
+            message: "Please try again latter",
+          })
+        );
+        setLoading(false);
+      }
+    }
+    return [];
+  };
 
   const saveItem = async () => {
     const arabicValid = isProductDetailValid(
@@ -460,125 +600,118 @@ const Board = (props) => {
     const arbic = productDescrtopAndnameState.arabic;
     const english = productDescrtopAndnameState.english;
     const french = productDescrtopAndnameState.francias;
-
-    if (!(arabicValid || englishValid || frenchValid)) {
-      if (arabicValid) {
+    if (validations(arabicValid, englishValid, frenchValid)) {
+      if (!productDescrtopAndnameState.productIdState) {
         dispatch(
-          props.addErrorItemInAlert({
-            message: "Please select one product to edit",
+          addErrorItemInAlert({
+            message: "Please add product code",
           })
         );
-        // seterrorString("Fill both name and description for Arabic");
-      } else if (englishValid) {
-        dispatch(
-          props.addErrorItemInAlert({
-            message: "Fill both name and description for English",
-          })
-        );
-        seterrorString("Fill both name and description for English");
-      } else if (frenchValid) {
-        dispatch(
-          props.addErrorItemInAlert({
-            message: "Fill both name and description for French",
-          })
-        );
-
-        seterrorString("Fill both name and description for French");
+        seterrorString("Please add product code");
+        return;
       } else {
-        dispatch(
-          props.addErrorItemInAlert({
-            message: "Fill both name and description for a language",
-          })
-        );
-        seterrorString("Fill both name and description for a language");
-      }
-    }
-    if (!productDescrtopAndnameState.productIdState) {
-      dispatch(
-        props.addErrorItemInAlert({
-          message: "Please add product code",
-        })
-      );
-      seterrorString("Please add product code");
-    } else {
-      const obj = {
-        product_code: productDescrtopAndnameState.productIdState,
-        product_details: {
-          ar: {
-            name: arbic && arbic.name ? arbic.name : "",
-            description: arbic && arbic.description ? arbic.description : "",
+        const obj = {
+          product_code: productDescrtopAndnameState.productIdState,
+          product_details: {
+            ar: {
+              name: arbic && arbic.name ? arbic.name : "",
+              description: arbic && arbic.description ? arbic.description : "",
+            },
+            eng: {
+              name: english && english.name ? english.name : "",
+              description:
+                english && english.description ? english.description : "",
+            },
+            fr: {
+              name: french && french.name ? french.name : "",
+              description:
+                french && french.description ? french.description : "",
+            },
           },
-          eng: {
-            name: english && english.name ? english.name : "",
-            description:
-              english && english.description ? english.description : "",
-          },
-          fr: {
-            name: french && french.name ? french.name : "",
-            description: french && french.description ? french.description : "",
-          },
-        },
-        product_url: productDescrtopAndnameState.productUrl,
-        product_image:
-          "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-        product_category_id: "5f75b84ea456c4ef19049547",
-      };
-      seterrorString(null);
+          product_url: productDescrtopAndnameState.productUrl,
+          product_image: "",
+          product_category_id: "5f75b84ea456c4ef19049547",
+        };
+        seterrorString(null);
 
-      // const tokken = getTokken();
-      // const url = apiUrl + "/fileUpload";
-      // const responceImg = await axios.post(url, {
-      //   data: {
-      //     file: images
-      //   },
-      //   headers: {
-      //     Authorization: tokken,
-      //   },
-      // });
-      const tokken = getTokken();
-      if (isAdd) {
-        try {
-          const url = apiUrl + "/products/add";
-          const responce = await axios.post(url, obj);
-          if (responce.status == 200 || responce.status == 201) {
-            props.history.push("/");
-          } else {
+        const tokken = getTokken();
+        const url = apiUrl + "/users/imageUpload";
+        const imagesToUpload = await chkNewImages(
+          productDescrtopAndnameState.images
+        );
+
+        const uploadImage = await imageUploadApi(imagesToUpload);
+        obj.product_image = setImages(
+          productDescrtopAndnameState.images,
+          uploadImage
+        );
+        if (isAdd) {
+          try {
+            const url = apiUrl + "/products/add";
+            const responce = await axios.post(url, obj, {
+              headers: { Authorization: tokken },
+            });
+            if (responce.status == 200 || responce.status == 201) {
+              setLoading(false);
+              props.history.push("/");
+            } else {
+              setLoading(false);
+              dispatch(
+                addErrorItemInAlert({
+                  message: "Please try again latter",
+                })
+              );
+            }
+          } catch (e) {
             dispatch(
-              props.addErrorItemInAlert({
-                message: "Please add product code",
+              addErrorItemInAlert({
+                message: "Please try again latter",
               })
             );
+            setLoading(false);
           }
-        } catch (e) {}
-      } else {
-        try {
-          const url = apiUrl + "/products/update";
-          const responce = await axios.put(url, obj);
-          if (responce.status == 200 || Response.staus == 201) {
-            props.history.push("/");
-          } else {
+        } else {
+          try {
+            const url = apiUrl + "/products/update";
+            const responce = await axios.put(url, obj, {
+              headers: { Authorization: tokken },
+            });
+            if (responce.status == 200 || Response.staus == 201) {
+              setLoading(false);
+              props.history.push("/");
+            } else {
+              setLoading(false);
+              dispatch(
+                addErrorItemInAlert({
+                  message: "Please try again latter",
+                })
+              );
+            }
+          } catch (e) {
             dispatch(
-              props.addErrorItemInAlert({
-                message: "Please add product code",
+              addErrorItemInAlert({
+                message: "Please try again latter",
               })
             );
+            setLoading(false);
           }
-        } catch (e) {}
+        }
       }
     }
   };
-
+  function rtrim(str) {
+    return str.toString().replace(/<[^>]+>/g, "");
+  }
   const isProductDetailValid = (item) => {
-    if (
-      item.name &&
-      item.name.trim().length > 0 &&
-      item.description &&
-      item.description.trim().length > 0
-    ) {
-      return true;
+    let count = 0;
+    if (item.name && item.name.trim().length > 0) {
+      count = count + 1;
+    }
+    if (rtrim(item.description) && rtrim(item.description.trim().length > 0)) {
+      count = count + 1;
     }
 
-    return false;
+    return count;
   };
 
   return (
@@ -600,6 +733,7 @@ const Board = (props) => {
               <Images
                 onChange={onChange}
                 images={productDescrtopAndnameState.images}
+                delImages={delImages}
               />
             </ActionHomeButtonContainer>
             <ActionButtonContainer
@@ -608,7 +742,7 @@ const Board = (props) => {
               sm={12}
               style={{
                 maxHeight: "500px",
-                maxWidth: "606px",
+                maxWidth: "100vh",
                 overflow: "auto",
                 padding: "20px",
                 paddingTop: "0px",
@@ -661,30 +795,35 @@ const Board = (props) => {
                   handleChange={handleChangeFranciasTextBox}
                 />
               </div>
-              <Button
-                style={{
-                  marginTop: "5px",
-                  marginBottom: "15px",
-                  color: "#FFFFFF",
-                  border: "1px solid #6E9F21",
-                  background: "#6E9F21",
-                  marginRight: "20px",
-                }}
-                onClick={saveItem}
-              >
-                {i18n._(t`Save`)}
-              </Button>
-              <Button
-                style={{
-                  marginTop: "5px",
-                  marginBottom: "15px",
-                  border: "1px solid red",
-                }}
-              >
-                {i18n._(t`Cancel`)}
-              </Button>
+              {loading ? (
+                <LoaderComponent height={"80px"} />
+              ) : (
+                <div>
+                  <Button
+                    style={{
+                      marginTop: "5px",
+                      marginBottom: "15px",
+                      color: "#FFFFFF",
+                      border: "1px solid #6E9F21",
+                      background: "#6E9F21",
+                      marginRight: "20px",
+                    }}
+                    onClick={saveItem}
+                  >
+                    {i18n._(t`Save`)}
+                  </Button>
+                  <Button
+                    style={{
+                      marginTop: "5px",
+                      marginBottom: "15px",
+                      border: "1px solid red",
+                    }}
+                  >
+                    {i18n._(t`Cancel`)}
+                  </Button>
+                </div>
+              )}
             </ActionButtonContainer>
-
             <ActionButtonContainer
               lg={2}
               md={2}

@@ -28,7 +28,7 @@ const ProductCarousel = (props) => {
             props.items.map((item) => {
               return (
                 <Image
-                  src={fetchImageURL(item.product_image)[0]}
+                  src={fetchImageURL(item)[0]}
                   className="carousel-image"
                   ref={imageRef}
                 />

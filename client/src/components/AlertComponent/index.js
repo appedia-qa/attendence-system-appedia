@@ -7,10 +7,11 @@ import alertConstants from '../../redux/actionTypes/alert.types';
 const AlertComponent = () => {
   const alertReducer = useSelector(state => state.alert);
   
+  
   const alert = useAlert();
 
   useEffect( () => {
-    
+    console.log(alertReducer,'reducer')
     switch (alertReducer.type) {
       case alertConstants.SUCCESS:
         alert.success(alertReducer.message);
