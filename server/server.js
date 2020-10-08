@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 const config = require('./config');
+const bodyParser = require('body-parser');
 // import {config} from './config/index'
 
 require('dotenv').config();
@@ -14,6 +15,9 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'files/images')));
+// app.use(express.json({limit: '50mb'}));
+// app.use(express.urlencoded({limit: '50mb' , extended: true, parameterLimit:50000}));
+// app.use(express.bodyParser({limit: '50mb'}));
 const uri = process.env.MONGO_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true  });
 const connection = mongoose.connection;
