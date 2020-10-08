@@ -23,6 +23,7 @@
     "multer": "^1.4.2",
     "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
+    "request-stats": "^3.0.0",
     "uuid": "^8.3.1"
   }
 }

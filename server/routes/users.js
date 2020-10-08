@@ -9,6 +9,8 @@ const bcrypt = require('bcryptjs');
 const { checkAuthentication, checkAuthorization } = require('../middlewares');
 let Product = require("../models/product.model");
 const ObjectId = require("mongodb").ObjectID;
+const server = require('http').createServer()
+var requestStats = require('request-stats');
 
 // router.post('/users/fileUpload', upload.single('image'), (req, res, next) => {
 //   if(!req.file) {
@@ -31,7 +33,7 @@ const ObjectId = require("mongodb").ObjectID;
 // });
 
 router.post('/users/imageUpload', (req, res) => {
-
+ 
   var dir = './files/images';
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -96,7 +98,6 @@ router.post('/users/imageUpload', (req, res) => {
   fileName = '';
   for (i = 0; i < images.length ; i++) {
     var matches = images[i].match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    console.log(matches[1]);
     imageData = new Buffer.from(matches[2], 'base64');
     if(matches[1] === 'image/png') {
       fileName = uuidv4() + '.png';  
@@ -116,20 +117,27 @@ router.post('/users/imageUpload', (req, res) => {
 
 router.post('/users/imageDelete', async(req, res) => {
 
-  const { _id, image_name } = req.body;
+  const { image_name } = req.body;
 
-  try {
-    let productExist = await Product.findById({_id});
-    if(productExist && productExist._id === _id) {
-      productExist.product_image = productExist.product_image.filter((image) => image !== image_name)
-    }
-    const productSaved = await productExist.save();
-    res.status(200).send(productSaved);
+  const filePath = 'files/images/' + image_name;
+
+  try { 
+    fs.unlinkSync(filePath)
+    res.status(200).send('image deleted from server');
+  } catch(err) {
+    res.status(400).send('image not deleted');
   }
-  catch(error) {
-    console.log('Error');
-    res.status(400).send(error.message);
-  }
+
+  // try {
+  //   let productExist = await Product.findById({_id});
+  //     filtered_image = productExist.product_image.filter((image) => image !== image_name)
+  //     productExist.product_image = filtered_image;
+  //     const productSaved = await productExist.save();
+  //     res.status(200).send(productSaved);
+  // }
+  // catch(error) {
+  //   res.status(404).send('Product not exists');
+  // }
 });
 
 router.route('/users').get(async (req, res) => {
