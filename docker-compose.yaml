@@ -17,6 +17,8 @@ services:
       - '5000:5000'
     external_links:
       - mongo
+    volumes:
+      - ./data/nodejsapp/files/images:/home/node/app/files/images
   mongo:
     container_name: mongo
     image: mongo
@@ -32,6 +34,7 @@ services:
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+      - ./data/nodejsapp/files/images:/var/www/nodejsapp/files/images
     ports:
       - "80:80"
       - "443:443"
