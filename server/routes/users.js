@@ -2,7 +2,7 @@ const router = require('express').Router();
 let User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const upload = require('../config/FileUpload');
-const fs = require('fs');
+const fsp = require('fs/promises');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
@@ -12,107 +12,36 @@ const ObjectId = require("mongodb").ObjectID;
 const server = require('http').createServer()
 var requestStats = require('request-stats');
 
-// router.post('/users/fileUpload', upload.single('image'), (req, res, next) => {
-//   if(!req.file) {
-//     res.status(400).send('Please upload png OR jpeg image');
-//   }
-//   else {
-//     const filePath = 'files/uploads/' + req.file.filename;
-//     res.status(200).send(filePath);
-//   } 
-// });
-
-// router.post('/users/fileUpload', upload.array('images',12), (req, res, next) => {
-//   if(!req.files) {
-//     res.status(400).send('Please upload png OR jpeg image');
-//   }
-//   else {
-//     // const filePath = 'files/uploads/' + req.file.filename;
-//     res.status(200).send(req.files);
-//   } 
-// });
-
-router.post('/users/imageUpload', (req, res) => {
- 
-  var dir = './files/images';
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-
-  // const { images } = req.body;
-  // uploadedList = [];
-
-  // try {
-
-  //   function decodeBase64Image(dataString) {
-  //     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-  //     var response = {};
-
-  //     if (matches.length !== 3) {
-  //       return new Error('Invalid input string');
-  //     }
-
-  //     response.type = matches[1];
-  //     response.data = new Buffer.from(matches[2], 'base64');
-
-  //     return response;
-  //   }
-
-  //   // Regular expression for image type:
-  //   // This regular image extracts the "jpeg" from "image/jpeg"
-  //   // var imageTypeRegularExpression = /\/(.*?)$/;
-
-  //   // var base64Data = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAZABkAAD/4Q3zaHR0cDovL25zLmFkb2JlLmN...';
-  //   var base64Data = images[0].data_url;
-
-  //   var imageBuffer = decodeBase64Image(base64Data);
-  //   var directory = 'files/images/';
-
-  //   var fileNameName = 'image';
-  //   // var imageTypeDetected = imageBuffer
-  //   //   .type
-  //   //   .match(imageTypeRegularExpression);
-
-  //   var filePath = directory +
-  //   fileNameName +
-  //     '.' +
-  //     'png';
-
-  //   // Save decoded binary image to disk
-  //   try {
-  //     require('fs').writeFile(filePath, imageBuffer.data,
-  //       function () {
-  //         console.log('DEBUG - feed:message: Saved to disk image attached by user:', filePath);
-  //       });
-  //   }
-  //   catch (error) {
-  //     console.log('ERROR:', error);
-  //   }
-  // }
-  // catch (error) {
-  //   console.log('ERROR:', error);
-  // }
+router.post('/users/imageUpload', async (req, res) => {
 
   const { images } = req.body;
-  uploadedList = [];
-  fileName = '';
-  for (i = 0; i < images.length ; i++) {
-    var matches = images[i].match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    imageData = new Buffer.from(matches[2], 'base64');
-    if(matches[1] === 'image/png') {
-      fileName = uuidv4() + '.png';  
+  try {
+
+    let filesArr = [];
+    let fileNames = [];
+    for (i = 0; i < images?.length ; i++) {
+      let fileName = '';
+      let filePath = ''
+      var matches = images[i].match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+      if (matches?.length === 3) {
+        imageData = new Buffer.from(matches[2], 'base64');
+        fileName = uuidv4() + `.${matches[1].split("/")[1]}`;
+        fileNames.push(fileName);
+        filePath = 'files/images/' + fileName;
+        filesArr.push({filePath, imageData});
+      } else {
+        throw new Error(`Bad format for image at index ${i+1}`)
+      }
     }
-    else if (matches[1] === 'image/jpg') {
-      fileName = uuidv4() + '.jpg';  
+
+    for (i = 0; i < filesArr.length; i++) {
+      await fsp.writeFile(filesArr[i].filePath, filesArr[i].imageData);
     }
-     
-    filePath = 'files/images/' + fileName;
-    fs.writeFile(filePath, imageData, function(err) {
-      if(!err) {}
-    }); 
-    uploadedList.push(fileName)
+
+    res.status(200).send({ images: fileNames })
+  } catch (e){
+    res.status(400).send({ message: e.message })
   }
-  res.status(200).send({ images: uploadedList })
 });
 
 router.post('/users/imageDelete', async(req, res) => {
@@ -127,17 +56,6 @@ router.post('/users/imageDelete', async(req, res) => {
   } catch(err) {
     res.status(400).send('image not deleted');
   }
-
-  // try {
-  //   let productExist = await Product.findById({_id});
-  //     filtered_image = productExist.product_image.filter((image) => image !== image_name)
-  //     productExist.product_image = filtered_image;
-  //     const productSaved = await productExist.save();
-  //     res.status(200).send(productSaved);
-  // }
-  // catch(error) {
-  //   res.status(404).send('Product not exists');
-  // }
 });
 
 router.route('/users').get(async (req, res) => {
