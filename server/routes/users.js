@@ -110,8 +110,8 @@ router.post('/users/imageUpload', async (req, res) => {
           fileName = uuidv4() + '.png';
           filePath = 'files/images/' + fileName;
         }
-        else if (matches[1] === 'image/jpg') {
-          fileName = uuidv4() + '.jpg';
+        else if (matches[1] === 'image/jpeg') {
+          fileName = uuidv4() + '.jpeg';
           filePath = 'files/images/' + fileName;
         }
         fs.writeFile(filePath, imageData, function(err) {
