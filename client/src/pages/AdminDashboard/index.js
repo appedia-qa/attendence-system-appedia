@@ -56,6 +56,7 @@ const StyleButton = styled(Button)`
 
 const AdminDashbord = (props) => {
   const [open, setOpen] = useState("");
+  const [productUrl, setProductUrl] = useState("");
   const [productData, setProductData] = useState("");
   const [isAllSelected, setAllSelected] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -105,9 +106,11 @@ const AdminDashbord = (props) => {
   };
 
   const closeProductDialog = () => {
+    setProductUrl("");
     setOpen(false);
   };
-  const print = () => {
+  const print = (status, value) => {
+    setProductUrl(value);
     setOpen(true);
   };
   const checkname = (lan) => {
@@ -294,6 +297,7 @@ const AdminDashbord = (props) => {
 
             <Model
               isDialogOpen={open}
+              url={productUrl}
               closeProductDialog={closeProductDialog}
             />
           </React.Fragment>

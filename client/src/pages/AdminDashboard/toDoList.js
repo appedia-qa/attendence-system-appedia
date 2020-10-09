@@ -58,7 +58,7 @@ const List = (props) => {
                   <Checkbox
                     checked={props.selected}
                     color="primary"
-                    onClick={(e) => props.onCheckBoxClick(e,props.id)}
+                    onClick={(e) => props.onCheckBoxClick(e, props.id)}
                   />
                 </Col>
                 <Col>
@@ -77,7 +77,11 @@ const List = (props) => {
                 {props.name}
               </Typography>
             </ListColumn>
-            <ListColumn lg={3}>
+            <ListColumn
+              lg={3}
+              style={{ cursor: "pointer" }}
+              onClick={() => window.open(props.url)}
+            >
               <Typography
                 component="p"
                 variant="subtitle2"
@@ -96,7 +100,7 @@ const List = (props) => {
                   border: "1px solid #08004015",
                 }}
                 onClick={() => {
-                  props.print(true);
+                  props.print(true,props.url);
                 }}
               >
                 <PrintRoundedIcon
