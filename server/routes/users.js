@@ -104,6 +104,7 @@ router.post('/users/imageUpload', async (req, res) => {
       // var base64Data = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAZABkAAD/4Q3zaHR0cDovL25zLmFkb2JlLmN...';
       // console.log(matches?.lenght);
       if (matches?.lenght === 3) {
+        console.log(matches.length)
         console.log('matches === 3');
         imageData = new Buffer.from(matches[2], 'base64');
         if(matches[1] === 'image/png') {
@@ -122,7 +123,11 @@ router.post('/users/imageUpload', async (req, res) => {
         uploadedList.push(fileName)
       }
     }
-    res.status(200).send({ images: uploadedList })
+    if(uploadedList.lenght > 0 ) {
+      res.status(200).send({images: uploadedList})
+    } else {
+      res.status(400).send('no image uploaded')
+    }
   } catch {
     if(uploadedList.lenght > 0 && uploadedList.lenght < images.length) {
       res.status(400).send({ images: uploadedList });
