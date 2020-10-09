@@ -28,12 +28,13 @@ import { closeProductDialog } from "../../redux/actions/productDialog.action";
 import { useEffect } from "react";
 import Image from "../Image";
 var PrintTemplate = require("react-print");
+var QRCode = require("qrcode.react");
 
 const Container = styled.div`
   ${({ theme, width }) => `
     // position: absolute;
     outline: none;
-    max-width: 300px;
+    max-width: 250px;
     background:white;
     margin: 0 auto;
     box-shadow: 0px 3px 40px #00000029;
@@ -195,6 +196,19 @@ const DivContainer = styled.div`
   `}
 `;
 
+const QRCodeContainer = styled.div`
+  padding: 30px;
+  border: 2px #707070 dashed;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  background-color: #f7f7f7;
+  width: 100%;
+  .qr-code {
+    width: 80% !important;
+    height: auto !important;
+  }
+`;
 function areEqual(prevProps, nextProps) {
   if (prevProps.isDialogOpen == nextProps.isDialogOpen) {
     return true;
@@ -254,14 +268,19 @@ const ProductDialog = (props, prop2) => {
           style={{ overflow: "scroll", zIndex: "4", border: "none" }}
         >
           <Container>
-            <DivContainer
-              style={{ width: `${width}px`, height: `${height}px` }}
-              ref={componentRef}
-            >
-              <Image
-                id="page-main"
-                src="https://www.qrcode-monkey.com/img/default-preview-qr.svg"
-              />
+            <DivContainer ref={componentRef}>
+              <QRCodeContainer>
+                <QRCode
+                  className="qr-code"
+                  value={props.url || ""}
+                  bgColor="#080040"
+                  fgColor="#fff"
+                  level="L"
+                  includeMargin={true}
+                  color="red"
+                  renderAs="svg"
+                />
+              </QRCodeContainer>
             </DivContainer>
 
             {/* <DivContainer style={{ marginBottom: "10px" }}>
@@ -290,7 +309,9 @@ const ProductDialog = (props, prop2) => {
                 onChange={(event) => handleEditHeight(event.target.value)}
               />
             </DivContainer> */}
-            <DivContainer style={{ justifyContent: "space-around" }}>
+            <DivContainer
+              style={{ justifyContent: "space-between", marginTop: "20px" }}
+            >
               <Button
                 style={{
                   background: "#6E9F21",

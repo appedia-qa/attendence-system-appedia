@@ -23,7 +23,7 @@ const Container = styled(Grid)`
   padding: 25px;
   padding-top: 5px;
   background:#362222;
-  height:100vh;
+  height:100%;
   
 
   
@@ -57,7 +57,7 @@ const StyleButton = styled(Button)`
 const ProductDesciption = (props) => {
   const [selected, setSelected] = useState({
     english: false,
-    arabic: true,
+    arabic: false,
     francais: false,
   });
   const [showData, setShowData] = useState({
@@ -129,7 +129,6 @@ const ProductDesciption = (props) => {
           ? data.product_details.fr.description
           : "";
       const product_image = data.product_image ? data.product_image : "";
-      console.log(product_image)
 
       setProductData({
         ...productData,
@@ -159,6 +158,27 @@ const ProductDesciption = (props) => {
   useEffect(() => {
     fetchproduct(props.match.params.id);
   }, []);
+
+  useEffect(() => {
+    if (productData) {
+      if (productData.showEnglish) {
+        setSelected({
+          ...selected,
+          english: true,
+        });
+      } else if (productData.showFr) {
+        setSelected({
+          ...selected,
+          francais: true,
+        });
+      } else if (productData.showArabic) {
+        setSelected({
+          ...selected,
+          arabic: true,
+        });
+      }
+    }
+  }, [productData]);
 
   useEffect(() => {
     if (productData) {
