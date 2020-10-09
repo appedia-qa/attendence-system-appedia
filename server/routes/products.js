@@ -241,7 +241,7 @@ router.route("/products").get(async (req, res) => {
       meta: {
         page: getPageNumber(req),
         limit: paginateOptionItem.limit,
-        totalPages: Math.ceil(totalCount / limit)
+        totalPages: Math.ceil(totalCount / paginateOptionItem.limit)
       },
     });
   } catch (e) {
