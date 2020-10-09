@@ -32,12 +32,12 @@ var requestStats = require('request-stats');
 //   } 
 // });
 
-router.post('/users/imageUpload', (req, res) => {
+router.post('/users/imageUpload', async (req, res) => {
  
-  var dir = './files/images';
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
+  // var dir = './files/images';
+  // if (!fs.existsSync(dir)) {
+  //   fs.mkdirSync(dir, { recursive: true });
+  // }
 
   // const { images } = req.body;
   // uploadedList = [];
@@ -96,23 +96,41 @@ router.post('/users/imageUpload', (req, res) => {
   const { images } = req.body;
   uploadedList = [];
   fileName = '';
-  for (i = 0; i < images.length ; i++) {
-    var matches = images[i].match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    imageData = new Buffer.from(matches[2], 'base64');
-    if(matches[1] === 'image/png') {
-      fileName = uuidv4() + '.png';  
+  filePath = ''
+  try {
+    for (i = 0; i < images?.length ; i++) {
+      console.log('inside for loop');
+      var matches = images[i].match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+      // var base64Data = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAZABkAAD/4Q3zaHR0cDovL25zLmFkb2JlLmN...';
+      // console.log(matches?.lenght);
+      if (matches?.lenght === 3) {
+        console.log('matches === 3');
+        imageData = new Buffer.from(matches[2], 'base64');
+        if(matches[1] === 'image/png') {
+          fileName = uuidv4() + '.png';
+          filePath = 'files/images/' + fileName;
+        }
+        else if (matches[1] === 'image/jpg') {
+          fileName = uuidv4() + '.jpg';
+          filePath = 'files/images/' + fileName;
+        }
+        fs.writeFile(filePath, imageData, function(err) {
+          if(err) {
+            console.log(err);
+          }
+        }); 
+        uploadedList.push(fileName)
+      }
     }
-    else if (matches[1] === 'image/jpg') {
-      fileName = uuidv4() + '.jpg';  
+    res.status(200).send({ images: uploadedList })
+  } catch {
+    if(uploadedList.lenght > 0 && uploadedList.lenght < images.length) {
+      res.status(400).send({ images: uploadedList });
     }
-     
-    filePath = 'files/images/' + fileName;
-    fs.writeFile(filePath, imageData, function(err) {
-      if(!err) {}
-    }); 
-    uploadedList.push(fileName)
+    else {
+      res.status(400).send('no image uploaded');
+    }
   }
-  res.status(200).send({ images: uploadedList })
 });
 
 router.post('/users/imageDelete', async(req, res) => {

@@ -36,10 +36,6 @@ const categoriesRouter = require('./routes/categories');
 app.use(config.api.prefix, usersRouter);
 app.use(config.api.prefix, productsRouter);
 app.use(config.api.prefix, categoriesRouter);
-
-var str = 'https://192.168.100.30:5000/abc.png'
-var str2 = str.split('/')
-console.log(str2)
   
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
