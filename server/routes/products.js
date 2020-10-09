@@ -190,6 +190,20 @@ router.route("/products/remove").delete(authGuard, async (req, res) => {
   }
 });
 
+router.route("/products/find").post(async (req, res) => {
+  let { product_code } = req.body;
+  try {
+    let productExist = await Product.findOne({ product_code });
+    if (productExist && productExist.product_code === product_code) {
+      res.status(200).send(productExist);
+    } else {
+      res.status(404).send("Product does not exist");
+    }
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 router.route("/products").get(async (req, res) => {
   try {
     const { query, categoryId } = req.query;
