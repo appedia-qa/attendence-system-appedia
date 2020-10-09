@@ -22,6 +22,9 @@ services:
     image: mongo
     ports:
       - '27017:27017'
+    volumes:
+      - ./data/mongo-db/mongo:/data/db
+      - ./data/mongo/mongo-config:/data/configdb
   nginx:
     image: nginx:1.15-alpine
     restart: unless-stopped
