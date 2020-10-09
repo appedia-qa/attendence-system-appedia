@@ -722,9 +722,9 @@ const Board = (props) => {
             <ActionHomeButtonContainer
               style={{
                 minWidth: "230px",
-                minHeight: "500px",
+                minHeight: props.windowWidth > Breakpoints.SM_MAX ? "500px" :"100%",
                 background: "#FFFFFF",
-                padding: "15px",
+                padding: "20px",
               }}
               lg={2}
               md={2}
@@ -741,10 +741,8 @@ const Board = (props) => {
               md={7}
               sm={12}
               style={{
-                maxHeight: "500px",
                 maxWidth: "100vh",
-                overflow: "auto",
-                padding: "20px",
+                padding: "0px",
                 paddingTop: "0px",
               }}
             >
@@ -798,7 +796,7 @@ const Board = (props) => {
               {loading ? (
                 <LoaderComponent height={"80px"} />
               ) : (
-                <div>
+                <div style={{marginTop:"10px"}}>
                   <Button
                     style={{
                       marginTop: "5px",
@@ -829,7 +827,7 @@ const Board = (props) => {
               md={2}
               sm={12}
               style={{
-                padding: "15px",
+                padding: "20px",
                 minHeight: "500px",
                 minWidth: "230px",
                 background: "#FFFFFF",

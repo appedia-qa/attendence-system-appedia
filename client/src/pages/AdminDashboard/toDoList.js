@@ -43,6 +43,8 @@ const ListColumn = styled(Col)`
   ${({ theme }) => `
   line-break: anywhere;
   padding-left:5px;
+  padding-top:5px;
+  padding-bottom:5px;
   `}
 `;
 
