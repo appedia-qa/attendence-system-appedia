@@ -34,7 +34,7 @@ const Container = styled.div`
   ${({ theme, width }) => `
     // position: absolute;
     outline: none;
-    max-width: 250px;
+    max-width: 300px;
     background:white;
     margin: 0 auto;
     box-shadow: 0px 3px 40px #00000029;

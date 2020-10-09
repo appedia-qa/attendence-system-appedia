@@ -42,7 +42,7 @@ const StyleButton = styled(Button)`
 const ListColumn = styled(Col)`
   ${({ theme }) => `
   line-break: anywhere;
-  padding-left:5px;
+  padding:100px;
   `}
 `;
 
@@ -58,7 +58,7 @@ const List = (props) => {
                   <Checkbox
                     checked={props.selected}
                     color="primary"
-                    onClick={(e) => props.onCheckBoxClick(e,props.id)}
+                    onClick={(e) => props.onCheckBoxClick(e, props.id)}
                   />
                 </Col>
                 <Col>
@@ -83,7 +83,7 @@ const List = (props) => {
                 style={{ paddingLeft: "12px" }}
                 variant="subtitle2"
               >
-               Status
+                Status
               </Typography>
             </ListColumn>
             <ListColumn

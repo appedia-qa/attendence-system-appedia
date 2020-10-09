@@ -39,13 +39,10 @@ const SearchButton = styled.div`
   padding: 9px 12px;
   margin:0px;
   border: 1px solid #BAB8B8;
-<<<<<<< HEAD
   input {
     line-break:anywhere;
     font: revert;
   }
-=======
->>>>>>> 66f67345fd7ff65f432bc08ea868cf4a5e073c03
   
   
 `}
@@ -146,76 +143,76 @@ const ActionHomeButtonContainer = styled(Col)`
 const TextBox = (props) => {
   return (
     <I18n>
-    {({ i18n }) => (
-    <React.Fragment>
-      <ActionButtonContainer
-        style={{
-          marginTop: "0px",
-          width: "100%",
-          padding: "10px",
-          background: "#FFFFFF",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <Typography component="p" variant="caption">
-        {i18n._(t`Product Name`)} ({props.name})
-        </Typography>
-        <SearchButton>
-          <Input
+      {({ i18n }) => (
+        <React.Fragment>
+          <ActionButtonContainer
             style={{
-              width: "100%",
-              margin: "10px",
+              marginTop: "0px",
+              padding:"20px",
+              background: "#FFFFFF",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
             }}
-            name={props.EventName}
-            value={props.valueName ? props.valueName : ""}
-            disableUnderline={true}
-            placeholder="Enter  Product Name"
-            onChange={(event) => props.handleNameChange(event)}
-            // onKeyUp={(event) => {
-            //   handleSearch(props, searchText);
-            // }}
-          />
-        </SearchButton>
-        <Typography
-          component="p"
-          style={{
-            marginTop: "30px",
-          }}
-          variant="caption"
-        >
-           {i18n._(t`Product Description`)} ({props.name})
-        </Typography>
-        {props.mount ? (
-          <div className="text-editor">
-            <EditorToolbar id={props.id} />
-          
-            <ReactQuill
-              ref={props.ref}
-              value={props.valueDescription ? props.valueDescription : ""}
-              theme="snow"
-              id={props.id}
-              onChange={props.handleChange}
-              placeholder={"Write something awesome..."}
-              modules={modules}
-              formats={formats}
-              onFocus={() => props.setActive(props.id)}
-            />
-          </div>
-        ) : (
-          <div className="text-editor">
-            <ReactQuill
-              value={props.valueDescription ? props.valueDescription : ""}
-              placeholder={"Write something awesome..."}
-              onFocus={() => props.setActive(props.id)}
-            />
-          </div>
-        )}
-      </ActionButtonContainer>
-    </React.Fragment>
-  )}
-  </I18n>);
+          >
+            <Typography component="p" variant="caption">
+              {i18n._(t`Product Name`)} ({props.name})
+            </Typography>
+            <SearchButton>
+              <Input
+                style={{
+                  width: "100%",
+                  margin: "10px",
+                }}
+                name={props.EventName}
+                value={props.valueName ? props.valueName : ""}
+                disableUnderline={true}
+                placeholder="Enter  Product Name"
+                onChange={(event) => props.handleNameChange(event)}
+                // onKeyUp={(event) => {
+                //   handleSearch(props, searchText);
+                // }}
+              />
+            </SearchButton>
+            <Typography
+              component="p"
+              style={{
+                marginTop: "30px",
+              }}
+              variant="caption"
+            >
+              {i18n._(t`Product Description`)} ({props.name})
+            </Typography>
+            {props.mount ? (
+              <div className="text-editor">
+                <EditorToolbar id={props.id} />
+
+                <ReactQuill
+                  ref={props.ref}
+                  value={props.valueDescription ? props.valueDescription : ""}
+                  theme="snow"
+                  id={props.id}
+                  onChange={props.handleChange}
+                  placeholder={"Write something awesome..."}
+                  modules={modules}
+                  formats={formats}
+                  onFocus={() => props.setActive(props.id)}
+                />
+              </div>
+            ) : (
+              <div className="text-editor">
+                <ReactQuill
+                  value={props.valueDescription ? props.valueDescription : ""}
+                  placeholder={"Write something awesome..."}
+                  onFocus={() => props.setActive(props.id)}
+                />
+              </div>
+            )}
+          </ActionButtonContainer>
+        </React.Fragment>
+      )}
+    </I18n>
+  );
 };
 
 export default withRouter(TextBox);
