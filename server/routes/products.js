@@ -93,23 +93,6 @@ const verifyProductDetails = (details) => {
   }
 };
 
-router.route("/products").get(async (req, res) => {
-  try {
-    const paginateOptionItem = getPaginateOptions(req);
-
-    let products = await Product.find({}, {}, paginateOptionItem);
-
-    res.status(200).send({
-      products,
-      meta: {
-        ...paginateOptionItem,
-      },
-    });
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
 router.route("/products/add").post(authGuard, async (req, res) => {
   const {
     product_code,
@@ -207,21 +190,7 @@ router.route("/products/remove").delete(authGuard, async (req, res) => {
   }
 });
 
-router.route("/products/find").post(async (req, res) => {
-  let { product_code } = req.body;
-  try {
-    let productExist = await Product.findOne({ product_code });
-    if (productExist && productExist.product_code === product_code) {
-      res.status(200).send(productExist);
-    } else {
-      res.status(404).send("Product does not exist");
-    }
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
-router.route("/products/search").get(async (req, res) => {
+router.route("/products").get(async (req, res) => {
   try {
     const { query, categoryId } = req.query;
     const paginateOptionItem = getPaginateOptions(req);
@@ -265,12 +234,14 @@ router.route("/products/search").get(async (req, res) => {
     };
 
     products = await Product.find(compoundQurey, {}, paginateOptionItem);
+    totalCount = await Product.count(compoundQurey)
 
     res.status(200).send({
       products,
       meta: {
         page: getPageNumber(req),
-        limit: paginateOptionItem.limit
+        limit: paginateOptionItem.limit,
+        totalPages: Math.ceil(totalCount / limit)
       },
     });
   } catch (e) {
