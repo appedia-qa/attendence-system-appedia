@@ -24,9 +24,15 @@ const Container = styled(Grid)`
   padding-top: 5px;
   background:#362222;
   height:100%;
-  
 
-  
+  button {
+    
+    &:hover {
+      background-color: white;
+      color: white;
+    }
+  }
+   
     white-space: pre-wrap;      /* CSS3 */   
     white-space: -moz-pre-wrap; /* Firefox */    
     white-space: -pre-wrap;     /* Opera <7 */   
@@ -43,14 +49,12 @@ const StyleButton = styled(Button)`
   ${({ theme }) => `
   
   background-color:#FFFFFF;
-  height 40px;
+  height 30px;
   display: flex;
   justify-content: center;
   border-radius:8px;
   align-items: center;
   margin:0px;
-  
-  
 `}
 `;
 
@@ -223,7 +227,7 @@ const ProductDesciption = (props) => {
             display: "flex",
             justifyContent: "center",
             width: "100%",
-            marginTop: "20px",
+            marginTop: "10px",
             padding: "0px",
           }}
         >
@@ -300,7 +304,7 @@ const ProductDesciption = (props) => {
             display: "flex",
             justifyContent: "center",
             width: "100%",
-            marginTop: "20px",
+            marginTop: "10px",
             padding: "0px",
           }}
         >
@@ -315,14 +319,13 @@ const ProductDesciption = (props) => {
             display: "flex",
             justifyContent: "center",
             width: "100%",
-            marginTop: "20px",
+            marginTop: "0px",
             padding: "0px",
           }}
         >
           <Col
             style={{
               background: "rgba(189,152,152, 0.2)",
-              marginTop: "10px",
               marginBottom: "50px",
               borderRadius: "10px",
             }}
@@ -337,12 +340,19 @@ const ProductDesciption = (props) => {
                   textAlign: "center",
                   fontSize: "20px",
                   fontWeight: "600",
+                  marginBottom: "0px",
                 }}
               >
                 {showData && showData.name ? showData.name : "Not Available"}
               </p>
               <p
-                style={{ color: "#FFFFFF", maxWidth: "100%" }}
+                style={{
+                  color: "#FFFFFF",
+                  maxWidth: "100%",
+                  padding: "10px",
+                  marginTop: "0px",
+                  paddingTop: "0px",
+                }}
                 dangerouslySetInnerHTML={{
                   __html:
                     showData && showData.dis

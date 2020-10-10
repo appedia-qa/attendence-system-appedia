@@ -16,8 +16,9 @@ import {
 
 const HeaderTopMenu = styled.div`
   ${({ theme, width }) => `
-    min-height: 50px;
-    background-color: ${theme.palette.primary[900]}; 
+    min-height: ${width > Breakpoints.SM_MAX ? "50px":"100px"};
+    background: rgb(29,15,15);
+    background: linear-gradient(17deg, rgba(29,15,15,1) 18%, rgba(77,59,59,1) 70%);
     display: flex;
     align-items: center;
     flex-direction:${width > Breakpoints.SM_MAX ? "row" : "row"};
@@ -71,41 +72,47 @@ const Header = (props) => {
       window.location.reload(false);
     }
   };
-  
+
   return (
     <I18n>
       {({ i18n }) => (
         <div style={{ position: "sticky", top: "0", zIndex: "3" }}>
           <HeaderTopMenu width={props.width}>
-            <HeaderArb />
             <HeaderEng />
+            <HeaderArb />
           </HeaderTopMenu>
-          {!props.location.pathname.includes("/view/") && <HeaderDiv>
-            <Typography
-              component="p"
-              className={
-                props.language === ENGLISH_LANGUAGE ? `selected` : null
-              }
-              onClick={() => handleChangeLanguage(ENGLISH_LANGUAGE)}
-            >
-              ENG
-            </Typography>
-            <div className="verticalDivider"></div>
-            <HeaderImg
-              className={props.language === ARABIC_LANGUAGE ? `selected` : null}
-              onClick={() => handleChangeLanguage(ARABIC_LANGUAGE)}
-            >
-              <Sign />
-            </HeaderImg>
-            <div className="verticalDivider"></div>
-            <Typography
-              component="p"
-              className={props.language === FRECH_LANGUAGE ? `selected` : null}
-              onClick={() => handleChangeLanguage(FRECH_LANGUAGE)}
-            >
-              FR
-            </Typography>
-          </HeaderDiv>}
+          {!props.location.pathname.includes("/view/") && (
+            <HeaderDiv>
+              <Typography
+                component="p"
+                className={
+                  props.language === ENGLISH_LANGUAGE ? `selected` : null
+                }
+                onClick={() => handleChangeLanguage(ENGLISH_LANGUAGE)}
+              >
+                ENG
+              </Typography>
+              <div className="verticalDivider"></div>
+              <HeaderImg
+                className={
+                  props.language === ARABIC_LANGUAGE ? `selected` : null
+                }
+                onClick={() => handleChangeLanguage(ARABIC_LANGUAGE)}
+              >
+                <Sign />
+              </HeaderImg>
+              <div className="verticalDivider"></div>
+              <Typography
+                component="p"
+                className={
+                  props.language === FRECH_LANGUAGE ? `selected` : null
+                }
+                onClick={() => handleChangeLanguage(FRECH_LANGUAGE)}
+              >
+                FR
+              </Typography>
+            </HeaderDiv>
+          )}
         </div>
       )}
     </I18n>
