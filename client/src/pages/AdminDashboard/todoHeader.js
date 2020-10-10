@@ -34,38 +34,39 @@ const ListColumn = styled(Col)`
 const List = (props) => {
   return (
     <I18n>
-       {({ i18n }) => (
-      <ToDoList>
-        <ListColumn lg={3}>
-          <Typography
-            style={{ color: "#FFFFFF" }}
-            component="p"
-            variant="subtitle1"
-          >
-              {i18n._(t` Product ID`)}
-          </Typography>
-        </ListColumn>
-        <ListColumn lg={3}>
-          <Typography
-            style={{ color: "#FFFFFF" }}
-            component="p"
-            variant="subtitle1"
-          >
-           {i18n._(t` Product Name`)}
-          </Typography>
-        </ListColumn>
-        <ListColumn lg={3}>
-          <Typography
-            style={{ color: "#FFFFFF" }}
-            component="p"
-            variant="subtitle1"
-          > 
-            {i18n._(t` Product URL`)}
-          </Typography>
-        </ListColumn>
-        <ListColumn lg={3}></ListColumn>
-      </ToDoList>
-    )}</I18n>
+      {({ i18n }) => (
+        <ToDoList>
+          <ListColumn lg={3}>
+            <Typography
+              style={{ color: "#FFFFFF" }}
+              component="p"
+              variant="subtitle1"
+            >
+              {i18n._(t` Product Code`)}
+            </Typography>
+          </ListColumn>
+          <ListColumn lg={3}>
+            <Typography
+              style={{ color: "#FFFFFF" }}
+              component="p"
+              variant="subtitle1"
+            >
+              {i18n._(t` Product Name`)}
+            </Typography>
+          </ListColumn>
+          <ListColumn lg={3}>
+            <Typography
+              style={{ color: "#FFFFFF" }}
+              component="p"
+              variant="subtitle1"
+            >
+              {i18n._(t` Product URL`)}
+            </Typography>
+          </ListColumn>
+          <ListColumn lg={3}></ListColumn>
+        </ToDoList>
+      )}
+    </I18n>
   );
 };
 

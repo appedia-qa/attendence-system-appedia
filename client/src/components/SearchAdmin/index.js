@@ -26,6 +26,7 @@ import {
   ENGLISH_LANGUAGE,
   ARABIC_LANGUAGE,
   CURRENT_LANGUAGE_KEY,
+  FRECH_LANGUAGE,
 } from "../../constants";
 import { emptyCartRequest } from "../../redux/actions/cart.action";
 
@@ -50,17 +51,32 @@ const SearchButton = styled.div`
 
 const StyleButton = styled(Button)`
   ${({ theme }) => `
-  
+  background-color:red;
   border-radius: 20px;
-  height: 20px;
+  height: 40px;
+  width: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin:0px;
   border-radius: 5px;
   margin:0px;
-      border: 1px solid #6E9F21;
-  
+  border: 1px solid #F36D12;
+  background: #fff;
+  p {
+    margin-right: 10px;
+    font-size: 16px !important;
+    letter-spacing: 0;
+  }
+
+  svg {
+    height: 18px;
+    width: auto;
+  }
+
+  .right {
+    
+  }
   
 `}
 `;
@@ -70,6 +86,7 @@ const HeaderBottomMenu = styled(Row)`
     align-items: center;
     justify-content:space-between;
     width: 100%;
+    marign: 0;
 
     [class^="col-"], [class*=" col-"] {
       height: 100%;
@@ -123,7 +140,7 @@ const ActionBottomButtonContainer = styled(Col)`
   ${({ theme, width }) => `
     justify-content: flex-end;
     align-items: center;
-    max-width: ${width > Breakpoints.SM_MAX ? "130px" : ""};
+    // max-width: ${width > Breakpoints.SM_MAX ? "130px" : ""};
     border-radius: 5px;
     margin:0px;
     .home {
@@ -143,6 +160,10 @@ const ActionBottomButtonContainer = styled(Col)`
             fill:#F36D12;
         }
     }
+
+    .right {
+      
+    }
    
     }
   `}
@@ -152,26 +173,46 @@ const ActionHomeButtonContainer = styled(Col)`
   ${({ theme, width }) => `
     justify-content: flex-end;
     align-items: center;
-    max-width: ${width > Breakpoints.SM_MAX ? "130px" : ""};
-        color:#6E9F21;
-        svg{
-            path{
-                stroke:#6E9F21;
-                fill:#6E9F21;
-            }
-        }
-    }
+    // max-width: ${width > Breakpoints.SM_MAX ? "130px" : ""};
+    //     color:#6E9F21;
+    //     svg{
+    //         path{
+    //             stroke:#6E9F21;
+    //             fill:#6E9F21;
+    //         }
+    //     }
+    // }
   `}
 `;
-
-const Container = styled(Grid)`
+const HeaderDiv = styled.div`
   ${({ theme }) => `
-  width:90%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-`}
+  cursor:pointer;
+  background-color:#fff; 
+  .container {
+    justify-content: flex-end;
+    display:flex;
+    flex-direction:row;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    // margin-right:8px;
+    
+    .verticalDivider {
+      margin: 0 10px;
+      width: 1px;
+      background-color: gray;
+    }
+
+  `}
+  }
 `;
+
+const SearchRow = styled(Row)`
+  ${({ theme }) => `
+    padding-top: 2px;
+    padding-bottom: 10px;
+    margin: 0;
+  `}
+`
 
 const handleSearch = (key, props, searchText) => {
   // console.log('Key Entered', key);
@@ -212,6 +253,13 @@ const HeaderSearch = (props) => {
   ) {
     return false;
   }
+  const handleChangeLanguage = (language) => {
+    if (props.language !== language) {
+      localStorage.setItem(CURRENT_LANGUAGE_KEY, language);
+      window.location.reload(false);
+    }
+  };
+
 
   return (
     <I18n>
@@ -225,105 +273,119 @@ const HeaderSearch = (props) => {
             justifyContent: "center",
           }}
         >
-          <Container>
-            <HeaderBottomMenu className="home">
-              <ActionHomeButtonContainer
-                width={props.width}
-                style={{
-                  padding: "0",
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                }}
-                lg={2}
-                md={2}
-                sm={2}
-              >
-                <StyleButton
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                  onClick={() => handleHomeCilck()}
-                >
+          <Grid>
+            <Row>
+              <HeaderDiv>
+                <Grid>
                   <Typography
-                    style={{
-                      color: "#6E9F21",
-                      fontSize: "12px",
-                      fontWeight: "800",
-                    }}
                     component="p"
+                    className={
+                      props.language === ENGLISH_LANGUAGE ? `selected` : null
+                    }
+                    onClick={() => handleChangeLanguage(ENGLISH_LANGUAGE)}
                   >
-                    {i18n._(t`Home`)}
+                    ENG
                   </Typography>
-                  <HomeIcon style={{ width: "15px" }} />
-                </StyleButton>
-              </ActionHomeButtonContainer>
-              <ActionButtonContainer
-                active={active}
-                style={{ border: active ? "1px solid #F36D12" : "" }}
-                lg={7}
-                md={7}
-                sm={7}
-              >
-                <SearchButton>
-                  {!active && <SearchIcon />}
-                  <Input
-                    style={{
-                      width: "100%",
-                      margin: "10px",
-                    }}
-                    onClick={() => activeSearch()}
-                    value={searchText}
-                    disableUnderline={true}
-                    placeholder="Enter Search Text"
-                    onChange={(event) => setSearchText(event.target.value)}
-                    onKeyUp={(event) => {
-                      handleSearch(event.key, props, searchText);
-                    }}
-                  />
+                  <div className="verticalDivider"></div>
+                  <HeaderImg
+                    className={
+                      props.language === ARABIC_LANGUAGE ? `selected` : null
+                    }
+                    onClick={() => handleChangeLanguage(ARABIC_LANGUAGE)}
+                  >
+                    <Sign />
+                  </HeaderImg>
+                  <div className="verticalDivider"></div>
+                  <Typography
+                    component="p"
+                    className={
+                      props.language === FRECH_LANGUAGE ? `selected` : null
+                    }
+                    onClick={() => handleChangeLanguage(FRECH_LANGUAGE)}
+                  >
+                    FR
+                  </Typography>
+                </Grid>
+              </HeaderDiv>
+            </Row>
+              <SearchRow>
+              <HeaderBottomMenu className="home">
+                <ActionHomeButtonContainer
+                  width={props.width}
+                  style={{
+                    padding: "0",
+                    // marginTop: "10px",
+                    // marginBottom: "10px",
+                  }}
+                  lg={2}
+                  md={2}
+                  sm={2}
+                >
+                  <StyleButton
+                    onClick={() => handleHomeCilck()}
+                  >
+                    <Typography
+                      component="p"
+                    >
+                      {i18n._(t`Home`)}
+                    </Typography>
+                    <HomeIcon/>
+                  </StyleButton>
+                </ActionHomeButtonContainer>
+                <ActionButtonContainer
+                  active={active}
+                  style={{ border: active ? "1px solid #F36D12" : "" }}
+                  lg={7}
+                  md={7}
+                  sm={7}
+                >
+                  <SearchButton>
+                    {!active && <SearchIcon />}
+                    <Input
+                      style={{
+                        width: "100%",
+                        margin: "10px",
+                      }}
+                      onClick={() => activeSearch()}
+                      value={searchText}
+                      disableUnderline={true}
+                      placeholder="Enter Search Text"
+                      onChange={(event) => setSearchText(event.target.value)}
+                      onKeyUp={(event) => {
+                        handleSearch(event.key, props, searchText);
+                      }}
+                    />
 
-                  {active && <CloseIcon onClick={() => unActiveSearch()} />}
-                </SearchButton>
-              </ActionButtonContainer>
-              <ActionBottomButtonContainer
-                style={{
-                  padding: "0",
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                  width: "100%",
-                }}
-                width={props.width}
-                lg={2}
-                md={2}
-                sm={2}
-              >
-                <StyleButton
+                    {active && <CloseIcon onClick={() => unActiveSearch()} />}
+                  </SearchButton>
+                </ActionButtonContainer>
+                <ActionBottomButtonContainer
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    border: "1px solid #F36D12",
+                    // padding: "0",
+                    // marginTop: "10px",
+                    // marginBottom: "10px",
+                    // width: "100%",
                   }}
-                  onClick={() => handleLogout()}
+                  width={props.width}
+                  lg={2}
+                  md={2}
+                  sm={2}
+                  className="right"
                 >
-                  <Typography
-                    style={{
-                      color: "#F36D12",
-                      fontSize: "12px",
-                      fontWeight: "800",
-                    }}
-                    component="p"
+                  <StyleButton
+                    onClick={() => handleLogout()}
                   >
-                    {i18n._(t`Log out`)}
-                  </Typography>
-                  <PersonIcon style={{ width: "15px" }} />
-                </StyleButton>
-              </ActionBottomButtonContainer>
-            </HeaderBottomMenu>
-          </Container>
+                    <Typography
+                      component="p"
+                    >
+                      {i18n._(t`Log out`)}
+                    </Typography>
+                    <PersonIcon />
+                  </StyleButton>
+                </ActionBottomButtonContainer>
+              </HeaderBottomMenu>
+              </SearchRow>
+          </Grid>
         </div>
       )}
     </I18n>

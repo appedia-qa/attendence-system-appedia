@@ -2,5 +2,9 @@
   "name": "qr_code_scanner",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "global": "^4.4.0",
+    "serve": "^11.3.2"
+  }
 }

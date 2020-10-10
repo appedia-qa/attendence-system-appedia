@@ -258,6 +258,7 @@ const AdminDashbord = (props) => {
                     return (
                       <ToDoList
                         id={obj.id}
+                        product_code={obj.product_code}
                         url={obj.product_url}
                         selected={obj.selected}
                         name={checkname(

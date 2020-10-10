@@ -34,7 +34,6 @@
     "Product Code":"كود المنتج",
     "Product Url":"عنوان URL للمنتج",
     "Copy Url":"إنسخ الرابط",
-    "Product Code":"كود المنتج",
     "Print Code":"كود الطباعة",
     "Save":"حفظ",
     "Cancel":"إلغاء",

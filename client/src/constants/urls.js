@@ -1,7 +1,7 @@
 
-// export const baseUrl = `http://192.168.100.30:5000/api/users`;
-// export const apiBaseUrl = `http://192.168.100.30:5000`
-// export const apiUrl = `http://192.168.100.30:5000/api`
+// export const baseUrl = `http://localhost:5000/api/users`;
+// export const apiBaseUrl = `http://localhost:5000`
+// export const apiUrl = `http://localhost:5000/api`
 
 //Production
 export const baseUrl = `https://alhafeez.qa/api/users`;
