@@ -50,11 +50,17 @@ const StyleButton = styled(Button)`
   
   background-color:#FFFFFF;
   height 30px;
+  width: 67px;
   display: flex;
   justify-content: center;
-  border-radius:8px;
+  border-radius:6px;
   align-items: center;
   margin:0px;
+  p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #080040;
+  }
 `}
 `;
 
@@ -227,15 +233,15 @@ const ProductDesciption = (props) => {
             display: "flex",
             justifyContent: "center",
             width: "100%",
-            marginTop: "10px",
+            marginTop: "18px",
             padding: "0px",
           }}
         >
           {productData.showEnglish && (
             <StyleButton
               style={{
-                margin: "10px",
-                background: selected.english ? "#6E9F19" : "",
+                margin: "5px",
+                background: selected.english ? "#6E9F19" : "#E6E4E4",
               }}
               onClick={() => {
                 setselectedAndPaulateData("english");
@@ -246,7 +252,6 @@ const ProductDesciption = (props) => {
                 variant="subtitle1"
                 style={{
                   color: selected.english ? "#FFFFFF" : "",
-                  fontSize: "14px",
                 }}
               >
                 English
@@ -256,9 +261,8 @@ const ProductDesciption = (props) => {
           {productData.showFr && (
             <StyleButton
               style={{
-                margin: "10px",
-                background: selected.francais ? "#6E9F19" : "",
-                fontSize: "14px",
+                margin: "5px",
+                background: selected.francais ? "#6E9F19" : "#E6E4E4",
               }}
               onClick={() => {
                 setselectedAndPaulateData("francais");
@@ -268,8 +272,7 @@ const ProductDesciption = (props) => {
                 component="p"
                 variant="subtitle1"
                 style={{
-                  color: selected.francais ? "#FFFFFF" : "",
-                  fontSize: "14px",
+                  color: selected.francais ? "#FFFFFF" : ""
                 }}
               >
                 Français
@@ -279,8 +282,8 @@ const ProductDesciption = (props) => {
           {productData.showArabic && (
             <StyleButton
               style={{
-                margin: "10px",
-                background: selected.arabic ? "#6E9F19" : "",
+                margin: "5px",
+                background: selected.arabic ? "#6E9F19" : "#E6E4E4",
               }}
               onClick={() => {
                 setselectedAndPaulateData("arabic");
@@ -290,8 +293,7 @@ const ProductDesciption = (props) => {
                 component="p"
                 variant="subtitle1"
                 style={{
-                  color: selected.arabic ? "#FFFFFF" : "",
-                  fontSize: "14px",
+                  color: selected.arabic ? "#FFFFFF" : ""
                 }}
               >
                 عربي
@@ -304,7 +306,7 @@ const ProductDesciption = (props) => {
             display: "flex",
             justifyContent: "center",
             width: "100%",
-            marginTop: "10px",
+            marginTop: "33px",
             padding: "0px",
           }}
         >
@@ -341,6 +343,7 @@ const ProductDesciption = (props) => {
                   fontSize: "20px",
                   fontWeight: "600",
                   marginBottom: "0px",
+                  marginTop:"10px"
                 }}
               >
                 {showData && showData.name ? showData.name : "Not Available"}
@@ -350,8 +353,9 @@ const ProductDesciption = (props) => {
                   color: "#FFFFFF",
                   maxWidth: "100%",
                   padding: "10px",
-                  marginTop: "0px",
+                  marginTop: "10px",
                   paddingTop: "0px",
+                  fontSize:"12px"
                 }}
                 dangerouslySetInnerHTML={{
                   __html:
