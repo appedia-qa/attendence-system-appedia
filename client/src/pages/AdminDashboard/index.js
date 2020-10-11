@@ -86,7 +86,7 @@ const AdminDashbord = (props) => {
     if (!params.query) {
       params.query = "";
     }
-    let url = `${apiUrl}/products?query=${params.query}&&page=${page}`;
+    let url = `${apiUrl}/products?query=${params.query}&&page=${page}&&limit=6`;
     const response = await axios.get(url);
     const resp = response.data;
     if (resp && resp.products && resp.meta) {

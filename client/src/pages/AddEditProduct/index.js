@@ -721,7 +721,8 @@ const Board = (props) => {
             <ActionHomeButtonContainer
               style={{
                 minWidth: "230px",
-                minHeight: props.windowWidth > Breakpoints.SM_MAX ? "500px" :"100%",
+                minHeight:
+                  props.windowWidth > Breakpoints.SM_MAX ? "500px" : "100%",
                 background: "#FFFFFF",
                 padding: "20px",
               }}
@@ -795,7 +796,7 @@ const Board = (props) => {
               {loading ? (
                 <LoaderComponent height={"80px"} />
               ) : (
-                <div style={{marginTop:"10px"}}>
+                <div style={{ marginTop: "10px" }}>
                   <Button
                     style={{
                       marginTop: "5px",
@@ -881,37 +882,41 @@ const Board = (props) => {
                   {i18n._(t`Copy Url`)}
                 </Button>
               </CopyToClipboard>
-              <Typography
-                style={{ marginTop: "40px" }}
-                component="p"
-                variant="caption"
-              >
-                {i18n._(t`Product Code`)}
-              </Typography>
-
-              <Button
-                style={{
-                  marginTop: "5px",
-                  border: "1px solid #6E9F21",
-                  backgroundColor: "#6E9F21",
-                }}
-                onClick={handlePrint}
-              >
-                {i18n._(t`Print Code`)}
-              </Button>
               {productDescrtopAndnameState.productIdState ? (
-                <QRCodeContainer ref={componentRef}>
-                  <QRCode
-                    className="qr-code"
-                    value={productDescrtopAndnameState.productUrl || ""}
-                    bgColor="#080040"
-                    fgColor="#fff"
-                    level="L"
-                    includeMargin={true}
-                    color="red"
-                    renderAs="svg"
-                  />
-                </QRCodeContainer>
+                <div style={{width:"100%"}}>
+                  <Typography
+                    style={{ marginTop: "40px" }}
+                    component="p"
+                    variant="caption"
+                  >
+                    {i18n._(t`Product Code`)}
+                  </Typography>
+
+                  <Button
+                    style={{
+                      marginTop: "5px",
+                      border: "1px solid #6E9F21",
+                      backgroundColor: "#6E9F21",
+                      width: "100%"
+                    }}
+
+                    onClick={handlePrint}
+                  >
+                    {i18n._(t`Print Code`)}
+                  </Button>
+                  <QRCodeContainer ref={componentRef}>
+                    <QRCode
+                      className="qr-code"
+                      value={productDescrtopAndnameState.productUrl || ""}
+                      bgColor="#080040"
+                      fgColor="#fff"
+                      level="L"
+                      includeMargin={true}
+                      color="red"
+                      renderAs="svg"
+                    />
+                  </QRCodeContainer>
+                </div>
               ) : null}
             </ActionButtonContainer>
           </HeaderBottomMenu>
