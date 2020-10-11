@@ -73,11 +73,6 @@ const StyleButton = styled(Button)`
     height: 18px;
     width: auto;
   }
-
-  .right {
-    
-  }
-  
 `}
 `;
 const HeaderBottomMenu = styled(Row)`
@@ -86,8 +81,10 @@ const HeaderBottomMenu = styled(Row)`
     align-items: center;
     justify-content:space-between;
     width: 100%;
-    marign: 0;
-
+    padding-top: 2px;
+    padding-bottom: 10px;
+    margin: 0;
+    
     [class^="col-"], [class*=" col-"] {
       height: 100%;
     }
@@ -161,10 +158,13 @@ const ActionBottomButtonContainer = styled(Col)`
         }
     }
 
-    .right {
-      
+    &.right {
+      background: red;
+     justify-content: flex-end;
+     display: flex;
+     padding: 0;
     }
-   
+       
     }
   `}
 `;
@@ -205,14 +205,6 @@ const HeaderDiv = styled.div`
   `}
   }
 `;
-
-const SearchRow = styled(Row)`
-  ${({ theme }) => `
-    padding-top: 2px;
-    padding-bottom: 10px;
-    margin: 0;
-  `}
-`
 
 const handleSearch = (key, props, searchText) => {
   // console.log('Key Entered', key);
@@ -308,7 +300,6 @@ const HeaderSearch = (props) => {
                 </Grid>
               </HeaderDiv>
             </Row>
-              <SearchRow>
               <HeaderBottomMenu className="home">
                 <ActionHomeButtonContainer
                   width={props.width}
@@ -384,7 +375,6 @@ const HeaderSearch = (props) => {
                   </StyleButton>
                 </ActionBottomButtonContainer>
               </HeaderBottomMenu>
-              </SearchRow>
           </Grid>
         </div>
       )}
