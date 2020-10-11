@@ -34,7 +34,6 @@ import {
 
 const Container = styled(Grid)`
   ${({ theme }) => `
-  width:80%;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -44,12 +43,27 @@ const StyleButton = styled(Button)`
   ${({ theme }) => `
   
   background-color:#FFFFFF !important;
-  height: 30px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin:0px;
-  
+  border: 1px solid #E6E4E4;
+  width: 120px;
+  &.right {
+    border-radius: 0 5px 5px 0;
+    border-left: 0;
+  }
+
+  &.left {
+    border-radius: 5px 0 0 5px;
+  }
+
+  p {
+    color: #080040;
+    font-size: 14px;
+    
+  }
   
 `}
 `;
@@ -204,21 +218,18 @@ const AdminDashbord = (props) => {
       {({ i18n }) => (
         <div>
           <React.Fragment>
+            {console.log("hello",props)}
             <Container>
               <Row
                 style={{
                   display: "flex",
                   justifyContent: "flex-end",
                   width: "100%",
-                  marginTop: "20px",
+                  marginTop: "24px",
                   padding: "0px",
                 }}
               >
-                <StyleButton
-                  style={{
-                    margin: "10px",
-                  }}
-                >
+                <StyleButton className={props.language === "ar" ? "right": "left"}>
                   <Typography
                     component="p"
                     variant="subtitle3"
@@ -228,9 +239,7 @@ const AdminDashbord = (props) => {
                   </Typography>
                 </StyleButton>
                 <StyleButton
-                  style={{
-                    margin: "10px",
-                  }}
+                   className={props.language === "ar" ? "left": "right"}
                   onClick={() => {
                     props.history.push(`/product/add?add-product=${true}`);
                   }}
@@ -240,7 +249,7 @@ const AdminDashbord = (props) => {
                   </Typography>
                 </StyleButton>
               </Row>
-              <Row style={{ width: "100%", marginTop: "20px" }}>
+              <Row style={{ width: "100%", marginTop: "24px" }}>
                 <FormGroup row>
                   <FormControlLabel
                     control={<Checkbox name="checkedB" color="primary" />}
@@ -251,7 +260,7 @@ const AdminDashbord = (props) => {
                 </FormGroup>
               </Row>
               <ToDoListHeader />
-              <div style={{ width: "100%", margin: "0px" }}>
+              <div style={{margin: "0px" }}>
                 {productData &&
                   productData.products &&
                   productData.products.map((obj) => {

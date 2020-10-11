@@ -205,7 +205,6 @@ const QRCodeContainer = styled.div`
   background-color: #f7f7f7;
   width: 100%;
   .qr-code {
-    width: 80% !important;
     height: auto !important;
   }
 `;

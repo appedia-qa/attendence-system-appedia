@@ -19,7 +19,7 @@ const ToDoList = styled(Row)`
   background:#503320;
   border:1px solid #D8D8D8;
   color:white;
-  margin-top:50px;
+  margin-top:15px;
   
   `}
 `;

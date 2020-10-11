@@ -54,15 +54,16 @@ const StyleButton = styled(Button)`
   background-color:red;
   border-radius: 20px;
   height: 40px;
-  width: 120px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin:0px;
   border-radius: 5px;
-  margin:0px;
   border: 1px solid #F36D12;
   background: #fff;
+  margin-top: 5px;
+  margin-bottom: 5px;
   p {
     margin-right: 10px;
     font-size: 16px !important;
@@ -103,14 +104,14 @@ const HeaderBottomMenu = styled(Row)`
 
 const HeaderImg = styled.div`
   ${({ theme }) => `
-  cursor:pointer;
-
+    cursor:pointer;
+    align-self: center;
     svg{
       width:15px;
       height:15px;
       path {
-        stroke: white;
-        fill: white;
+        stroke: #5F6366;
+        fill: #5F6366;
       }
     }
 
@@ -159,7 +160,6 @@ const ActionBottomButtonContainer = styled(Col)`
     }
 
     &.right {
-      background: red;
      justify-content: flex-end;
      display: flex;
      padding: 0;
@@ -200,6 +200,10 @@ const HeaderDiv = styled.div`
       margin: 0 10px;
       width: 1px;
       background-color: gray;
+    }
+
+    p {
+      align-self: center;
     }
 
   `}
@@ -340,7 +344,7 @@ const HeaderSearch = (props) => {
                       onClick={() => activeSearch()}
                       value={searchText}
                       disableUnderline={true}
-                      placeholder="Enter Search Text"
+                      placeholder={i18n._(t`Enter Search Text`)}
                       onChange={(event) => setSearchText(event.target.value)}
                       onKeyUp={(event) => {
                         handleSearch(event.key, props, searchText);

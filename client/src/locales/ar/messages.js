@@ -41,6 +41,7 @@
     "User Name":"اسم المستخدم",
     "password":"كلمه السر",
     "Login":"تسجيل الدخول",
+    "Enter Search Text": "أدخل نص البحث",
     "{0}": function (a) {
       return [a("0")];
     },
