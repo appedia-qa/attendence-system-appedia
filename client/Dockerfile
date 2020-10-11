@@ -14,7 +14,6 @@ COPY yarn.lock ./
 USER node
 # RUN yarn install
 RUN yarn install --frozen-lockfile --production && yarn cache clean
-
 # add app
 COPY --chown=node:node . .
 EXPOSE 3000

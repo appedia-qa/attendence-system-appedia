@@ -9,8 +9,6 @@ services:
       - 3000:3000
     depends_on:
       - nodeapp
-    volumes:
-      - ./data/reactapp/build:/home/react/app/build
   nodeapp:
     container_name: nodeapp
     restart: always
@@ -37,7 +35,6 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - ./data/nodejsapp/files/images:/var/www/nodejsapp/files/images
-      - ./data/reactapp/build:/var/www/reactapp/build
     ports:
       - "80:80"
       - "443:443"

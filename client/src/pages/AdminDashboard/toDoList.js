@@ -52,7 +52,7 @@ const List = (props) => {
   return (
     <I18n>
       {({ i18n }) => (
-        <React.Fragment>
+        <Grid>
           <ToDoList style={{ alignItems: "center" }}>
             <ListColumn lg={3}>
               <Row style={{ alignItems: "center", paddingLeft: "10px" }}>
@@ -65,7 +65,7 @@ const List = (props) => {
                 </Col>
                 <Col>
                   <Typography component="p" variant="subtitle2">
-                    {props.id}
+                    {props.product_code}
                   </Typography>
                 </Col>
               </Row>
@@ -128,7 +128,7 @@ const List = (props) => {
               </StyleButton>
             </ListColumn>
           </ToDoList>
-        </React.Fragment>
+        </Grid>
       )}
     </I18n>
   );

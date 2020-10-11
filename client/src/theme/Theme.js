@@ -90,7 +90,7 @@ const customTheme = createMuiTheme({
     primaryLight: "#cf7639",
   },
   typography: {
-    fontFamily: "Lato",
+    fontFamily: useRTL ? "Cairo": "Lato",
     allVariants: {
       textAlign: useRTL ? "right" : "left",
       fontFamily: "Lato",

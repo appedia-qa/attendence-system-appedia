@@ -34,7 +34,6 @@
     "Product Code":"كود المنتج",
     "Product Url":"عنوان URL للمنتج",
     "Copy Url":"إنسخ الرابط",
-    "Product Code":"كود المنتج",
     "Print Code":"كود الطباعة",
     "Save":"حفظ",
     "Cancel":"إلغاء",
@@ -42,6 +41,7 @@
     "User Name":"اسم المستخدم",
     "password":"كلمه السر",
     "Login":"تسجيل الدخول",
+    "Enter Search Text": "أدخل نص البحث",
     "{0}": function (a) {
       return [a("0")];
     },
