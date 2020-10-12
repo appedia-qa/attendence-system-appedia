@@ -51,7 +51,6 @@ const SearchButton = styled.div`
 
 const StyleButton = styled(Button)`
   ${({ theme }) => `
-  background-color:red;
   border-radius: 20px;
   height: 40px;
   width: 100%;
@@ -60,12 +59,41 @@ const StyleButton = styled(Button)`
   align-items: center;
   margin:0px;
   border-radius: 5px;
-  border: 1px solid #F36D12;
   background: #fff;
   margin-top: 5px;
   margin-bottom: 5px;
+  &.hoverClass {
+    &:hover {
+      .color{
+          color:white !important;
+      }
+      background-color: #F36D12;
+    
+      svg{
+        path{
+            stroke:white;
+            fill:white;
+        }
+    }
+    }
+  }
+  &.hoverHome {
+    &:hover {
+      .color{
+          color:white !important;
+      }
+      background-color: #6E9F21;
+      svg{
+        path{
+            stroke:white;
+            fill:white;
+        }
+    }
+    }
+  }
   p {
     margin-right: 10px;
+    margin-left: 10px;
     font-size: 16px !important;
     letter-spacing: 0;
   }
@@ -163,6 +191,7 @@ const ActionBottomButtonContainer = styled(Col)`
      justify-content: flex-end;
      display: flex;
      padding: 0;
+     
     }
        
     }
@@ -174,14 +203,14 @@ const ActionHomeButtonContainer = styled(Col)`
     justify-content: flex-end;
     align-items: center;
     // max-width: ${width > Breakpoints.SM_MAX ? "130px" : ""};
-    //     color:#6E9F21;
-    //     svg{
-    //         path{
-    //             stroke:#6E9F21;
-    //             fill:#6E9F21;
-    //         }
-    //     }
-    // }
+        color:#6E9F21;
+        svg{
+            path{
+                stroke:#6E9F21;
+                fill:#6E9F21;
+            }
+        }
+    }
   `}
 `;
 const HeaderDiv = styled.div`
@@ -211,7 +240,6 @@ const HeaderDiv = styled.div`
 `;
 
 const handleSearch = (key, props, searchText) => {
-  // console.log('Key Entered', key);
   if (key === "Enter") {
     props.history.push({
       pathname: "/",
@@ -255,7 +283,6 @@ const HeaderSearch = (props) => {
       window.location.reload(false);
     }
   };
-
 
   return (
     <I18n>
@@ -304,81 +331,83 @@ const HeaderSearch = (props) => {
                 </Grid>
               </HeaderDiv>
             </Row>
-              <HeaderBottomMenu className="home">
+            <HeaderBottomMenu>
+              {props.location.pathname !== "/" && (
                 <ActionHomeButtonContainer
                   width={props.width}
                   style={{
                     padding: "0",
-                    // marginTop: "10px",
-                    // marginBottom: "10px",
                   }}
                   lg={2}
                   md={2}
                   sm={2}
                 >
                   <StyleButton
+                    style={{ border: "1px solid #6E9F21" }}
+                    className="hoverHome"
                     onClick={() => handleHomeCilck()}
                   >
                     <Typography
                       component="p"
+                      className="color"
+                      style={{ color: "#6E9F21" }}
                     >
                       {i18n._(t`Home`)}
                     </Typography>
-                    <HomeIcon/>
+                    <HomeIcon />
                   </StyleButton>
                 </ActionHomeButtonContainer>
-                <ActionButtonContainer
-                  active={active}
-                  style={{ border: active ? "1px solid #F36D12" : "" }}
-                  lg={7}
-                  md={7}
-                  sm={7}
-                >
-                  <SearchButton>
-                    {!active && <SearchIcon />}
-                    <Input
-                      style={{
-                        width: "100%",
-                        margin: "10px",
-                      }}
-                      onClick={() => activeSearch()}
-                      value={searchText}
-                      disableUnderline={true}
-                      placeholder={i18n._(t`Enter Search Text`)}
-                      onChange={(event) => setSearchText(event.target.value)}
-                      onKeyUp={(event) => {
-                        handleSearch(event.key, props, searchText);
-                      }}
-                    />
+              )}
+              <ActionButtonContainer
+                active={active}
+                style={{ border: active ? "1px solid #F36D12" : "" }}
+                lg={7}
+                md={7}
+                sm={7}
+              >
+                <SearchButton>
+                  {!active && <SearchIcon />}
+                  <Input
+                    style={{
+                      width: "100%",
+                      margin: "10px",
+                    }}
+                    onClick={() => activeSearch()}
+                    value={searchText}
+                    disableUnderline={true}
+                    placeholder={i18n._(t`Enter Search Text`)}
+                    onChange={(event) => setSearchText(event.target.value)}
+                    onKeyUp={(event) => {
+                      handleSearch(event.key, props, searchText);
+                    }}
+                  />
 
-                    {active && <CloseIcon onClick={() => unActiveSearch()} />}
-                  </SearchButton>
-                </ActionButtonContainer>
-                <ActionBottomButtonContainer
-                  style={{
-                    // padding: "0",
-                    // marginTop: "10px",
-                    // marginBottom: "10px",
-                    // width: "100%",
-                  }}
-                  width={props.width}
-                  lg={2}
-                  md={2}
-                  sm={2}
-                  className="right"
+                  {active && <CloseIcon onClick={() => unActiveSearch()} />}
+                </SearchButton>
+              </ActionButtonContainer>
+              <ActionBottomButtonContainer
+                width={props.width}
+                lg={2}
+                md={2}
+                sm={2}
+                className="right"
+              >
+                <StyleButton
+                  className="hoverClass"
+                  style={{ border: "1px solid #F36D12" }}
+                  onClick={() => handleLogout()}
                 >
-                  <StyleButton
-                    onClick={() => handleLogout()}
+                  <Typography
+                    style={{ color: "#F36D12" }}
+                    className="color"
+                    component="p"
                   >
-                    <Typography
-                      component="p"
-                    >
-                      {i18n._(t`Log out`)}
-                    </Typography>
-                    <PersonIcon />
-                  </StyleButton>
-                </ActionBottomButtonContainer>
-              </HeaderBottomMenu>
+                    {i18n._(t`Log out`)}
+                  </Typography>
+                  <PersonIcon />
+                </StyleButton>
+              </ActionBottomButtonContainer>
+            </HeaderBottomMenu>
           </Grid>
         </div>
       )}

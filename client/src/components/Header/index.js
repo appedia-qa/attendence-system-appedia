@@ -13,10 +13,10 @@ const HeaderTopMenu = styled.div`
   ${({ theme, width }) => `
     background: rgb(29,15,15);
     background: linear-gradient(17deg, rgba(29,15,15,1) 18%, rgba(77,59,59,1) 70%);
-    padding-top: ${width > Breakpoints.SM_MAX ? "26px":"20px"};
-    padding-bottom: ${width > Breakpoints.SM_MAX ? "26px":"20px"};
+    padding-top: ${width > Breakpoints.SM_MAX ? "26px" : "20px"};
+    padding-bottom: ${width > Breakpoints.SM_MAX ? "26px" : "20px"};
     .container {
-      // min-height: ${width > Breakpoints.SM_MAX ? "50px":"100px"};
+      // min-height: ${width > Breakpoints.SM_MAX ? "50px" : "100px"};
       display: flex;
       align-items: center;
       flex-direction:${width > Breakpoints.SM_MAX ? "row" : "row"};
@@ -33,7 +33,6 @@ const HeaderTopMenu = styled.div`
   `}
 `;
 const Header = (props) => {
-
   return (
     <I18n>
       {({ i18n }) => (

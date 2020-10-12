@@ -7,16 +7,16 @@ import { Typography } from "@material-ui/core";
 const Container = styled.div`
   ${({ theme }) => `
 
-  margin-top: -20px;
+  
   display:flex;
-  padding: 0 2% 5% 2%;
+  margin-top: 20px;
   flex-direction:column;
   align-items:center;
   .imageError {
     width: 300px;
   }
   h1 {
-    margin-top: -20px;
+  
     color: #002040;
     font-size: 40px;
     font-weight: 400;
@@ -35,7 +35,7 @@ const Container = styled.div`
     cursor: pointer;
     margin-left: -10px;
     &:hover {
-      background-color: ${theme.palette.secondary.main};
+      background-color: #302121;
       color: ${theme.palette.white.main};
     }
   }
@@ -60,7 +60,6 @@ class Page extends Component {
   render() {
     return (
       <Container>
-        <ErrorIcon class="imageError" />
         <h1>WhOoOPS!</h1>
         <h2>Sorry we couldn't find that page</h2>
         <button onClick={this.fun.bind(this)}>GO TO HOME PAGE</button>
