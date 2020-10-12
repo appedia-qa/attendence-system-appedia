@@ -45,7 +45,6 @@ import LoaderComponent from "../../components/LoaderComponent";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useReactToPrint } from "react-to-print";
 var QRCode = require("qrcode.react");
-const imageToBase64 = require("image-to-base64");
 
 const useStyles = makeStyles((theme) =>
   createStyles({
