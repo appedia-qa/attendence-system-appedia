@@ -18,7 +18,7 @@ export function* login(action) {
 
     yield put({ type: authenticationConstants.LOGIN_INPROGRESS });
     const { password } = action.payload;
-    const username =action.payload.email
+    const username = action.payload.email;
 
     if (!username) {
       throw new Error("Empty email found in params");
@@ -105,9 +105,4 @@ export function* updateUserFromId(action) {
 
 export default function* authenticationSaga() {
   yield takeEvery(authenticationConstants.LOGIN_REQUEST, login);
-  yield takeEvery(authenticationConstants.LOGIN_SUCCESS, getUserFromId);
-  yield takeEvery(
-    authenticationConstants.UPDATE_USER_INITIVE,
-    updateUserFromId
-  );
 }

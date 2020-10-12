@@ -181,7 +181,7 @@ const ActionHomeButtonContainer = styled(Col)`
 
 const Container = styled(Grid)`
   ${({ theme }) => `
-  width:90%;
+ 
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -664,7 +664,8 @@ const Board = (props) => {
           } catch (e) {
             dispatch(
               addErrorItemInAlert({
-                message: "Please try again latter",
+                message:
+                  "Please try again latter or try with other product url",
               })
             );
             setLoading(false);
@@ -883,7 +884,7 @@ const Board = (props) => {
                 </Button>
               </CopyToClipboard>
               {productDescrtopAndnameState.productIdState ? (
-                <div style={{width:"100%"}}>
+                <div style={{ width: "100%" }}>
                   <Typography
                     style={{ marginTop: "40px" }}
                     component="p"
@@ -897,9 +898,8 @@ const Board = (props) => {
                       marginTop: "5px",
                       border: "1px solid #6E9F21",
                       backgroundColor: "#6E9F21",
-                      width: "100%"
+                      width: "100%",
                     }}
-
                     onClick={handlePrint}
                   >
                     {i18n._(t`Print Code`)}

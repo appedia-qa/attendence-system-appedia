@@ -5,8 +5,9 @@ import overlay from "../../assets/images/logo.svg";
 
 export const LoginContainer = styled.div`
   margin-top: 30px;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 13%;
+  margin-right: 13%;
+  height: 80vh;
 
   ${({ theme, width }) => `
     .image-section{
@@ -28,6 +29,7 @@ export const LoginContainer = styled.div`
         height: 47px;
         width: 30%;
         cursor: pointer;
+       
     }
     h1{
         font-size: 12px;
@@ -143,6 +145,7 @@ export const ContainerRow = styled(Row)`
   box-shadow: 0px 3px 6px #00000029;
   margin-bottom: 40px;
   margin-top: 20px;
+  height: 80vh;
   ${({ width }) => `
     h1 {
      ${
@@ -156,19 +159,23 @@ export const ContainerRow = styled(Row)`
     text-align: center
     }
     .email-section{
-        margin-top: 100px;
+       
     }
     .password-section{
-        margin-top: 10px;
+        margin-top: 30px;
     }
     .login-form {
       padding-top: 9%;
       padding-left: 10%;
       padding-right: 10%;
       padding-bottom: 15%;
+      display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
     }
     #login-button {
-      margin-top: 15px;  
+      margin-top: 30px;  
     }
     #fb-button {
         margin-top: 10px;  
@@ -202,8 +209,8 @@ export const ContainerRow = styled(Row)`
 export const ImageOverlay = styled.div`
   min-width: 200px;
   min-height: 50px;
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
   margin-top: 30px;
   margin-bottom: 30px;
   background-size: cover;
