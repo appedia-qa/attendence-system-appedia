@@ -115,26 +115,23 @@ class Login extends Component {
     return (
       <LoginContainer width={this.props.windowWidth}>
         <ContainerRow width={this.props.windowWidth}>
-          <Col md={6} className="image-section">
-            <ImageOverlay>
+          <Col md={6} style={{ marginTop: "0px" }} className="image-section">
+            <ImageOverlay style={{ marginTop: "0px" }}>
               <HeaderArb />
             </ImageOverlay>
             <ImageOverlay>
               <HeaderEng />
             </ImageOverlay>
           </Col>
-          <Col md={6}>
+          <Col md={6} style={{ display: "flex" }}>
             {this.props.loading ? (
-              <LoaderComponent />
+              <LoaderComponent height={"80vh"} />
             ) : (
               <div class="login-form">
                 <h4 id="check-valid">{errorState}</h4>
-                {/* <h1>
-                  <Trans>LOG IN</Trans>
-                </h1> */}
                 <div class="email-section">
                   <label for="outlined-basic">
-                    <Trans>User Name</Trans>*
+                    <Trans>User Name</Trans>
                   </label>
                   <br />
                   <div class="input-field">
@@ -148,7 +145,7 @@ class Login extends Component {
                 </div>
                 <div class="password-section">
                   <label for="outlined-basic">
-                    <Trans>Password</Trans>*
+                    <Trans>Password</Trans>
                   </label>
                   <br />
                   <div class="input-field">

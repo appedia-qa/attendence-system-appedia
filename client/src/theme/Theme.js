@@ -93,7 +93,7 @@ const customTheme = createMuiTheme({
     fontFamily: useRTL ? "Cairo": "Lato",
     allVariants: {
       textAlign: useRTL ? "right" : "left",
-      fontFamily: "Lato",
+      fontFamily: useRTL ? "Cairo": "Lato",
     },
     h1: {
       fontSize: "48px",
@@ -156,7 +156,7 @@ const customTheme = createMuiTheme({
       fontSize: "16px",
       fontWeight: 500,
       marginBottom: "5px",
-      fontFamily: "Lato",
+      fontFamily: useRTL ? "Cairo": "Lato",
     },
     subtitle2: {
       fontSize: "14px",

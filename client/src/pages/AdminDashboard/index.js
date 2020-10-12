@@ -218,7 +218,6 @@ const AdminDashbord = (props) => {
       {({ i18n }) => (
         <div>
           <React.Fragment>
-            {console.log("hello",props)}
             <Container>
               <Row
                 style={{
@@ -229,7 +228,9 @@ const AdminDashbord = (props) => {
                   padding: "0px",
                 }}
               >
-                <StyleButton className={props.language === "ar" ? "right": "left"}>
+                <StyleButton
+                  className={props.language === "ar" ? "right" : "left"}
+                >
                   <Typography
                     component="p"
                     variant="subtitle3"
@@ -239,7 +240,7 @@ const AdminDashbord = (props) => {
                   </Typography>
                 </StyleButton>
                 <StyleButton
-                   className={props.language === "ar" ? "left": "right"}
+                  className={props.language === "ar" ? "left" : "right"}
                   onClick={() => {
                     props.history.push(`/product/add?add-product=${true}`);
                   }}
@@ -260,7 +261,7 @@ const AdminDashbord = (props) => {
                 </FormGroup>
               </Row>
               <ToDoListHeader />
-              <div style={{margin: "0px" }}>
+              <div style={{ margin: "0px" }}>
                 {productData &&
                   productData.products &&
                   productData.products.map((obj) => {

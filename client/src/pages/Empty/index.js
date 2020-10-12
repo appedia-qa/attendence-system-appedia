@@ -6,7 +6,7 @@ import { Typography } from "@material-ui/core";
 
 const Container = styled.div`
   ${({ theme }) => `
-  width:100%;
+
   margin-top: -20px;
   display:flex;
   padding: 0 2% 5% 2%;
@@ -54,7 +54,7 @@ class Page extends Component {
   }
 
   componentDidMount() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }
 
   render() {

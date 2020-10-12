@@ -44,9 +44,9 @@ const currentLanguage = localStorage.getItem(CURRENT_LANGUAGE_KEY);
 const language =
   currentLanguage === ARABIC_LANGUAGE
     ? "ar"
-    : currentLanguage === ENGLISH_LANGUAGE
-    ? "eng"
-    : "fr";
+    : currentLanguage === FRECH_LANGUAGE
+    ? "fr"
+    : "eng";
 export const useRTL =
   currentLanguage && currentLanguage === ARABIC_LANGUAGE ? true : false;
 // Configure JSS
