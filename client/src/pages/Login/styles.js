@@ -21,14 +21,19 @@ export const LoginContainer = styled.div`
         flex-direction: column;
     }
     .login-button{
-        background-color: ${theme.palette.white.main};
-        color: ${theme.palette.primary[300]};
-        border-color:  ${theme.palette.primary[300]};
+        background-color: 1px solid ${theme.palette.white.main};
+        color: #F36D12;
+        border: 2px solid #F36D12;
         border-radius:7px;
         font-size: 18px;
+        margin-top:30px;
         height: 47px;
         width: 30%;
         cursor: pointer;
+        &:hover {
+            background-color: #F36D12;
+            color: ${theme.palette.white.main};
+          }
        
     }
     h1{

@@ -7,6 +7,7 @@ import Theme from "../../theme/Theme";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Typography, Button, IconButton, Input } from "@material-ui/core";
 import { loginRequest } from "../../redux/actions/authentication.action";
 import { useHistory } from "react-router-dom";
 import { ProductPageEndPoint } from "../../routes/Routes";
@@ -157,10 +158,10 @@ class Login extends Component {
                     />
                   </div>
                 </div>
-                <div id="login-button">
-                  <button onClick={this.onLogin} class="login-button">
+                <div >
+                  <Button onClick={this.onLogin} className="login-button">
                     <Trans>Login</Trans>
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}

@@ -66,7 +66,7 @@ export const Container = styled.div`
     height: auto;
     width: 425px;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover !important;
     background: white;
   }
   `}

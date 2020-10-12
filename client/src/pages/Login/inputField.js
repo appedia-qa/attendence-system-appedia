@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
+  
   withoutLabel: {
     marginTop: theme.spacing(3),
   },
@@ -50,16 +51,6 @@ export const EmailField = (props) => {
         type="email"
         error={props.emailToched}
         onChange={(event) => props.onChange(event)}
-        // startAdornment={
-        //   <InputAdornment position="end">
-        //     <IconButton
-        //       aria-label="toggle password visibility"
-        //       onMouseDown={handleMouseDownPassword}
-        //     >
-        //       <MailOutlinedIcon />
-        //     </IconButton>
-        //   </InputAdornment>
-        // }
       />
       <span style={{ marginTop: "10px", color: "red" }}>
         {props.emailToched ? "Please Enter Valid Email" : false}
@@ -96,21 +87,7 @@ export const PasswordField = (props) => {
         error={props.passwordTouched}
         type={values.showPassword ? "text" : "password"}
         onChange={(event) => props.onChange(event)}
-        // startAdornment={
-        //   <InputAdornment position="end">
-        //     <IconButton
-        //       aria-label="toggle password visibility"
-        //       onClick={handleClickShowPassword}
-        //       onMouseDown={handleMouseDownPassword}
-        //     >
-        //       {values.showPassword ? (
-        //         <LockOpenOutlinedIcon />
-        //       ) : (
-        //         <LockOutlinedIcon />
-        //       )}
-        //     </IconButton>
-        //   </InputAdornment>
-        // }
+        
       />
       <span style={{ marginTop: "10px", color: "red" }}>
         {props.passwordTouched ? "Please Enter Valid password" : false}

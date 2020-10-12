@@ -249,6 +249,38 @@ const Board = (props) => {
     }
   };
 
+  // const delImagesOnError = (image) => {
+  //   try {
+  //     const tokken = getTokken();
+  //     const url = apiUrl + "/users/imageDelete";
+  //     let imagesToDel = image;
+  //     imagesToDel = imagesToDel.split("/");
+  //     const responceImg = axios.post(
+  //       url,
+  //       { image_name: imagesToDel[4] },
+  //       { headers: { Authorization: tokken } }
+  //     );
+  //     if (responceImg.status == 200 || responceImg.status == 201) {
+  //       dispatch(
+  //         addErrorItemInAlert({
+  //           message: "Image is deleted",
+  //         })
+  //       );
+  //     }
+  //   } catch (e) {
+  //     dispatch(
+  //       addErrorItemInAlert({
+  //         message: "Please try again latter",
+  //       })
+  //     );
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const delImagesError = (image) => {
+  //   return Promise.all(image.map(delImagesOnError));
+  // };
+
   const papulateData = async (product_code) => {
     if (!product_code) {
       props.history.push("/");
@@ -577,7 +609,7 @@ const Board = (props) => {
       } catch (e) {
         dispatch(
           addErrorItemInAlert({
-            message: "Please try again latter",
+            message: "something went wrong image is not uploaded",
           })
         );
         setLoading(false);
@@ -665,9 +697,10 @@ const Board = (props) => {
             dispatch(
               addErrorItemInAlert({
                 message:
-                  "Please try again latter or try with other product url",
+                  "Please try with other product url or try again later",
               })
             );
+            // delImagesError(obj.product_image)
             setLoading(false);
           }
         } else {
@@ -690,9 +723,10 @@ const Board = (props) => {
           } catch (e) {
             dispatch(
               addErrorItemInAlert({
-                message: "Please try again latter",
+                message: "something went wrong product update is not successful",
               })
             );
+            // delImagesError(obj.product_image)
             setLoading(false);
           }
         }
@@ -806,6 +840,8 @@ const Board = (props) => {
                       border: "1px solid #6E9F21",
                       background: "#6E9F21",
                       marginRight: "20px",
+
+                      width: "130px",
                     }}
                     onClick={saveItem}
                   >
@@ -815,7 +851,9 @@ const Board = (props) => {
                     style={{
                       marginTop: "5px",
                       marginBottom: "15px",
-                      border: "1px solid red",
+                      border: "1px solid green",
+                      color: "green",
+                      width: "130px",
                     }}
                   >
                     {i18n._(t`Cancel`)}

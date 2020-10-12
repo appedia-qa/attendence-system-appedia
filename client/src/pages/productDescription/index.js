@@ -23,8 +23,9 @@ const Container = styled(Grid)`
   padding: 25px;
   padding-top: 5px;
   background:#362222;
-  height:100%;
-
+  height: 100%;
+  min-height: 100vh;
+ 
   button {
     
     &:hover {
@@ -311,7 +312,7 @@ const ProductDesciption = (props) => {
           }}
         >
           {productData.images && (
-            <Col lg={4} sm={4} md={4}>
+            <Col>
               <Carosal items={productData.images} />
             </Col>
           )}
@@ -327,7 +328,7 @@ const ProductDesciption = (props) => {
         >
           <Col
             style={{
-              background: "rgba(189,152,152, 0.2)",
+              background: "rgba(255, 205, 211, 0.2)",
               marginBottom: "50px",
               borderRadius: "10px",
             }}
