@@ -3,6 +3,7 @@ let User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const upload = require('../config/FileUpload');
 const fsp = require('fs/promises');
+const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
