@@ -35,8 +35,12 @@ router.post('/users/imageUpload', async (req, res) => {
       }
     }
 
+    const pathStr = path.join(__dirname, "../", "files", "images");
+    fs.accessSync(pathStr, fs.constants.R_OK | fs.constants.W)
+
     for (i = 0; i < filesArr.length; i++) {
-      await fsp.writeFile(filesArr[i].filePath, filesArr[i].imageData);
+      const resp = await fsp.writeFile(filesArr[i].filePath, filesArr[i].imageData);
+      console.log(resp);
     }
 
     res.status(200).send({ images: fileNames })
@@ -52,6 +56,9 @@ router.post('/users/imageDelete', async(req, res) => {
   const filePath = 'files/images/' + image_name;
 
   try { 
+    const pathStr = path.join(__dirname, "../", "files", "images");
+    fs.accessSync(pathStr, fs.constants.R_OK | fs.constants.W)
+
     fs.unlinkSync(filePath)
     res.status(200).send('image deleted from server');
   } catch(err) {
