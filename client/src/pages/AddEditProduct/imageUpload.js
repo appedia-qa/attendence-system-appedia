@@ -62,9 +62,9 @@ export function App(props) {
       );
     }
   };
-
-  
-
+  const dataURL = (e) => {
+    console.log(e);
+  };
   return (
     <I18n>
       {({ i18n }) => (
@@ -77,6 +77,7 @@ export function App(props) {
             dataURLKey="data_url"
             maxFileSize={"4000000"}
             onError={(e) => callErr(e)}
+            acceptType={["jpg", "gif", "png"]}
           >
             {({
               imageList,
@@ -148,7 +149,6 @@ export function App(props) {
                   </button>
                 </div>
                 &nbsp;
-                {/* <button onClick={onImageRemoveAll}>Remove all images</button> */}
               </div>
             )}
           </ImageUploading>

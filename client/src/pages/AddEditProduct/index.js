@@ -248,37 +248,37 @@ const Board = (props) => {
     }
   };
 
-  // const delImagesOnError = (image) => {
-  //   try {
-  //     const tokken = getTokken();
-  //     const url = apiUrl + "/users/imageDelete";
-  //     let imagesToDel = image;
-  //     imagesToDel = imagesToDel.split("/");
-  //     const responceImg = axios.post(
-  //       url,
-  //       { image_name: imagesToDel[4] },
-  //       { headers: { Authorization: tokken } }
-  //     );
-  //     if (responceImg.status == 200 || responceImg.status == 201) {
-  //       dispatch(
-  //         addErrorItemInAlert({
-  //           message: "Image is deleted",
-  //         })
-  //       );
-  //     }
-  //   } catch (e) {
-  //     dispatch(
-  //       addErrorItemInAlert({
-  //         message: "Please try again latter",
-  //       })
-  //     );
-  //     setLoading(false);
-  //   }
-  // };
+  const delImagesOnError = (image) => {
+    try {
+      const tokken = getTokken();
+      const url = apiUrl + "/users/imageDelete";
+      let imagesToDel = image;
+      imagesToDel = imagesToDel.split("/");
+      const responceImg = axios.post(
+        url,
+        { image_name: imagesToDel[4] },
+        { headers: { Authorization: tokken } }
+      );
+      if (responceImg.status == 200 || responceImg.status == 201) {
+        dispatch(
+          addErrorItemInAlert({
+            message: "Image is deleted",
+          })
+        );
+      }
+    } catch (e) {
+      dispatch(
+        addErrorItemInAlert({
+          message: "Please try again latter",
+        })
+      );
+      setLoading(false);
+    }
+  };
 
-  // const delImagesError = (image) => {
-  //   return Promise.all(image.map(delImagesOnError));
-  // };
+  const delImagesError = (image) => {
+    return Promise.all(image.map(delImagesOnError));
+  };
 
   const papulateData = async (product_code) => {
     if (!product_code) {
@@ -695,11 +695,10 @@ const Board = (props) => {
           } catch (e) {
             dispatch(
               addErrorItemInAlert({
-                message:
-                  "Please try with other product url or try again later",
+                message: "Please try with other product url or try again later",
               })
             );
-            // delImagesError(obj.product_image)
+            delImagesError(obj.product_image)
             setLoading(false);
           }
         } else {
@@ -722,10 +721,11 @@ const Board = (props) => {
           } catch (e) {
             dispatch(
               addErrorItemInAlert({
-                message: "something went wrong product update is not successful",
+                message:
+                  "something went wrong product update is not successful",
               })
             );
-            // delImagesError(obj.product_image)
+            delImagesError(obj.product_image)
             setLoading(false);
           }
         }
@@ -761,7 +761,7 @@ const Board = (props) => {
                 padding: "20px",
               }}
               lg={2}
-              md={2}
+              md={12}
               sm={12}
             >
               <Images
@@ -772,7 +772,7 @@ const Board = (props) => {
             </ActionHomeButtonContainer>
             <ActionButtonContainer
               lg={7}
-              md={7}
+              md={12}
               sm={12}
               style={{
                 maxWidth: "100vh",
@@ -862,15 +862,13 @@ const Board = (props) => {
             </ActionButtonContainer>
             <ActionButtonContainer
               lg={2}
-              md={2}
+              md={12}
               sm={12}
               style={{
                 padding: "20px",
                 minHeight: "500px",
                 minWidth: "230px",
                 background: "#FFFFFF",
-                display: "flex",
-                flexDirection: "column",
               }}
             >
               <Typography component="p" variant="caption">
