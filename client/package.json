@@ -17,7 +17,6 @@
     "append-query": "^2.1.0",
     "axios": "^0.19.2",
     "browser-history": "^1.0.1",
-    "browser-image-compression": "^1.0.12",
     "card-validator": "^6.2.0",
     "clsx": "^1.1.0",
     "google-map-react": "^2.0.8",

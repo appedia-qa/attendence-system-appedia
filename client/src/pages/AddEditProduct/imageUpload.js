@@ -62,9 +62,7 @@ export function App(props) {
       );
     }
   };
-  const dataURL = (e) => {
-    console.log(e);
-  };
+
   return (
     <I18n>
       {({ i18n }) => (
