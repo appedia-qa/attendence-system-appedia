@@ -698,7 +698,7 @@ const Board = (props) => {
                 message: "Please try with other product url or try again later",
               })
             );
-            delImagesError(obj.product_image)
+            delImagesError(obj.product_image);
             setLoading(false);
           }
         } else {
@@ -725,7 +725,7 @@ const Board = (props) => {
                   "something went wrong product update is not successful",
               })
             );
-            delImagesError(obj.product_image)
+            delImagesError(obj.product_image);
             setLoading(false);
           }
         }
@@ -764,6 +764,13 @@ const Board = (props) => {
               md={12}
               sm={12}
             >
+              <Typography
+                component="p"
+                variant="caption"
+                style={{ textAlign: "center" }}
+              >
+                {i18n._(t`Please add square images for better result`)}
+              </Typography>
               <Images
                 onChange={onChange}
                 images={productDescrtopAndnameState.images}

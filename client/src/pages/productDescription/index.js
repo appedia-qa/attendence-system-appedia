@@ -273,7 +273,7 @@ const ProductDesciption = (props) => {
                 component="p"
                 variant="subtitle1"
                 style={{
-                  color: selected.francais ? "#FFFFFF" : ""
+                  color: selected.francais ? "#FFFFFF" : "",
                 }}
               >
                 Français
@@ -294,7 +294,7 @@ const ProductDesciption = (props) => {
                 component="p"
                 variant="subtitle1"
                 style={{
-                  color: selected.arabic ? "#FFFFFF" : ""
+                  color: selected.arabic ? "#FFFFFF" : "",
                 }}
               >
                 عربي
@@ -302,27 +302,27 @@ const ProductDesciption = (props) => {
             </StyleButton>
           )}
         </Row>
-        <Row
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            width: "100%",
-            marginTop: "33px",
-            padding: "0px",
-          }}
-        >
-          {productData.images && (
+        {productData && productData.images.length > 0 && (
+          <Row
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              marginTop: "33px",
+              padding: "0px",
+            }}
+          >
             <Col>
               <Carosal items={productData.images} />
             </Col>
-          )}
-        </Row>
+          </Row>
+        )}
         <Row
           style={{
             display: "flex",
             justifyContent: "center",
             width: "100%",
-            marginTop: "0px",
+            marginTop: "10px",
             padding: "0px",
           }}
         >
@@ -344,7 +344,7 @@ const ProductDesciption = (props) => {
                   fontSize: "20px",
                   fontWeight: "600",
                   marginBottom: "0px",
-                  marginTop:"10px"
+                  marginTop: "10px",
                 }}
               >
                 {showData && showData.name ? showData.name : "Not Available"}
@@ -356,7 +356,7 @@ const ProductDesciption = (props) => {
                   padding: "10px",
                   marginTop: "10px",
                   paddingTop: "0px",
-                  fontSize:"12px"
+                  fontSize: "12px",
                 }}
                 dangerouslySetInnerHTML={{
                   __html:

@@ -131,11 +131,11 @@ class Login extends Component {
               <div class="login-form">
                 <h4 id="check-valid">{errorState}</h4>
                 <div class="email-section">
-                  <label for="outlined-basic">
+                  <Typography style={{marginBottom:"8px" ,fontSize:"14px", fontWeight:"600"}}>
                     <Trans>User Name</Trans>
-                  </label>
-                  <br />
-                  <div class="input-field">
+                  </Typography>
+
+                  <div>
                     <EmailField
                       emailToched={emailToched}
                       onChange={(event) =>
@@ -145,11 +145,11 @@ class Login extends Component {
                   </div>
                 </div>
                 <div class="password-section">
-                  <label for="outlined-basic">
+                  <Typography style={{marginBottom:"8px",fontSize:"14px", fontWeight:"600"}}>
                     <Trans>Password</Trans>
-                  </label>
-                  <br />
-                  <div class="input-field">
+                  </Typography>
+
+                  <div>
                     <PasswordField
                       passwordTouched={passwordTouched}
                       onChange={(event) =>
@@ -158,7 +158,7 @@ class Login extends Component {
                     />
                   </div>
                 </div>
-                <div >
+                <div>
                   <Button onClick={this.onLogin} className="login-button">
                     <Trans>Login</Trans>
                   </Button>

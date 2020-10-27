@@ -66,8 +66,9 @@ export const Container = styled.div`
     height: auto;
     width: 425px;
     height: 100%;
-    object-fit: cover !important;
-    background: white;
+    object-fit: contain !important;
+    background: rgb(29,15,15);
+    background: linear-gradient(17deg, rgba(29,15,15,1) 18%, rgba(77,59,59,1) 70%);
   }
   `}
 `;

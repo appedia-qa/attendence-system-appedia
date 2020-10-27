@@ -10,6 +10,7 @@ import MailOutlinedIcon from "@material-ui/icons/MailOutlined";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import LockOpenOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
 import { red } from "@material-ui/core/colors";
+import styled from "styled-components";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
-  
+
   withoutLabel: {
     marginTop: theme.spacing(3),
   },
@@ -27,6 +28,12 @@ const useStyles = makeStyles((theme) => ({
     width: "25ch",
   },
 }));
+
+const OutlinedInputStyled = styled(OutlinedInput)`
+  .MuiOutlinedInput-input {
+    padding: 11.5px 12.5px;
+  }
+`;
 
 export const EmailField = (props) => {
   const classes = useStyles();
@@ -44,10 +51,10 @@ export const EmailField = (props) => {
 
   return (
     <div className={classes.root}>
-      <OutlinedInput
+      <OutlinedInputStyled
         id="standard-adornment-email"
         style={{ width: "100%" }}
-        inputStyle={{ width: "100%" }}
+        inputStyle={{ width: "100%", padding: "0px" }}
         type="email"
         error={props.emailToched}
         onChange={(event) => props.onChange(event)}
@@ -80,14 +87,13 @@ export const PasswordField = (props) => {
 
   return (
     <div className={classes.root}>
-      <OutlinedInput
+      <OutlinedInputStyled
         id="standard-adornment-password"
         style={{ width: "100%" }}
         inputStyle={{ width: "100%" }}
         error={props.passwordTouched}
         type={values.showPassword ? "text" : "password"}
         onChange={(event) => props.onChange(event)}
-        
       />
       <span style={{ marginTop: "10px", color: "red" }}>
         {props.passwordTouched ? "Please Enter Valid password" : false}

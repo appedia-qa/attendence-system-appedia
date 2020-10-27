@@ -39,7 +39,7 @@ const StyleDiv = styled.div`
 
 const ImgDiv = styled.div`
   ${({ theme }) => `
-  padding:5px;
+  padding:20px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -101,7 +101,10 @@ export function App(props) {
                         ) : (
                           <img src={image["data_url"]} alt="" width="70%" />
                         )}
-                        <div className="image-item__btn-wrapper">
+                        <div
+                          style={{ marginTop: "5px" }}
+                          className="image-item__btn-wrapper"
+                        >
                           <UpdateIcon
                             color="secondary"
                             onClick={() => onImageUpdate(index)}

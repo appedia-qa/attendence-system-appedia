@@ -23,18 +23,17 @@ export const LoginContainer = styled.div`
     .login-button{
         background-color: 1px solid ${theme.palette.white.main};
         color: #F36D12;
-        border: 2px solid #F36D12;
+        border: 1px solid #F36D12;
         border-radius:7px;
         font-size: 18px;
-        margin-top:30px;
-        height: 47px;
-        width: 30%;
+        margin-top:25px;
+        height: 38px;
+        width: 40%;
         cursor: pointer;
         &:hover {
             background-color: #F36D12;
             color: ${theme.palette.white.main};
           }
-       
     }
     h1{
         font-size: 12px;

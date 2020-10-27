@@ -42,6 +42,7 @@
     "password":"كلمه السر",
     "Login":"تسجيل الدخول",
     "Enter Search Text": "أدخل نص البحث",
+    "Please add square images for better result":"الرجاء إضافة صور مربعة للحصول على نتيجة أفضل",
     "{0}": function (a) {
       return [a("0")];
     },
