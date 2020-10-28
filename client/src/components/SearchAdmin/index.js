@@ -382,7 +382,7 @@ const HeaderSearch = (props) => {
                     }}
                   />
 
-                  {active && <CloseIcon onClick={() => unActiveSearch()} />}
+                  {active && <CloseIcon style={{cursor:"pointer"}} onClick={() => unActiveSearch()} />}
                 </SearchButton>
               </ActionButtonContainer>
               <ActionBottomButtonContainer

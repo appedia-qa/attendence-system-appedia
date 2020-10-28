@@ -23,8 +23,8 @@ import {
   passwordValidator,
   emailValidator,
 } from "../../utils/emailPasswordValidator";
-import { ReactComponent as HeaderArb } from "../../assets/images/headerArb.svg";
-import { ReactComponent as HeaderEng } from "../../assets/images/headerEng.svg";
+import { ReactComponent as HeaderArbLogin } from "../../assets/images/headerArbLogin.svg";
+import { ReactComponent as HeaderEngLogin } from "../../assets/images/headerEngLogin.svg";
 
 class Login extends Component {
   constructor(props) {
@@ -117,11 +117,11 @@ class Login extends Component {
       <LoginContainer width={this.props.windowWidth}>
         <ContainerRow width={this.props.windowWidth}>
           <Col md={6} style={{ marginTop: "0px" }} className="image-section">
-            <ImageOverlay style={{ marginTop: "0px" }}>
-              <HeaderArb />
+            <ImageOverlay>
+              <HeaderEngLogin style={{ marginTop: "0px" }} />
             </ImageOverlay>
             <ImageOverlay>
-              <HeaderEng />
+              <HeaderArbLogin />
             </ImageOverlay>
           </Col>
           <Col md={6} style={{ display: "flex" }}>
@@ -131,7 +131,13 @@ class Login extends Component {
               <div class="login-form">
                 <h4 id="check-valid">{errorState}</h4>
                 <div class="email-section">
-                  <Typography style={{marginBottom:"8px" ,fontSize:"14px", fontWeight:"600"}}>
+                  <Typography
+                    style={{
+                      marginBottom: "8px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
                     <Trans>User Name</Trans>
                   </Typography>
 
@@ -145,7 +151,13 @@ class Login extends Component {
                   </div>
                 </div>
                 <div class="password-section">
-                  <Typography style={{marginBottom:"8px",fontSize:"14px", fontWeight:"600"}}>
+                  <Typography
+                    style={{
+                      marginBottom: "8px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
                     <Trans>Password</Trans>
                   </Typography>
 
