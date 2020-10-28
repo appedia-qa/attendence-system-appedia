@@ -861,6 +861,9 @@ const Board = (props) => {
                       color: "green",
                       width: "130px",
                     }}
+                    onClick={() => {
+                      props.history.push("/");
+                    }}
                   >
                     {i18n._(t`Cancel`)}
                   </Button>
