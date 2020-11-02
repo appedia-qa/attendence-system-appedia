@@ -747,6 +747,11 @@ const Board = (props) => {
     return count;
   };
 
+  const tokken = getTokken();
+  if (!tokken) {
+    props.history.push("/login");
+  }
+
   return (
     <I18n>
       {({ i18n }) => (
