@@ -5,6 +5,7 @@ import { ReactComponent as ErrorIcon } from "../../assets/icons/error-404.svg";
 import { Row, Col, Grid } from "react-flexbox-grid";
 import Carosal from "../../components/ProductCarousel";
 import { apiUrl } from "../../constants/urls";
+import LoaderComponent from "../../components/LoaderComponent";
 import {
   Typography,
   IconButton,
@@ -76,6 +77,7 @@ const ProductDesciption = (props) => {
     dis: "",
   });
   const [productData, setProductData] = useState({
+    loading: true,
     showArabic: false,
     showEnglish: false,
     showFr: false,
@@ -143,10 +145,12 @@ const ProductDesciption = (props) => {
 
       setProductData({
         ...productData,
+       
         images: product_image,
         showArabic: arabicName ? true : false,
         showEnglish: englishName ? true : false,
         showFr: frName ? true : false,
+        loading: false,
         ar: {
           ...productData.ar,
           name: arabicName,
@@ -162,6 +166,11 @@ const ProductDesciption = (props) => {
           name: englishName,
           dis: englishDiscription,
         },
+      });
+    } else {
+      setProductData({
+        ...productData,
+        loading: false,
       });
     }
   };
@@ -228,147 +237,154 @@ const ProductDesciption = (props) => {
   };
   return (
     <React.Fragment>
-      <Container>
-        <Row
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            width: "100%",
-            marginTop: "18px",
-            padding: "0px",
-          }}
-        >
-          {productData.showEnglish && (
-            <StyleButton
-              style={{
-                margin: "5px",
-                background: selected.english ? "#6E9F19" : "#E6E4E4",
-              }}
-              onClick={() => {
-                setselectedAndPaulateData("english");
-              }}
-            >
-              <Typography
-                component="p"
-                variant="subtitle1"
-                style={{
-                  color: selected.english ? "#FFFFFF" : "",
-                }}
-              >
-                English
-              </Typography>
-            </StyleButton>
-          )}
-          {productData.showFr && (
-            <StyleButton
-              style={{
-                margin: "5px",
-                background: selected.francais ? "#6E9F19" : "#E6E4E4",
-              }}
-              onClick={() => {
-                setselectedAndPaulateData("francais");
-              }}
-            >
-              <Typography
-                component="p"
-                variant="subtitle1"
-                style={{
-                  color: selected.francais ? "#FFFFFF" : "",
-                }}
-              >
-                Français
-              </Typography>
-            </StyleButton>
-          )}
-          {productData.showArabic && (
-            <StyleButton
-              style={{
-                margin: "5px",
-                background: selected.arabic ? "#6E9F19" : "#E6E4E4",
-              }}
-              onClick={() => {
-                setselectedAndPaulateData("arabic");
-              }}
-            >
-              <Typography
-                component="p"
-                variant="subtitle1"
-                style={{
-                  color: selected.arabic ? "#FFFFFF" : "",
-                }}
-              >
-                عربي
-              </Typography>
-            </StyleButton>
-          )}
-        </Row>
-        {productData && productData.images.length > 0 && (
+      
+        <Container>
+        {productData.loading ? (
+        <LoaderComponent height={"80vh"} />
+      ) : (
+        <div>
           <Row
             style={{
               display: "flex",
               justifyContent: "center",
               width: "100%",
-              marginTop: "33px",
+              marginTop: "18px",
               padding: "0px",
             }}
           >
-            <Col>
-              <Carosal items={productData.images} />
-            </Col>
-          </Row>
-        )}
-        <Row
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            width: "100%",
-            marginTop: "10px",
-            padding: "0px",
-          }}
-        >
-          <Col
-            style={{
-              background: "rgba(255, 205, 211, 0.2)",
-              marginBottom: "50px",
-              borderRadius: "10px",
-            }}
-            lg={5}
-            sm={5}
-            md={5}
-          >
-            <div>
-              <p
+            {productData.showEnglish && (
+              <StyleButton
                 style={{
-                  color: "#6E9F21",
-                  textAlign: "center",
-                  fontSize: "20px",
-                  fontWeight: "600",
-                  marginBottom: "0px",
-                  marginTop: "10px",
+                  margin: "5px",
+                  background: selected.english ? "#6E9F19" : "#E6E4E4",
+                }}
+                onClick={() => {
+                  setselectedAndPaulateData("english");
                 }}
               >
-                {showData && showData.name ? showData.name : "Not Available"}
-              </p>
-              <p
+                <Typography
+                  component="p"
+                  variant="subtitle1"
+                  style={{
+                    color: selected.english ? "#FFFFFF" : "",
+                  }}
+                >
+                  English
+                </Typography>
+              </StyleButton>
+            )}
+            {productData.showFr && (
+              <StyleButton
                 style={{
-                  color: "#FFFFFF",
-                  maxWidth: "100%",
-                  padding: "10px",
-                  marginTop: "10px",
-                  paddingTop: "0px",
-                  fontSize: "12px",
+                  margin: "5px",
+                  background: selected.francais ? "#6E9F19" : "#E6E4E4",
                 }}
-                dangerouslySetInnerHTML={{
-                  __html:
-                    showData && showData.dis
-                      ? showData.dis
-                      : "<p>Not Available</p>",
+                onClick={() => {
+                  setselectedAndPaulateData("francais");
                 }}
-              ></p>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+              >
+                <Typography
+                  component="p"
+                  variant="subtitle1"
+                  style={{
+                    color: selected.francais ? "#FFFFFF" : "",
+                  }}
+                >
+                  Français
+                </Typography>
+              </StyleButton>
+            )}
+            {productData.showArabic && (
+              <StyleButton
+                style={{
+                  margin: "5px",
+                  background: selected.arabic ? "#6E9F19" : "#E6E4E4",
+                }}
+                onClick={() => {
+                  setselectedAndPaulateData("arabic");
+                }}
+              >
+                <Typography
+                  component="p"
+                  variant="subtitle1"
+                  style={{
+                    color: selected.arabic ? "#FFFFFF" : "",
+                  }}
+                >
+                  عربي
+                </Typography>
+              </StyleButton>
+            )}
+          </Row>
+          {productData && productData.images.length > 0 && (
+            <Row
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                marginTop: "33px",
+                padding: "0px",
+              }}
+            >
+              <Col>
+                <Carosal items={productData.images} />
+              </Col>
+            </Row>
+          )}
+          <Row
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              marginTop: "10px",
+              padding: "0px",
+            }}
+          >
+            <Col
+              style={{
+                background: "rgba(255, 205, 211, 0.2)",
+                marginBottom: "50px",
+                borderRadius: "10px",
+              }}
+              lg={5}
+              sm={5}
+              md={5}
+            >
+              <div>
+                <p
+                  style={{
+                    color: "#6E9F21",
+                    textAlign: "center",
+                    fontSize: "20px",
+                    fontWeight: "600",
+                    marginBottom: "0px",
+                    marginTop: "10px",
+                  }}
+                >
+                  {showData && showData.name ? showData.name : "Not Available"}
+                </p>
+                <p
+                  style={{
+                    color: "#FFFFFF",
+                    maxWidth: "100%",
+                    padding: "10px",
+                    marginTop: "10px",
+                    paddingTop: "0px",
+                    fontSize: "12px",
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      showData && showData.dis
+                        ? showData.dis
+                        : "<p>Not Available</p>",
+                  }}
+                ></p>
+              </div>
+            </Col>
+          </Row>
+        </div>)}
+        </Container>
+      
     </React.Fragment>
   );
 };
